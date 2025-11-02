@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Registro - Gameoteca{% endblock %}
+
+{% block content %}
+<main class="vs-page__main">
+    <!-- Estilo del Breadcrumb -->
+    <div class="breadcumb-wrapper" data-bg-src="{{ url_for('static', filename='img/bg/breadcrumb-bg-1-2.jpg') }}">
+        <div class="container">
+            <div class="breadcumb-content">
+                <h1 class="breadcumb-title wow animate__fadeInUp" data-wow-delay="0.35s">Crear Cuenta</h1>
+                <div class="breadcumb-menu-wrap">
+                    <ul class="breadcumb-menu wow animate__fadeInUp" data-wow-delay="0.45s">
+                        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                        <li>Registro</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contenido Principal -->
+    <div class="vs-page__main--layouts">
+        <section class="space-extra-bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="vs-card">
+                            <div class="vs-card__body">
+                                <form method="POST" class="login-form wow animate__fadeInUp" data-wow-delay="0.3s">
+                                    <!-- Campo de Nombre -->
+                                    <div class="form-group mb-4">
+                                        <label for="nombre" class="form-label">Nombre Completo</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                    </div>
+                                    <!-- Campo de Email -->
+                                    <div class="form-group mb-4">
+                                        <label for="email" class="form-label">Correo Electrónico</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                    <!-- Campo de Contraseña -->
+                                    <div class="form-group mb-4">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                    <!-- Campo de Confirmar Contraseña -->
+                                    <div class="form-group mb-4">
+                                        <label for="confirm_password" class="form-label">Confirmar Contraseña</label>
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                    </div>
+                                    <!-- Botón de Envío -->
+                                    <button type="submit" class="vs-btn vs-btn--style2 w-100">
+                                        Crear Cuenta
+                                        <span class="vs-btn__inner">
+                                            <span class="vs-btn__blobs">
+                                                <span class="vs-btn__blob"></span>
+                                                <span class="vs-btn__blob"></span>
+                                                <span class="vs-btn__blob"></span>
+                                                <span class="vs-btn__blob"></span>
+                                            </span>
+                                        </span>
+                                    </button>
+                                </form>
+                                <!-- Enlace de Login -->
+                                <div class="text-center mt-4 wow animate__fadeInUp" data-wow-delay="0.4s">
+                                    <p class="mb-0">¿Ya tienes una cuenta? 
+                                        <a href="{{ url_for('auth.login') }}" class="text-theme">Inicia sesión aquí</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
