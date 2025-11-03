@@ -18,8 +18,8 @@
   6. Call To Action
   7. Services Section
   8. Review Section
-  9. News Section
-  10. Newsletter section
+
+
   11. Footer
   12. Room Listing
   13. Room Grid 
@@ -2555,136 +2555,6 @@ section.reviews.reviews-style-1{padding-bottom:100px; }
 .reviews-style-2  .slider-content{padding: 0;}
 
 /* ========================================= */
-/*          News Section CSS        */
-/* ======================================== */
-
-.news-item{
-	box-shadow: 0 0 15px #cccccc57;
-    background: #fff;
-}
-.news-image{
-    overflow: hidden;
-}
-.news-image img{
-    transition: all ease-in-out 0.5s;
-    width: 100%;
-}
-.news-item:hover img{
-    transform: scale(1.2) rotate(-5deg);
-    transition: all ease-in-out 0.5s;
-}
-.news-content{
-	padding: 20px 25px 20px;
-	background: #fff;
-}
-
-.news-content h4{margin-bottom: 11px}
-
-.news-content>p {margin-bottom: 10px;}
-
-.news-content ul li{font-size: 14px;}
-
-.review-item p.date, .news-content p.date{
-    font-weight: 500;
-    font-size: 13px;
-    margin-bottom: 10px;
-    color: #fe4e37;
-}
-.news-item ul li i{
-	color: #fe4e37;
-}
-
-.news-content>a{font-size: 12px; font-weight: 500; color: #fe4e37;}
-
-.news-content>a i{transition: all 0.4s ease; }
-
-.news-content>a:hover i{padding-left: 5px; transition: all 0.4s ease; }
-
-/* news-style-1*/
-.news-style-1 .events-list{padding: 20px;}
-
-.news-style-1 .events-title{position: relative; border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;}
-
-.news-style-1 .time-from{
-    position: absolute;
-    border: 2px solid #fe4e37;
-    padding: 0 15px;
-    left: 0;
-    top: 0;
-}
-
-.news-style-1 .events-title h4{padding-left: 80px;}
-
-.news-style-1 .time-from .date{font-size: 24px; line-height: 1.5;}
-
-@media(max-width: 991px){
-  section.news .col-md-4.col-sm-12.col-xs-12{margin-top: 30px;}
-  section.news img{width: 100%;}
-
-  .news-style-1 .events-list{margin-bottom: 30px;}
-}
-
-@media(max-width: 767px){
-  section.news .col-md-4.col-sm-6.col-xs-12{margin-bottom: 30px;}
-
-  section.news .col-md-4.col-sm-12.col-xs-12{margin-top: 0px;}
-
-  .news-style-1 .events-list .display-flex{display: block; width: 100%; margin: 0;}
-
-  .news-style-1 .events-list .news-image{margin-top: 30px;}
-}
-
-@media(max-width: 567px){
-  .news-style-1 .time-from{position: relative;}
-  .news-style-1 .events-title h4{padding:20px 0 0;}
-}
-
-/* ========================================= */
-/*          Newsletter section CSS        */
-/* ======================================== */
-
-section.newsletter{
-	background: url(../images/newsletterbg.jpg) no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	background-size: cover;
-}
-section.newsletter:before{
-	content: '';
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	background: rgba(0,0,0,0.7);
-}
-.newsletter-form{
-	position: relative;
-	z-index: 1;
-	width: 50%;
-	margin: 0 auto;
-}
-.newsletter-form input{
-    height: 45px;
-    border-radius: 20px;
-}
-.newsletter-form a{
-	position: absolute;
-    right: 2px;
-    top: 2px;
-    padding: 11px 30px 11px;
-}
-
-@media(max-width: 991px){
-  .newsletter-form{width: 80%;}
-}
-
-@media(max-width: 411px){
-  .newsletter-form{width: 100%; text-align: center;}
-  .newsletter-form a{position: relative; margin-top: 10px;}
-}
-
-/* ========================================= */
 /*          Footer CSS        */
 /* ======================================== */
 
@@ -3402,7 +3272,7 @@ ul.amenities li{
     background: #666;
     color: #fff;
 }
-.list-content .news-item{
+.list-content {
     margin-bottom: 30px;
 }
 
@@ -5365,11 +5235,11 @@ table.shop_table.rt-checkout-review-order-table thead, table.shop_table.rt-check
 /* ========================================= */
 /*          Events Pages CSS        */
 /* ======================================== */
-section.events .news-image{position: relative;}
+section.events {position: relative;}
 
-section.events .news-image img{width: 100%;}
+section.events img{width: 100%;}
 
-section.events .news-content h4 {
+section.events h4 {
     border-bottom: 1px dashed #ccc;
     padding-bottom: 15px;
 }
@@ -5669,9 +5539,9 @@ section.events .meta span {
     color: #fff;
 }
 
-.night-mode .news-item, .night-mode .room-item{box-shadow: 0 0 15px #00000057;}
+.night-mode , .night-mode .room-item{box-shadow: 0 0 15px #00000057;}
 
-.night-mode .news-content, .night-mode .room-content{background: #242424;}
+.night-mode , .night-mode .room-content{background: #242424;}
 
 .night-mode .pagination li a, .night-mode .comment-box input,
 .night-mode .comment-box textarea{background: #000; color: #fff;}

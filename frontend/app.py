@@ -12,28 +12,31 @@ def index():
     # Index usa templates/index.html ya presente en la carpeta
     return render_template('index.html')
 
-@app.route('/hospedaje/<int:id>')
-def detalle_hospedaje(id):
-    return render_template('hospedajes/detalle.html')
+#@app.route('/hospedaje/<int:id>')
+#def detalle_hospedaje(id):
+#    return render_template('hospedajes/detalle.html')
+@app.route("/roomdetail") #es el detalle del hospedaje
+def roomdetail():
+    return render_template("detail-full.html")
 
-@app.route('/reservas/consultar')
-def consultar():
-    return render_template('reservas/consultar.html')
+#@app.route('/reservas/consultar')
+#def consultar():
+#    return render_template('reservas/consultar.html')
 
-@app.route('/reservas/checkout')
-def checkout():
-    return render_template('reservas/checkout.html')
+#@app.route('/reservas/checkout')
+#def checkout():
+#    return render_template('reservas/checkout.html')
 
-@app.route('/perfil')
-def perfil():
-    return render_template('perfil/mis_reservas.html')
+#@app.route('/perfil')
+#def perfil():
+#    return render_template('perfil/mis_reservas.html')
 
 
 @app.route("/aboutus")
 def aboutus():
     return render_template("aboutus1.html")
 
-@app.route("/contct")
+@app.route("/contact")
 def contact():
     return render_template("contact1.html")
 
@@ -57,10 +60,6 @@ def login():
 def roomlist():
     return render_template("roomlist-2.html")
 
-@app.route("/roomdetail")
-def roomdetail():
-    return render_template("detail-full.html")
-
 @app.route("/availability")
 def availability():
     return render_template("availability.html")
@@ -81,6 +80,21 @@ def checkout():
 def confirmation():
     return render_template("confirmation.html")
 
+@app.route("/servicedetail")
+def servicedetail():
+    return render_template("service-detail.html")
+
+@app.route("/service")
+def service():
+    return render_template("service.html")
+
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
+
+@app.route("/testimonial")
+def testimonial():
+    return render_template("testimonial.html")
 
 # Ruta de ejemplo para servir assets si se necesita (Flask ya lo hace por defecto)
 @app.route('/static/<path:filename>')

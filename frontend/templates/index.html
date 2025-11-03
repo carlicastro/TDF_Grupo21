@@ -10,7 +10,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static',filename='css/bootstrap.min.css',_external=True)}}" rel="stylesheet" type="text/css" />
     <!--Default CSS-->
-    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <link href="{{ url_for('static',filename='css/default.css',_external=True)}}" rel="stylesheet" type="text/css" />
     <!--Custom CSS-->
     <link href="{{ url_for('static',filename='css/style.css',_external=True)}}" rel="stylesheet" type="text/css" />
     <!--Plugin CSS-->
@@ -20,11 +20,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
   </head>
   <body>
-    <!-- Preloader -->
+    <!-- Preloader 
     <div id="preloader">
       <div id="status"></div>
     </div>
-    <!-- Preloader Ends -->
+    Preloader Ends -->
 
     <!-- header start -->
     <header class="main_header_area">
@@ -91,6 +91,7 @@
                     >Rooms<i class="fa fa-angle-down" aria-hidden="true"></i
                   ></a>
                   <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('roomlist')}}">Room List</a></li>
                     <li><a href="{{ url_for('roomdetail')}}">Room Detail</a></li>
                     <li><a href="{{ url_for('availability')}}">Check Availability</a></li>
                     <li><a href="{{ url_for('roomselect')}}">Select Room</a></li>
@@ -99,137 +100,42 @@
                   </ul>
                 </li>
                 <li class="submenu dropdown">
+                  <a href="{{ url_for('service')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                    >Service<i class="fa fa-angle-down" aria-hidden="true"></i
+                  ></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('service')}}">Service</a></li>
+                    <li><a href="{{ url_for('servicedetail')}}">Service Detail</a></li>
+                  </ul>
+                </li>
+                <li class="submenu dropdown">
+                  <a href="{{ url_for('aboutus')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                    >About us
+                  </a>
+                </li>
+                <li class="submenu dropdown">
+                  <a href="{{ url_for('gallery')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                    >Gallery
+                  </a>                
+                </li>
+                <li class="submenu dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                     >Pages<i class="fa fa-angle-down" aria-hidden="true"></i
                   ></a>
                   <ul class="dropdown-menu">
+                    
                     <li class="submenu dropdown">
-                      <a href="service.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >Service<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="service.html">Service</a></li>
-                        <li><a href="service-detail.html">Service Detail</a></li>
-                      </ul>
-                    </li>
-                    <li class="submenu dropdown">
-                      <a href="aboutus.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >About Us<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="aboutus.html">About One</a></li>
-                        <li><a href="aboutus1.html">About Two</a></li>
-                      </ul>
-                    </li>
-                    <li class="submenu dropdown">
-                      <a href="gallery.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >Gallery<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="gallery.html">Gallery 1</a></li>
-                        <li><a href="gallery1.html">Gallery 2</a></li>
-                        <li><a href="gallery2.html">Gallery Masonry</a></li>
-                        <li><a href="gallery3.html">Gallery Lightbox</a></li>
-                      </ul>
-                    </li>
-                    <li class="submenu dropdown">
-                      <a href="events.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >Events<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="events.html">Events One</a></li>
-                        <li><a href="events1.html">Events Two</a></li>
-                        <li><a href="events-detail.html">Events Detail</a></li>
-                      </ul>
-                    </li>
-                    <li class="submenu dropdown">
-                      <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                      <a href="{{ url_for('contact')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
                         >Contact Us<i class="fa fa-angle-right" aria-hidden="true"></i
                       ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="contact.html">Contact One</a></li>
-                        <li><a href="contact1.html">Contact Two</a></li>
-                      </ul>
                     </li>
-                    <li class="submenu dropdown">
-                      <a href="404.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >Error<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="404.html">Error Page 1</a></li>
-                        <li><a href="404-1.html">Error Page 1</a></li>
-                      </ul>
-                    </li>
-                    <li class="submenu dropdown">
-                      <a href="comingsoon.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                        >Comming Soon<i class="fa fa-angle-right" aria-hidden="true"></i
-                      ></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="comingsoon.html">Coming Soon 1</a></li>
-                        <li><a href="comingsoon-1.html">Coming Soon 2</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="testimonial.html">Testimonials</a></li>
-                    <li><a href="pricing.html">Pricing</a></li>
-                    <li><a href="faq.html">Faq</a></li>
-                    <li><a href="terms.html">Terms and Conditions</a></li>
+                    
+                    <li><a href="{{ url_for('testimonial')}}'">Testimonials</a></li>
+                    <li><a href="{{ url_for('faq')}}">Faq</a></li>
+                    <li><a href="{{ url_for('terms')}}'">Terms and Conditions</a></li>
                   </ul>
                 </li>
-                <li class="submenu dropdown">
-                  <a href="restaurant.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Restaurant<i class="fa fa-angle-down" aria-hidden="true"></i
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="restaurant.html">Home</a></li>
-                    <li><a href="restaurant-about.html">About Us</a></li>
-                    <li><a href="restaurant-menu.html">Menu</a></li>
-                    <li><a href="restaurant-reserve.html">Reservation</a></li>
-                  </ul>
-                </li>
-                <li class="submenu dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Shop<i class="fa fa-angle-down" aria-hidden="true"></i
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="shop.html">Shop List</a></li>
-                    <li><a href="shop-detail.html">Shop Single</a></li>
-                    <li><a href="cart.html">Cart</a></li>
-                    <li><a href="checkout.html">Checkout</a></li>
-                    <li><a href="login.html">Account</a></li>
-                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                  </ul>
-                </li>
-                <li class="submenu dropdown">
-                  <a href="blog-full.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Blog<i class="fa fa-angle-down" aria-hidden="true"></i
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="blog-full.html">Blog Fullwidth</a></li>
-                    <li><a href="blog-left.html">Blog Left</a></li>
-                    <li><a href="blog-right.html">Blog Right</a></li>
-                    <li><a href="blog-masonry.html">Blog Masonry</a></li>
-                    <li><a href="single-full.html">Blog Single</a></li>
-                    <li><a href="single-left.html">Single Left</a></li>
-                    <li><a href="single-right.html">Single Right</a></li>
-                  </ul>
-                </li>
-                <li class="submenu dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Dashboard<i class="fa fa-angle-down" aria-hidden="true"></i
-                  ></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="dashboard/dashboard.html">Dashboard</a></li>
-                    <li><a href="dashboard/profile.html">Dashboard Profile</a></li>
-                    <li><a href="dashboard/appointment.html">Dashboard Bookings</a></li>
-                    <li><a href="dashboard/events.html">Dashboard History</a></li>
-                    <li><a href="dashboard/services-list.html">Dashboard Listing</a></li>
-                    <li><a href="dashboard/addevents.html">Dashboard Add Tour</a></li>
-                    <li><a href="dashboard/testimonial.html">Dashboard Reviews</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown submenu">
-                  <a href="cart.html" class="mt_cart"><i class="fa fa-shopping-cart"></i><span class="number-cart">1</span></a>
-                </li>
+                
               </ul>
               <div class="nav-btn">
                 <a href="#" class="btn btn-orange">Book Now</a>
@@ -250,10 +156,10 @@
       <div class="slider">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" style="background-image: url(images/slider/slider4.jpg)">
+            <div class="swiper-slide" style="background-image: url(static/images/slider/slider4.jpg)">
               <div class="swiper-content">
                 <div class="slider-logo">
-                  <img src="images/icons/bed-logo.png" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
                 </div>
                 <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
                 <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -261,10 +167,10 @@
                 <a href="#" data-animation="animated fadeInUp" class="slider-btn btn-wt"><i class="fa fa-book"></i> Book A Room Now</a>
               </div>
             </div>
-            <div class="swiper-slide" style="background-image: url(images/slider/slider2.jpg)">
+            <div class="swiper-slide" style="background-image: url(static/images/slider/slider2.jpg)">
               <div class="swiper-content">
                 <div class="slider-logo">
-                  <img src="images/icons/bed-logo.png" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
                 </div>
                 <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
                 <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -272,10 +178,10 @@
                 <a href="#" data-animation="animated fadeInUp" class="slider-btn btn-wt"><i class="fa fa-book"></i> Book A Room Now</a>
               </div>
             </div>
-            <div class="swiper-slide" style="background-image: url(images/slider/slider3.jpg)">
+            <div class="swiper-slide" style="background-image: url(static/images/slider/slider3.jpg)">
               <div class="swiper-content">
                 <div class="slider-logo">
-                  <img src="images/icons/bed-logo.png" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
                 </div>
                 <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
                 <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -339,7 +245,7 @@
             </div>
             <div class="table-item">
               <div class="form-btn">
-                <a class="btn btn-orange">Check Availability</a>
+                <a class="btn btn-orange">Check Availability</a> <!--Verificar que esta logeado, sino pedir que lo haga-->
               </div>
             </div>
           </div>
@@ -378,18 +284,18 @@
               <div class="about-image">
                 <div class="image-box">
                   <div class="image-1 abt-image">
-                    <img src="images/about1.jpg" alt="image" />
+                    <img src="{{ url_for('static', filename='images/about1.jpg',_external=True)}}" alt="image" />
                   </div>
                   <div class="image-2 abt-image">
-                    <img src="images/about2.jpg" alt="image" />
+                    <img src="{{ url_for('static', filename='images/about2.jpg',_external=True)}}" alt="image" />
                   </div>
                 </div>
                 <div class="image-box">
                   <div class="image-3 abt-image">
-                    <img src="images/about3.jpg" alt="image" />
+                    <img src="{{ url_for('static', filename='images/about3.jpg',_external=True)}}" alt="image" />
                   </div>
                   <div class="image-4 abt-image">
-                    <img src="images/about4.jpg" alt="image" />
+                    <img src="{{ url_for('static', filename='images/about4.jpg',_external=True)}}" alt="image" />
                   </div>
                 </div>
               </div>
@@ -415,7 +321,7 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="room-item">
                 <div class="room-image">
-                  <img src="images/room1.jpg" alt="image" />
+                  <img src="{{ url_for('static', filename='images/room1.jpg', _external=True)}}" alt="image" />
                 </div>
                 <div class="room-content">
                   <div class="room-title">
@@ -446,7 +352,7 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="room-item">
                 <div class="room-image">
-                  <img src="images/room2.jpg" alt="image" />
+                  <img src="{{ url_for('static', filename='images/room2.jpg', _external=True)}}" alt="image" />
                 </div>
                 <div class="room-content">
                   <div class="room-title">
@@ -477,7 +383,7 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="room-item">
                 <div class="room-image">
-                  <img src="images/room3.jpg" alt="image" />
+                  <img src="{{ url_for('static', filename='images/room3.jpg', _external=True)}}" alt="image" />
                 </div>
                 <div class="room-content">
                   <div class="room-title">
@@ -558,10 +464,10 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="service-item">
                 <div class="service-image">
-                  <img src="images/service1.jpg" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/service1.jpg', _external=True)}}" alt="Image" />
                 </div>
                 <div class="service-content">
-                  <h4><a href="service-detail.html">Restaurant</a></h4>
+                  <h4><a href="{{ url_for('servicedetail')}}">Restaurant</a></h4>
                   <p>Breakfast and Dinner</p>
                 </div>
               </div>
@@ -569,10 +475,10 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="service-item">
                 <div class="service-image">
-                  <img src="images/service2.jpg" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/service2.jpg', _external=True)}}" alt="Image" />
                 </div>
                 <div class="service-content">
-                  <h4><a href="service-detail.html">Massage</a></h4>
+                  <h4><a href="{{ url_for('servicedetail')}}">Massage</a></h4>
                   <p>Opens Daily</p>
                 </div>
               </div>
@@ -580,10 +486,10 @@
             <div class="col-lg-4 col-md-6 mar-bottom-30">
               <div class="service-item">
                 <div class="service-image">
-                  <img src="images/service3.jpg" alt="Image" />
+                  <img src="{{ url_for('static', filename='images/service3.jpg', _external=True)}}" alt="Image" />
                 </div>
                 <div class="service-content">
-                  <h4><a href="service-detail.html">Conference Room</a></h4>
+                  <h4><a href="{{ url_for('servicedetail')}}">Conference Room</a></h4>
                   <p>Air Conditioning</p>
                 </div>
               </div>
@@ -607,7 +513,7 @@
         <div class="review-slider">
           <div class="slider-item">
             <div class="slider-image">
-              <img src="images/review1.jpg" alt="image" />
+              <img src="{{ url_for('static', filename='images/review1.jpg', _external=True)}}" alt="image" />
             </div>
             <div class="slider-content">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas. Sed egestas sapien libero.</p>
@@ -615,12 +521,12 @@
               <span>Germany</span>
             </div>
             <div class="slider-quote">
-              <img src="images/icons/quote.png" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
             </div>
           </div>
           <div class="slider-item">
             <div class="slider-image">
-              <img src="images/review2.jpg" alt="image" />
+              <img src="{{ url_for('static', filename='images/review2.jpg', _external=True)}}" alt="image" />
             </div>
             <div class="slider-content">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas. Sed egestas sapien libero.</p>
@@ -628,12 +534,12 @@
               <span>Australia</span>
             </div>
             <div class="slider-quote">
-              <img src="images/icons/quote.png" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
             </div>
           </div>
           <div class="slider-item">
             <div class="slider-image">
-              <img src="images/review1.jpg" alt="image" />
+              <img src="{{ url_for('static', filename='images/review1.jpg', _external=True)}}" alt="image" />
             </div>
             <div class="slider-content">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas. Sed egestas sapien libero.</p>
@@ -641,7 +547,7 @@
               <span>Germany</span>
             </div>
             <div class="slider-quote">
-              <img src="images/icons/quote.png" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
             </div>
           </div>
         </div>
@@ -649,122 +555,12 @@
     </section>
     <!-- Reviews Ends -->
 
-    <!-- News Starts -->
-    <section class="news pad-bottom-70">
-      <div class="container">
-        <div class="section-title">
-          <h2>Latest <span>News</span></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae consectetur
-            turpis
-          </p>
-        </div>
-        <div class="news-outer">
-          <div class="row">
-            <div class="col-lg-4 col-md-12 mar-bottom-30">
-              <div class="news-item">
-                <div class="news-image">
-                  <img src="images/news1.jpg" alt="image" />
-                </div>
-                <div class="news-content">
-                  <p class="date mar-bottom-5">16 DECEMBER 2019</p>
-                  <h4><a href="single-right.html">Why choose Hotux Hotel to travel this summer</a></h4>
-                  <div class="room-services mar-bottom-10">
-                    <ul>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-user" aria-hidden="true"></i> By Jack Daniels</a>
-                      </li>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-comment" aria-hidden="true"></i> 3 comments</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci nulla, fermentum in faucibus a, interdum eu nibh.</p>
-                  <a href="single-left.html">READ MORE <i class="fas fa-angle-double-right"></i></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mar-bottom-30">
-              <div class="news-item">
-                <div class="news-image">
-                  <img src="images/news2.jpg" alt="image" />
-                </div>
-                <div class="news-content">
-                  <p class="date mar-bottom-5">16 DECEMBER 2019</p>
-                  <h4><a href="single-right.html">Why choose Hotux Hotel to travel this summer</a></h4>
-                  <div class="room-services mar-bottom-10">
-                    <ul>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-user" aria-hidden="true"></i> By Jack Daniels</a>
-                      </li>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-comment" aria-hidden="true"></i> 3 comments</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci nulla, fermentum in faucibus a, interdum eu nibh.</p>
-                  <a href="single-left.html">READ MORE <i class="fas fa-angle-double-right"></i></a>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mar-bottom-30">
-              <div class="news-item">
-                <div class="news-image">
-                  <img src="images/news3.jpg" alt="image" />
-                </div>
-                <div class="news-content">
-                  <p class="date mar-bottom-5">16 DECEMBER 2019</p>
-                  <h4><a href="single-right.html">Why choose Hotux Hotel to travel this summer</a></h4>
-                  <div class="room-services mar-bottom-10">
-                    <ul>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-user" aria-hidden="true"></i> By Jack Daniels</a>
-                      </li>
-                      <li>
-                        <a href="single-right.html"><i class="fa fa-comment" aria-hidden="true"></i> 3 comments</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum orci nulla, fermentum in faucibus a, interdum eu nibh.</p>
-                  <a href="single-left.html">READ MORE <i class="fas fa-angle-double-right"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="section-btn">
-          <a href="#" class="btn btn-black mar-right-10">EXPLORE ALL <i class="fas fa-angle-double-right"></i></a>
-        </div>
-      </div>
-    </section>
-    <!-- News Ends -->
-
-    <!-- Newsletter Starts -->
-    <section class="newsletter">
-      <div class="container">
-        <div class="section-title title-white">
-          <h2>Subscribe to our <span>Newsletter</span></h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae consectetur
-            turpis
-          </p>
-        </div>
-        <div class="newsletter-form">
-          <form>
-            <input type="email" placeholder="Enter your email" />
-            <a href="#" class="btn btn-orange">SIGN UP</a>
-          </form>
-        </div>
-      </div>
-    </section>
-    <!-- Newsletter Ends -->
-
     <!-- Footer Starts -->
     <footer>
       <div class="footer-top pad-bottom-20">
         <div class="container">
           <div class="footer-logo text-center">
-            <img src="images/logo.png" alt="Image" />
+            <img src="{{ url_for('static', filename='images/logo.png',_external=True)}}" alt="Image" />
           </div>
           <div class="footer-content">
             <div class="row">
@@ -776,9 +572,9 @@
                 <div class="footer-payment">
                   <h4>We Accept</h4>
                   <ul>
-                    <li><img src="images/icons/visa.png" alt="image" /></li>
-                    <li><img src="images/icons/mastercard.png" alt="image" /></li>
-                    <li><img src="images/icons/americanexpress.png" alt="image" /></li>
+                    <li><img src="{{ url_for('static', filename='images/icons/visa.png', _external=True)}}" alt="image" /></li>
+                    <li><img src="{{ url_for('static', filename='images/icons/mastercard.png', _external=True)}}" alt="image" /></li>
+                    <li><img src="{{ url_for('static', filename='images/icons/americanexpress.png', _external=True)}}" alt="image" /></li>
                   </ul>
                 </div>
               </div>
@@ -790,7 +586,6 @@
                     <li><a href="#">About</a></li>
                     <li><a href="#">Rooms</a></li>
                     <li><a href="#">Testimonials</a></li>
-                    <li><a href="#">Blog</a></li>
                     <li><a href="#">Gallery</a></li>
                     <li><a href="#">Services</a></li>
                     <li><a href="#">Contact</a></li>
@@ -851,7 +646,7 @@
             </div>
             <div class="col-lg-4 mar-bottom-10">
               <div class="tripadvisor-logo text-center">
-                <img src="images/tripadvisor.png" alt="image" />
+                <img src="{{ url_for('static', filename='images/tripadvisor.png', _external=True)}}" alt="image" />
               </div>
             </div>
             <div class="col-lg-4 mar-bottom-10">
@@ -863,8 +658,8 @@
                 </ul>
               </div>
               <div class="playstore-links">
-                <img src="images/icons/appstore.png" alt="image" class="mar-right-10" />
-                <img src="images/icons/googleplay.png" alt="image" />
+                <img src="{{ url_for('static', filename='images/icons/appstore.png', _external=True)}}" alt="image" class="mar-right-10" />
+                <img src="{{ url_for('static', filename='images/icons/googleplay.png', _external=True)}}" alt="image" />
               </div>
             </div>
           </div>
@@ -883,7 +678,7 @@
       <div class="modal-dialog">
         <div class="modal-content login-content">
           <div class="login-image">
-            <img src="images/logo-black.png" alt="image" />
+            <img src="{{ url_for('static', filename='images/logo-black.png', _external=True)}}" alt="image" />
           </div>
           <h3>Hello!Sign into your account</h3>
           <form>
@@ -924,7 +719,7 @@
       <div class="modal-dialog">
         <div class="modal-content login-content">
           <div class="login-image">
-            <img src="images/logo-black.png" alt="image" />
+            <img src="{{ url_for('static', filename='images/logo-black.png', _external=True)}}" alt="image" />
           </div>
           <h3>Awesome! Create a Hotux Account</h3>
           <form>
@@ -963,12 +758,12 @@
     </div>
 
     <!-- *Scripts* -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugin.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/custom-nav.js"></script>
-    <script src="js/custom-swiper1.js"></script>
-    <script src="js/custom-singledate.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/plugin.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/custom-nav.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/custom-swiper1.js', _external=True)}}"></script>
+    <script src="{{ url_for('static', filename='js/custom-singledate.js', _external=True)}}"></script>
   </body>
 </html>
