@@ -44,7 +44,7 @@ def service_detail():
 # esta ruta de prueba para verificar  header y footer funciona bien ..
 @app.route("/prueba")  
 def prueba():
-    return render_template("prueba.html")
+    return render_template("/public/prueba.html")
 
 @app.route("/faq")
 def faq():
