@@ -28,6 +28,60 @@ def checkout():
 def perfil():
     return render_template('perfil/mis_reservas.html')
 
+
+@app.route("/aboutus")
+def aboutus():
+    return render_template("aboutus1.html")
+
+@app.route("/contct")
+def contact():
+    return render_template("contact1.html")
+
+@app.route("/faq")
+def faq():
+    return render_template("faq.html")
+
+@app.route("/forgotpass")
+def forgotpassword():
+    return render_template("forgot-password.html")
+
+@app.route("/gallery")
+def gallery():
+    return render_template("gallery1.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/roomlist")
+def roomlist():
+    return render_template("roomlist-2.html")
+
+@app.route("/roomdetail")
+def roomdetail():
+    return render_template("detail-full.html")
+
+@app.route("/availability")
+def availability():
+    return render_template("availability.html")
+
+@app.route("/roomselect")
+def roomselect():
+    return render_template("room-select.html")
+
+@app.route("/booking")
+def booking():
+    return render_template("booking.html")
+
+@app.route("/checkout")
+def checkout():
+    return render_template("checkout.html")
+
+@app.route("/confirmation")
+def confirmation():
+    return render_template("confirmation.html")
+
+
 # Ruta de ejemplo para servir assets si se necesita (Flask ya lo hace por defecto)
 @app.route('/static/<path:filename>')
 def static_files(filename):
