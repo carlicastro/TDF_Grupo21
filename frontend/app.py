@@ -5,7 +5,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('public/index.html')
 
 @app.route('/hospedaje/<int:id>')
 def detalle_hospedaje(id):
@@ -24,51 +24,50 @@ def reservas_checkout():
 def perfil():
     return render_template('perfil/mis_reservas.html')
 
+@app.route('/prueba')
+def prueba():
+    return render_template('/public/prueba.html')
+
 
 @app.route("/about") 
 def about():
-    return render_template("about.html")
+    return render_template("public/about.html")
 
 @app.route("/aboutus")  
 def aboutus():
-    return render_template("about.html")
+    return render_template("public/about.html")
 
 @app.route("/contact")
 def contact():
-    return render_template("contact1.html")
+    return render_template("public/contact1.html")
 
 @app.route("/service-detail")  
 def service_detail():
     return render_template("service-detail.html")
 
-# esta ruta de prueba para verificar  header y footer funciona bien ..
-@app.route("/prueba")  
-def prueba():
-    return render_template("/public/prueba.html")
-
 @app.route("/faq")
 def faq():
-    return render_template("faq.html")
+    return render_template("public/faq.html")
 
 @app.route("/forgotpass")
 def forgotpassword():
-    return render_template("forgot-password.html")
+    return render_template("forgot-password.html")  
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery1.html")
+    return render_template("public/gallery1.html")
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 @app.route("/roomlist")
 def roomlist():
-    return render_template("roomlist-2.html")
+    return render_template("habitaciones/lista-habitaciones.html")
 
 @app.route("/roomdetail")
 def roomdetail():
-    return render_template("detail-full.html")
+    return render_template("habitaciones/detalles-habitacion.html")
 
 @app.route("/availability")
 def availability():
@@ -76,7 +75,7 @@ def availability():
 
 @app.route("/roomselect")
 def roomselect():
-    return render_template("room-select.html")
+    return render_template("public/room-select.html")
 
 @app.route("/booking")
 def booking():
@@ -88,7 +87,19 @@ def checkout():
 
 @app.route("/confirmation")
 def confirmation():
-    return render_template("confirmation.html")
+    return render_template("public/confirmation.html")
+
+@app.route("/testimonial")
+def testimonial():
+    return render_template("public/testimonial.html")
+
+@app.route("/terms")
+def terms():
+    return render_template("public/terms.html")
+
+@app.route("/404")
+def error404():
+    return render_template("public/404-1.html")
 
 if __name__ == '__main__':
     # Ejecutar en modo debug para desarrollo

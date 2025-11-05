@@ -25,29 +25,22 @@
                 <div class="quick-links">
                   <h4>Quick Links</h4>
                   <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Rooms</a></li>
-                    <li><a href="#">Testimonials</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
                   </ul>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 mar-bottom-30">
                 <div class="Rooms">
-                  <h4>Rooms</h4>
+                  <h4>Páginas</h4>
                   <ul>
-                    <li><a href="#">Single Rooms</a></li>
-                    <li><a href="#">Double Rooms</a></li>
-                    <li><a href="#">Studio Rooms</a></li>
-                    <li><a href="#">Kingsize Rooms</a></li>
-                    <li><a href="#">Presidentsuite Rooms</a></li>
-                    <li><a href="#">Luxury Kings Rooms</a></li>
-                    <li><a href="#">Connecting Rooms</a></li>
-                    <li><a href="#">Murphy Rooms</a></li>
+                    <li><a href="#" onclick="alert('Página en desarrollo')">Servicios</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('testimonial') }}">Testimonials</a></li>
+                    <li><a href="{{ url_for('terms') }}">Términos y Condiciones</a></li>
                   </ul>
                 </div>
               </div>
@@ -96,9 +89,9 @@
             <div class="col-lg-4 mar-bottom-10">
               <div class="copyright-links mar-bottom-20">
                 <ul>
-                  <li><a href="#">Accomodations</a></li>
-                  <li><a href="#">Book Now</a></li>
-                  <li><a href="#">Terms and Conditions</a></li>
+                  <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
+                  <li><a href="{{ url_for('roomselect') }}">Reservar</a></li>
+                  <li><a href="{{ url_for('terms') }}">Terms and Conditions</a></li>
                 </ul>
               </div>
               <div class="playstore-links">
