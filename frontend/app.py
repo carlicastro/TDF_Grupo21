@@ -1,65 +1,73 @@
 from flask import Flask, render_template, send_from_directory
-from dotenv import load_dotenv
 import os
-
-# Cargar .env en el directorio frontend
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 @app.route('/')
 def index():
-    # Index usa templates/index.html ya presente en la carpeta
-    return render_template('index.html')
+    return render_template('public/index.html')
 
 @app.route('/hospedaje/<int:id>')
 def detalle_hospedaje(id):
     return render_template('hospedajes/detalle.html')
+
 
 @app.route('/reservas/consultar')
 def consultar():
     return render_template('reservas/consultar.html')
 
 @app.route('/reservas/checkout')
-def checkout():
+def reservas_checkout():
     return render_template('reservas/checkout.html')
 
 @app.route('/perfil')
 def perfil():
     return render_template('perfil/mis_reservas.html')
 
+@app.route('/prueba')
+def prueba():
+    return render_template('/public/prueba.html')
 
-@app.route("/aboutus")
+
+@app.route("/about") 
+def about():
+    return render_template("public/about.html")
+
+@app.route("/aboutus")  
 def aboutus():
-    return render_template("aboutus1.html")
+    return render_template("public/about.html")
 
-@app.route("/contct")
+@app.route("/contact")
 def contact():
-    return render_template("contact1.html")
+    return render_template("public/contact1.html")
+
+@app.route("/service-detail")  
+def service_detail():
+    return render_template("service-detail.html")
 
 @app.route("/faq")
 def faq():
-    return render_template("faq.html")
+    return render_template("public/faq.html")
 
 @app.route("/forgotpass")
 def forgotpassword():
-    return render_template("forgot-password.html")
+    return render_template("forgot-password.html")  
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery1.html")
+    return render_template("public/gallery1.html")
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    return render_template("auth/login.html")
 
 @app.route("/roomlist")
 def roomlist():
-    return render_template("roomlist-2.html")
+    return render_template("habitaciones/lista-habitaciones.html")
 
 @app.route("/roomdetail")
 def roomdetail():
-    return render_template("detail-full.html")
+    return render_template("habitaciones/detalles-habitacion.html")
 
 @app.route("/availability")
 def availability():
@@ -67,7 +75,7 @@ def availability():
 
 @app.route("/roomselect")
 def roomselect():
-    return render_template("room-select.html")
+    return render_template("public/room-select.html")
 
 @app.route("/booking")
 def booking():
@@ -79,14 +87,20 @@ def checkout():
 
 @app.route("/confirmation")
 def confirmation():
-    return render_template("confirmation.html")
+    return render_template("public/confirmation.html")
 
+@app.route("/testimonial")
+def testimonial():
+    return render_template("public/testimonial.html")
 
-# Ruta de ejemplo para servir assets si se necesita (Flask ya lo hace por defecto)
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory(os.path.join(app.root_path, 'static'), filename)
+@app.route("/terms")
+def terms():
+    return render_template("public/terms.html")
+
+@app.route("/404")
+def error404():
+    return render_template("public/404-1.html")
 
 if __name__ == '__main__':
-    debug = os.getenv('FLASK_ENV') == 'development'
-    app.run(host='0.0.0.0', port=5001, debug=debug)
+    # Ejecutar en modo debug para desarrollo
+    app.run(host='0.0.0.0', port=5001, debug=True)
