@@ -45,7 +45,8 @@ def contact():
 def service_detail():
     return render_template("service-detail.html")
 
-@app.route("/faq")
+
+@app.route("/faq.html")
 def faq():
     return render_template("public/faq.html")
 
@@ -89,7 +90,7 @@ def checkout():
 def confirmation():
     return render_template("public/confirmation.html")
 
-@app.route("/testimonial")
+@app.route("/testimonial.html")
 def testimonial():
     return render_template("public/testimonial.html")
 
