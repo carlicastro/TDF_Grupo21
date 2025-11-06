@@ -1,0 +1,619 @@
+{% extends "base.html" %}
+
+{% block title %}Room Detail FUll | Hotux{% endblock %}
+
+
+<!-- breadcrumb Starts -->
+{% block breadcrumb %}
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Detalles de la habitación completo</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detalles de Habitacion </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+{% endblock %}
+<!-- breadcrumb Ends -->
+{% block content %}
+<!-- details starts-->
+<section class="details">
+  <div class="container">
+    <div class="detail-slider">
+      <div class="slider-1 slider-for">
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider2.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider3.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider4.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider5.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider6.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider7.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider8.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider9.jpg', external=True) }}" alt="image" />
+        </div>
+      </div>
+      <div class="slider-1 slider-nav">
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider2.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider3.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider4.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider5.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider6.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider7.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider8.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="detail-slider-item">
+          <img src="{{ url_for('static', filename='images/detail-slider/slider9.jpg', external=True) }}" alt="image" />
+        </div>
+      </div>
+    </div>
+    <div class="detail-content">
+      <div class="detail-title">
+        <div class="title-left">
+          <h3>Habitación King de lujo</h3>
+          <div class="rating">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+          </div>
+        </div>
+        <div class="title-right pull-right">
+          <ul>
+            <li class="facebook"><i class="fab fa-facebook"></i></li>
+            <li class="twitter"><i class="fab fa-twitter"></i></li>
+            <li class="linkedin"><i class="fab fa-linkedin"></i></li>
+            <li class="pinterest"><i class="fab fa-pinterest"></i></li>
+          </ul>
+          <div class="title-price">
+            <h3>$1200<span>/Noche</span></h3>
+          </div>
+        </div>
+      </div>
+      <div class="detail-overview">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="overview-outer">
+              <div class="overview-content mar-bottom-30">
+                <h4>Descripción general</h4>
+                <p>
+                  Hotel de lujo con 1 restaurantes y 2 piscinas al aire libre, un spa y jacuzzi completo. Ofrece
+                  desayuno completo gratuito y wifi gratis en las zonas comunes. Además, cuenta con un bar/salón,
+                  un bar junto a la piscina.
+                </p>
+                <p class="mar-0">
+                  El hotel, ofrece 12 habitaciones con caja fuerte para portátil y agua embotellada gratuita.
+                  Cada habitación está amueblada y decorada de forma individual. Las camas de espuma visco
+                  elástica cuentan con edredones de plumas y ropa de cama de primera calidad. Los huéspedes pueden
+                  navegar por internet gracias al acceso inalámbrico gratuito (velocidad: más de 25 Mbps).
+                  Los baños incluyen zapatillas, artículos de aseo gratuitos y secador de pelo. Las comodidades
+                  ideales para viajeros de negocios incluyen escritorios y teléfonos. Además, las habitaciones
+                  incluyen plancha y tabla de planchar y cortinas opacas. El servicio de limpieza se ofrece a diario.
+                </p>
+              </div>
+              <div class="price-table">
+                <h4>Precios y Tarifas (Dia/Noche)</h4>
+                <table class="table table-bordered mar-0">
+                  <thead>
+                    <tr>
+                      <td>Lunes</td>
+                      <td>Martes</td>
+                      <td>Miercoles</td>
+                      <td>Jueves</td>
+                      <td>Viernes</td>
+                      <td>Sabado</td>
+                      <td>Domingo</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                      <td>$1200</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="overwiew-map">
+              <div id="map" style="height: 357px; width: 100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- details Ends-->
+
+<!-- check-in Starts -->
+<section class="check-in">
+  <div class="container">
+    <div class="form-content">
+      <div class="table-item">
+        <div class="form-group">
+          <div class="date-range-inner-wrapper">
+            <input id="date-range2" class="form-control" value="Check In" />
+            <span class="input-group-addon">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="table-item">
+        <div class="form-group">
+          <div class="date-range-inner-wrapper">
+            <input id="date-range3" class="form-control" value="Check out" />
+            <span class="input-group-addon">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="table-item">
+        <div class="form-group form-icon">
+          <select class="wide">
+            <option value="0">Personas</option>
+            <option value="1">0</option>
+            <option value="2">1</option>
+            <option value="3">2</option>
+            <option value="4">3</option>
+            <option value="5">4</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-item">
+        <div class="form-btn">
+          <a class="btn btn-orange">Check Availability</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- check-in Ends -->
+
+<!-- amenities starts -->
+<section class="amenities">
+  <div class="container">
+    <div class="section-title">
+      <h3>Explora <span>Servicios</span></h3>
+    </div>
+    <div class="amenities-content">
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item mar-bottom-30">
+            <div class="amt-icon">
+              <i class="fa fa-glass" aria-hidden="true"></i>
+            </div>
+            <h4>bar privado</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item mar-bottom-30">
+            <div class="amt-icon">
+              <i class="fa fa-car" aria-hidden="true"></i>
+            </div>
+            <h4>Transportes</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item mar-bottom-30">
+            <div class="amt-icon">
+              <i class="fa fa-wifi" aria-hidden="true"></i>
+            </div>
+            <h4>wifi Gratis</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item mar-bottom-30">
+            <div class="amt-icon">
+              <i class="fa fa-bath" aria-hidden="true"></i>
+            </div>
+            <h4>Servicio de lavanderia</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item">
+            <div class="amt-icon">
+              <i class="fa fa-cogs" aria-hidden="true"></i>
+            </div>
+            <h4>Servicio rapido</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item">
+            <div class="amt-icon">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+            </div>
+            <h4>mapa de la ciudad</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item">
+            <div class="amt-icon">
+              <i class="fa fa-life-ring" aria-hidden="true"></i>
+            </div>
+            <h4>piscina</h4>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="amt-item">
+            <div class="amt-icon">
+              <i class="fa fa-bolt" aria-hidden="true"></i>
+            </div>
+            <h4>Libre de humo</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- amenities Ends -->
+
+<!-- detail features starts-->
+<section class="detail-features">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <div class="feature-item">
+        <div class="feature-image">
+          <img src="{{ url_for('static', filename='images/feature1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="feature-content">
+          <img src="{{ url_for('static', filename='images/icons/ficon1.png', external=True) }}" alt="image" />
+          <h4><a href="#" class="white">Gymnasio</a></h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <div class="feature-item">
+        <div class="feature-image">
+          <img src="{{ url_for('static', filename='images/feature2.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="feature-content">
+          <img src="{{ url_for('static', filename='images/icons/ficon2.png', external=True) }}" alt="image" />
+          <h4><a href="#" class="white">Playa Privada</a></h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <div class="feature-item">
+        <div class="feature-image">
+          <img src="{{ url_for('static', filename='images/feature3.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="feature-content">
+          <img src="{{ url_for('static', filename='images/icons/ficon3.png', external=True) }}" alt="image" />
+          <h4><a href="#" class="white">Alquiler de bicicletas</a></h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-6">
+      <div class="feature-item">
+        <div class="feature-image">
+          <img src="{{ url_for('static', filename='images/feature4.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="feature-content">
+          <img src="{{ url_for('static', filename='images/icons/ficon4.png', external= True) }}" alt="image" />
+          <h4><a href="#" class="white">Restaurante</a></h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- detail features Ends-->
+
+<!-- detail review starts -->
+<section class="detail-reviews">
+  <div class="container">
+    <div class="section-title">
+      <h2>Explorar <span>Reseñas</span></h2>
+    </div>
+    <div class="review-outer">
+      <ul>
+        <li>
+          <div class="review-item">
+            <div class="review-image">
+              <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+            </div>
+            <div class="review-content">
+              <h5>Micheal Clordy</h5>
+              <a href="#"><i class="fa fa-reply" aria-hidden="true"></i> Responder</a>
+              <p class="date">Noviembre 10,2018 at 3:10 pm</p>
+              <p>
+                Excelente el trato de todo el personal. El desayuno muy completo. Instalaciones modernas y la
+                limpieza excelente. Las camas muy confortables y la habitación triple muy amplia . Muy bien ubicado.
+                Fui con mí madre, un persona mayor y mí sobrina y fue una experiencia que superó nuestras
+                espectativas. ¡¡Súper recomendable!!
+              </p>
+            </div>
+          </div>
+          <ul>
+            <li>
+              <div class="review-item">
+                <div class="review-image">
+                  <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
+                </div>
+                <div class="review-content">
+                  <h5>Micheal Clordy</h5>
+                  <a href="#"><i class="fa fa-reply" aria-hidden="true"></i> Responder</a>
+                  <p class="date">Noviembre 10,2018 at 3:10 pm</p>
+                  <p>
+                    Muy cómodas y lindas instalaciones , todo limpio y muy bien mantenido! Cerca de todo! Buena
+                    ubicación para moverse. Buena atención de los chicos que atienden, rico el jacuzzi, muy
+                    recomendable para venir a disfrutar unos días.
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <div class="review-item">
+            <div class="review-image">
+              <img src="{{ url_for('static', filename='images/review3.jpg', external= True) }}" alt="image" />
+            </div>
+            <div class="review-content">
+              <h5>Micheal Clordy</h5>
+              <a href="#"><i class="fa fa-reply" aria-hidden="true"></i> Responder</a>
+              <p class="date">Noviembre 10,2018 at 3:10 pm</p>
+              <p>
+                El hotel está muy bien ubicado, cerca de los teatros de calle Corrientes. Es muy cómodo, las
+                habitaciones son impecables y el trato de los recepcionistas es muy amable. tiene estacionamiento, lo
+                cual lo hace más práctico. el desayuno es inmejorable. Ya fui dos veces y me sentí como en casa.
+                Tiene una pequeña cocinita, a lo que yo aconsejaría que dejen unos saquitos de té de cortesia (ya lo
+                he visto en otros hoteles). Volvería con mucho gusto!
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="comment-box">
+      <h4>Dejar un mensaje</h4>
+      <form>
+        <div class="row">
+          <div class="form-group col-lg-3">
+            <input type="text" class="form-control" id="fname" placeholder="First Name" />
+          </div>
+          <div class="form-group col-lg-3">
+            <input type="text" class="form-control" id="lname" placeholder="Last Name" />
+          </div>
+          <div class="form-group col-lg-3">
+            <input type="email" class="form-control" id="email" placeholder="Email" />
+          </div>
+          <div class="form-group col-lg-3">
+            <input type="text" class="form-control" id="number" placeholder="Phone" />
+          </div>
+        </div>
+        <div class="comment-btn text-center">
+          <a href="#" class="btn btn-orange">ENVIAR</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<!-- detail review Ends -->
+
+<!-- related rooms starts -->
+<section class="related-rooms">
+  <div class="container">
+    <div class="section-title">
+      <h2>Explorar <span>Habitacion</span></h2>
+      <p>
+        Estas habitaciónes ofrecen acceso a la sala de estar ejecutiva, donde puede disfrutar de un desayuno diario,
+        cócteles por la noche y bebidas sin alcohol durante todo el día.
+      </p>
+    </div>
+    <div class="room-outer">
+      <div class="row team-slider">
+        <div class="col-md-4">
+          <div class="room-item">
+            <div class="room-image">
+              <img src="{{ url_for('static', filename='images/room1.jpg', external=True) }}" alt="image" />
+            </div>
+            <div class="room-content">
+              <div class="room-title">
+                <h4>Super Luxury</h4>
+                <p><i class="fa fa-tag"></i> $1200/NOCHE</p>
+                <div class="deal-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                </div>
+              </div>
+              <div class="room-services mar-bottom-15">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Dormitorios
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Servicio Rapido
+                  </div>
+                </div>
+              </div>
+              <p>Vista a la ciudad, para dos 3 personas, acceso a la sala de estar ejecutiva con desayuno de cortesía,
+                sala de estar y comedor independientes, televisor de 65 pulgada.
+
+                Ubicada en una esquina del hotel, esta suite ofrece abundante luz natural, amplias habitaciones y
+                decoración moderna. Esta exclusiva suite de un dormitorio cuenta con una sala de estar independiente,
+                área de comedor, vestidor y un baño contemporáneo con ducha tipo lluvia doble.</p>
+              <div class="room-btns">
+                <a href="#" class="btn btn-black mar-right-10">VER DETALLE</a>
+                <a href="#" class="btn btn-orange">RESERVAR AHORA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="room-item">
+            <div class="room-image">
+              <img src="{{ url_for('static', filename='images/room2.jpg', external=True) }}" alt="image" />
+            </div>
+            <div class="room-content">
+              <div class="room-title">
+                <h4>Junior Suite</h4>
+                <p><i class="fa fa-tag"></i> $1200/Night</p>
+                <div class="deal-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                </div>
+              </div>
+              <div class="room-services mar-bottom-15">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Dormitorios
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Servicio rapido
+                  </div>
+                </div>
+              </div>
+              <p>Vista a la ciudad y al río, balcón, WiFi y desayuno de cortesía, acceso al lounge ejecutiva, dos
+                televisores, sala de estar, comedor y área de trabajo.
+
+                Estas amplias habitaciones le ofrecen relajación y sofisticación clásica. La amplia suite Presidential
+                ofrece una espectacular vista a la ciudad y al río, dos dormitorios, sala de estar completa, comedor y
+                área de trabajo.</p>
+              <div class="room-btns">
+                <a href="#" class="btn btn-black mar-right-10">VER DETALLES</a>
+                <a href="#" class="btn btn-orange">RESERVAR AHORA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="room-item">
+            <div class="room-image">
+              <img src="{{ url_for('static', filename='images/room3.jpg', external=True) }}" alt="image" />
+            </div>
+            <div class="room-content">
+              <div class="room-title">
+                <h4>Executive Suite</h4>
+                <p><i class="fa fa-tag"></i> $1200/Night</p>
+                <div class="deal-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                </div>
+              </div>
+              <div class="room-services mar-bottom-15">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Dormitorios
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Servicio rapido
+                  </div>
+                </div>
+              </div>
+              <p>En una de las plantas más altas del hotel, vista a la ciudad o a la calle, con capacidad para 3
+                personas, acceso a la sala de estar ejecutiva con desayuno de cortesía, sala de estar independiente,
+                televisor de 65 pulgada.
+
+                Esta suite, que ofrece espacio adicional, es la habitación perfecta para equilibrar el trabajo y el
+                esparcimiento</p>
+              <div class="room-btns">
+                <a href="#" class="btn btn-black mar-right-10">VER DETALLES</a>
+                <a href="#" class="btn btn-orange">RESERVAR AHORA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="room-item">
+            <div class="room-image">
+              <img src="{{ url_for('static', filename='images/room4.jpg', external=True) }}" alt="image" />
+            </div>
+            <div class="room-content">
+              <div class="room-title">
+                <h4>Royal Suite</h4>
+                <p><i class="fa fa-tag"></i> $1200/NOCHE</p>
+                <div class="deal-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                </div>
+              </div>
+              <div class="room-services mar-bottom-15">
+                <div class="row">
+                  <div class="col-md-6 col-sm-6 col-xs-12"><i class="fa fa-bed" aria-hidden="true"></i> 3 Dormitorios
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12"><i class="fa fa-wifi" aria-hidden="true"></i> Servicio rapido
+                  </div>
+                </div>
+              </div>
+              <p>Excelente opción para familias, con capacidad para 4 personas, televisor de 55 pulgada, WiFi de
+                cortesía, escritorio
+
+                Disfrute de esta habitación de diseño contemporáneo con 2 camas dobles, que la convierte en una opción
+                ideal para familias.
+
+                Esta habitación cuenta con: área de trabajo, televisor de 55 pulgada, cafetera y tetera, caja fuerte
+                electrónica, un amplio vestidor y un hermoso baño de mármol con bañera y ducha independiente. Un
+                espacio diseñado para su comodidad.</p>
+              <div class="room-btns">
+                <a href="#" class="btn btn-black mar-right-10">VER DETALLES</a>
+                <a href="#" class="btn btn-orange">RESERVAR AHORA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+<!-- related rooms Ends -->
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4JwWo5VPt9WyNp3Ne2uc2FMGEePHpqJ8&amp;callback=initMap"
+  async defer></script>
+{% endblock %}
