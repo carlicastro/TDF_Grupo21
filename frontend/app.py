@@ -102,6 +102,10 @@ def terms():
 def error404():
     return render_template("public/404-1.html")
 
+@app.route("/service")
+def service():
+    return render_template("public/service.html")
+
 if __name__ == '__main__':
     # Ejecutar en modo debug para desarrollo
     app.run(host='0.0.0.0', port=5001, debug=True)
