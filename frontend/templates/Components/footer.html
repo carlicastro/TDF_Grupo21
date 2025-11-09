@@ -1,16 +1,195 @@
-<!-- Este es el pie de página que se incluirá en todas las páginas -->
-<div class="footer-content">
-    <p>© 2024 Gameoteca - Todos los derechos reservados</p>
-</div>
+<!-- Footer Starts -->
+    <footer>
+      <div class="footer-top pad-bottom-20">
+        <div class="container">
+          <div class="footer-logo text-center">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Image" />
+          </div>
+          <div class="footer-content">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 mar-bottom-30">
+                <div class="footer-about">
+                  <h4>Company Info</h4>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius tellus vitae justo blandit ultrices.</p>
+                </div>
+                <div class="footer-payment">
+                  <h4>We Accept</h4>
+                  <ul>
+                    <li><img src="{{ url_for('static', filename='images/icons/visa.png') }}" alt="image" /></li>
+                    <li><img src="{{ url_for('static', filename='images/icons/mastercard.png') }}" alt="image" /></li>
+                    <li><img src="{{ url_for('static', filename='images/icons/americanexpress.png') }}" alt="image" /></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mar-bottom-30">
+                <div class="quick-links">
+                  <h4>Quick Links</h4>
+                  <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mar-bottom-30">
+                <div class="Rooms">
+                  <h4>Páginas</h4>
+                  <ul>
+                    <li><a href="#" onclick="alert('Página en desarrollo')">Servicios</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('testimonial') }}">Testimonials</a></li>
+                    <li><a href="{{ url_for('terms') }}">Términos y Condiciones</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 mar-bottom-30">
+                <div class="footer-contact">
+                  <h4>Contact info</h4>
+                  <ul>
+                    <li>Tel: 977-222-444-6666</li>
+                    <li>Email: info@hotux.com.np</li>
+                    <li>Fax: 977-222-444-666</li>
+                    <li>Address: 445 Mount Eden Road, Sundarbasti, Chakrapath</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright pad-bottom-20">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 mar-bottom-10">
+              <div class="copyright-content">
+                <p>Copyright 2019. Made with <span>♥</span>. All Rights Reserved. <a href="#">Hotux</a></p>
+                <ul>
+                  <li>
+                    <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-4 mar-bottom-10">
+              <div class="tripadvisor-logo text-center">
+                <img src="{{ url_for('static', filename='images/tripadvisor.png') }}" alt="image" />
+              </div>
+            </div>
+            <div class="col-lg-4 mar-bottom-10">
+              <div class="copyright-links mar-bottom-20">
+                <ul>
+                  <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
+                  <li><a href="{{ url_for('roomselect') }}">Reservar</a></li>
+                  <li><a href="{{ url_for('terms') }}">Terms and Conditions</a></li>
+                </ul>
+              </div>
+              <div class="playstore-links">
+                <img src="{{ url_for('static', filename='images/icons/appstore.png') }}" alt="image" class="mar-right-10" />
+                <img src="{{ url_for('static', filename='images/icons/googleplay.png') }}" alt="image" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Ends -->
 
-<!-- Back to Top Button -->
-<button class="back-to-top" id="backToTop" aria-label="Back to Top">
-  <span class="progress-circle">
-    <svg viewBox="0 0 100 100">
-      <circle class="bg" cx="50" cy="50" r="40"></circle>
-      <circle class="progress" cx="50" cy="50" r="40"></circle>
-    </svg>
-    <span class="progress-percentage" id="progressPercentage">0%</span>
-  </span>
-</button>
+    <!-- Back to top start -->
+    <div id="back-to-top">
+      <a href="#"></a>
+    </div>
+    <!-- Back to top ends -->
 
+    <div class="modal fade" id="login" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content login-content">
+          <div class="login-image">
+            <img src="{{ url_for('static', filename='images/logo-black.png') }}" alt="image" />
+          </div>
+          <h3>Hello!Sign into your account</h3>
+          <form>
+            <div class="form-group">
+              <input type="email" placeholder="Enter email address" />
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Enter password" />
+            </div>
+            <div class="form-group form-checkbox">
+              <input type="checkbox" /> Remember Me
+              <a href="#">Forgot password?</a>
+            </div>
+          </form>
+          <div class="form-btn">
+            <a href="#" class="btn btn-orange">LOGIN</a>
+            <p>Need an Account?<a href="#"> Create your Hotux account</a></p>
+          </div>
+          <ul class="social-links">
+            <li>
+              <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="register" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content login-content">
+          <div class="login-image">
+            <img src="{{ url_for('static', filename='images/logo-black.png') }}" alt="image" />
+          </div>
+          <h3>Awesome! Create a Hotux Account</h3>
+          <form>
+            <div class="form-group">
+              <input type="text" placeholder="Enter username" />
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Enter email address" />
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Enter password" />
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Confirm password" />
+            </div>
+          </form>
+          <div class="form-btn">
+            <a href="#" class="btn btn-orange">SIGN UP</a>
+          </div>
+          <ul class="social-links">
+            <li>
+              <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>

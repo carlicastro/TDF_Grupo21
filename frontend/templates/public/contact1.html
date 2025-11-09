@@ -1,0 +1,130 @@
+<!-- header Ends -->
+{% extends "base.html" %}
+
+{% block title %}Room Detail FUll | Hotux{% endblock %}
+
+
+
+<!-- breadcrumb Starts -->
+{% block breadcrumb %}
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Contactanos</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Contactactanos</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb Ends -->
+{% endblock %}
+<!-- contact starts -->
+{% block content %}
+<section class="contact pad-top-0 contact1">
+  <div class="map mar-bottom-60">
+    <div id="map" style="height: 535px; width: 100%"></div>
+  </div>
+  <div class="container">
+    <div class="contact-support">
+      <div class="row">
+        <div class="col-lg-4 col-md-12">
+          <div class="support-item">
+            <h4>Soporte al cliente</h4>
+            <p>Permite la comunicación en tiempo real con un agente de soporte, Pueden ofrecer respuestas instantáneas
+              a consultas comunes y resolver problemas básicos.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="support-item">
+            <h4>Apoyo técnico</h4>
+            <p>el cliente debe tener a mano antes de llamar (ej. número de habitacion, ID de usuario, dias que quiera
+              hospedar, detalles del problema) para agilizar el proceso de identificación y resolución..</p>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="support-item">
+            <h4>Consultas sobre reservas</h4>
+            <p>dirección de correo electrónico clara para que los usuarios puedan enviar sus preguntas o problemas..
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-info mar-0">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="contact-info">
+            <div class="info-item mar-bottom-30">
+              <div class="info-icon">
+                <i class="fa fa-map-marker"></i>
+              </div>
+              <div class="info-content">
+                <p>445 CABA, Buenos Aires</p>
+                <p>Argentina</p>
+              </div>
+            </div>
+            <div class="info-item info-item-or mar-bottom-30">
+              <div class="info-icon">
+                <i class="fa fa-phone"></i>
+              </div>
+              <div class="info-content">
+                <p>549-1146-666-888</p>
+                <p>549-1146-222-000</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-icon">
+                <i class="fa fa-envelope"></i>
+              </div>
+              <div class="info-content">
+                <p>info@hotux.com</p>
+                <p>help@hotux.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div id="contact-form" class="contact-form">
+            <h3>Mantenerse en contacto</h3>
+
+            <div id="contactform-error-msg"></div>
+
+            <form method="post" action="#" name="contactform" id="contactform">
+              <div class="form-group">
+                <input type="text" name="first_name" class="form-control" id="fname" placeholder="Nombre" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="last_name" class="form-control" id="lname" placeholder="Apellido" />
+              </div>
+              <div class="form-group">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email" />
+              </div>
+              <div class="form-group">
+                <input type="text" name="phone" class="form-control" id="phnumber" placeholder="Telefono" />
+              </div>
+              <div class="textarea">
+                <textarea name="comments" placeholder="Escribe un mensaje"></textarea>
+              </div>
+              <div class="comment-btn text-right">
+                <input type="submit" class="btn btn-orange" id="submit" value="ENVIAR MENSAJE" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- contact Ends -->
+{% endblock %}
+
+<!-- Footer Starts -->
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/map.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4JwWo5VPt9WyNp3Ne2uc2FMGEePHpqJ8&amp;callback=initMap"
+  async defer></script>
+{% endblock %}
