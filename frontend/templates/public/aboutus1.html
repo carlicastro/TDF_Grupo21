@@ -1,0 +1,426 @@
+<!-- header start -->
+{% extends "base.html" %}
+
+{% block title %} aboutus | Hotux{% endblock %}
+{% block breadcrumb %}
+<!-- breadcrumb Starts -->
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Sobre nosotras 2</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Sobre nosotras 2</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb Ends -->
+{% endblock %}
+<!-- about starts -->
+{% block content %}
+
+<section class="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="about-para mar-top-50">
+          <h3>Acerca de Hotux</h3>
+          <h4>Elige una habitación que se ajuste mejor a tus gustos y presupuesto.</h4>
+          <p>
+            Porque nadie desprecia, odia ni huye del placer en sí mismo por ser placer, sino porque grandes dolores siguen a quienes no saben seguir el placer con la razón. Tampoco hay quien ame, busque o desee obtener el dolor en sí mismo por ser dolor, sino porque a menudo se presentan situaciones en las que busca algún gran placer a través del trabajo y el dolor. Porque, en cuanto a las cosas más pequeñas...
+          </p>
+          <h5 class="text-capitalize">
+            Y además, ¿acaso hay alguien que, porque el dolor es dolor, ame, persiga y desee obtener el dolor mismo, pero porque el dolor nunca llega en momentos como estos?
+          </h5>
+          <div class="about-para-list mar-top-20">
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <div class="about-icon"><i class="fa fa-chess-queen"></i> Naturaleza Asombrosa</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <div class="about-icon"><i class="fa fa-reina del ajedrez"></i> Mejor Hotel Galardonado</div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4">
+                <div class="about-icon"><i class="fa fa-chess-queen"></i> Reserva en Línea</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="about-us-image mar-top-50">
+          <img src="{{ url_for('static', filename='images/gallery/gallery1.jpg', external=True) }}" alt="image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- about Ends -->
+
+<!-- about Faq Starts -->
+<section class="about-faq">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-5">
+        <div class="about-us-image">
+          <img src="{{ url_for('static', filename='images/gallery/gallery2.jpg', external=True) }}" alt="image" />
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="info-detail">
+          <div class="accrodion-grp" data-grp-name="faq-accrodion">
+            <div class="accrodion active">
+              <div class="accrodion-title">
+                <h4>¿Cómo puedo mejorar mi higiene bucal?</h4>
+              </div>
+              <div class="accrodion-content" style="display: block">
+                <div class="inner">
+                  <p>
+                    Las necesidades de cada persona son diferentes, así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
+                    dientes revisados por ellos en función del estado de su boca, dientes y encías.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Cómo sé si mis dientes son saludables?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    Las necesidades de cada persona son diferentes, así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
+                    dientes revisados por ellos en función del estado de su boca, dientes y encías.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Por qué son tan importantes las evaluaciones dentales regulares?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    Las necesidades de cada persona son diferentes, 
+                    así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
+                    Según el estado de su boca, dientes y encías.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Qué pasa si tengo que cancelar mi cita?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
+                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                    
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Qué debo llevar a mi cita?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
+                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Qué debo llevar a mi cita?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
+                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+            <div class="accrodion">
+              <div class="accrodion-title">
+                <h4>¿Cuáles son las instalaciones disponibles en el hospital?</h4>
+              </div>
+              <div class="accrodion-content" style="display: none">
+                <div class="inner">
+                  <p>
+                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
+                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                  </p>
+                </div>
+                <!-- /.inner -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- about Faq Ends -->
+
+<!-- about video starts -->
+<section class="video-box">
+  <div class="container">
+    <div class="section-title">
+      <h3 class="white mar-0">Haz un recorrido</h3>
+      <div class="call-button">
+        <button type="button" class="play-btn js-video-button" data-video-id="347309186" data-channel="vimeo"><i
+            class="fa fa-play"></i></button>
+      </div>
+      <div class="video-figure"></div>
+      <h4 class="white mar-0">de nuestro maravilloso complejo turístico</h4>
+    </div>
+  </div>
+</section>
+<!-- about video Ends -->
+
+<!-- about team starts-->
+<section class="about-team">
+  <div class="container">
+    <div class="section-title">
+      <h2> Explorar <span>equipo</span></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
+        vulputate quam donec vitae consectetur
+        turpis
+      </p>
+    </div>
+    <div class="row team-slider">
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="{{ url_for('static', filename='images/team1.jpg', external=True) }}" alt="image" />
+          </div>
+          <div class="team-content">
+            <h4>John Anderson</h4>
+            <p>Ceo and Founder</p>
+            <ul class="social-links">
+              <li>
+                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="{{ url_for('static', filename='images/team2.jpg', external=True) }}" alt="image" />
+          </div>
+          <div class="team-content">
+            <h4>Erina Gray</h4>
+            <p>Managing Director</p>
+            <ul class="social-links">
+              <li>
+                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="{{ url_for('static', filename='images/team3.jpg', external=True) }}" alt="image" />
+          </div>
+          <div class="team-content">
+            <h4>Micheal Carter</h4>
+            <p>Supervisor</p>
+            <ul class="social-links">
+              <li>
+                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="team-item">
+          <div class="team-image">
+            <img src="{{ url_for('static', filename='images/team4.jpg', external=True) }}" alt="image" />
+          </div>
+          <div class="team-content">
+            <h4>Nelson Roar</h4>
+            <p>Gerente de proyecto</p>
+            <ul class="social-links">
+              <li>
+                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- about team Ends -->
+
+<!-- Reviews Starts -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-title title-white">
+      <h2> Explorar <span>Reseñas</span></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
+        vulputate quam donec vitae consectetur
+        turpis
+      </p>
+    </div>
+    <div class="review-slider">
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
+            Sed egestas sapien libero.</p>
+          <h4>Micheal Clordy</h4>
+          <span>Germany</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
+            Sed egestas sapien libero.</p>
+          <h4>Ketty Perry</h4>
+          <span>Australia</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
+            Sed egestas sapien libero.</p>
+          <h4>Micheal Clordy</h4>
+          <span>Germany</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Reviews Ends -->
+
+<!-- Services Starts -->
+<section class="services pad-bottom-70">
+  <div class="container">
+    <div class="section-title">
+      <h2> Explorar <span>Servicios</span></h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
+        vulputate quam donec vitae consectetur
+        turpis
+      </p>
+    </div>
+    <div class="service-outer">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 mar-bottom-30">
+          <div class="service-item">
+            <div class="service-image">
+              <img src="{{ url_for('static', filename='images/service1.jpg', external=True) }}" alt="Image" />
+            </div>
+            <div class="service-content">
+              <h4><a href="{{ url_for('service_detail') }}">Restaurante</a></h4>
+              <p>Desayuno y cena</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mar-bottom-30">
+          <div class="service-item">
+            <div class="service-image">
+              <img src="{{ url_for('static', filename='images/service2.jpg', external=True) }}" alt="Image" />
+            </div>
+            <div class="service-content">
+              <h4><a href="{{ url_for('service_detail') }}">Masaje</a></h4>
+              <p>Abierto todos los días</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mar-bottom-30">
+          <div class="service-item">
+            <div class="service-image">
+              <img src="{{ url_for('static', filename='images/service3.jpg', external=True) }}" alt="Image" />
+            </div>
+            <div class="service-content">
+              <h4><a href="{{ url_for('service_detail') }}">Sala de conferencias</a></h4>
+              <p>Aire acondicionado</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Services Ends -->
+{% endblock %}
