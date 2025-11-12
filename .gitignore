@@ -205,3 +205,21 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+# ----------------------------------------------------------------------
+# REGLAS ADICIONALES PARA ARCHIVOS DE CACHÉ Y SISTEMA (VISTOS EN LA IMAGEN)
+# ----------------------------------------------------------------------
+
+# Archivos de historial de consola
+.bash_history
+.zsh_history
+.local/share/
+.npm/
+
+# Directorios de caché comunes del usuario
+# Esto es crucial para ignorar la ruta "~/.cache/" que se ve en la imagen.
+.cache/
+# Directorio de caché específico de Google (visto en la imagen)
+.cache/google/
+# Directorios específicos de caché
+tmp/
+temp/
