@@ -1,96 +1,97 @@
 <!-- Preloader -->
-    <div id="preloader">
-      <div id="status"></div>
-    </div>
-    <!-- Preloader Ends -->
+<div id="preloader">
+  <div id="status"></div>
+</div>
+<!-- Preloader Ends -->
 
-    <!-- header start -->
-    <header class="main_header_area">
-      <div class="header-content">
-        <div class="container">
-          <div class="links links-left">
-            <ul>
+<!-- header start -->
+<header class="main_header_area">
+  <div class="header-content">
+    <div class="container">
+      <div class="links links-left">
+        <ul>
+          <li>
+            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> info@hotux.com.np</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 977-222-333-444</a>
+          </li>
+        </ul>
+      </div>
+      <div class="links links-right pull-right">
+        <ul>
+          <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#login"><i class="fa fa-user" aria-hidden="true"></i>
+              Login</a>
+          </li>
+          <li>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#register"><i class="fa fa-pen" aria-hidden="true"></i>
+              Register</a>
+          </li>
+          <li>
+            <ul class="social-links">
               <li>
-                <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> info@hotux.com.np</a>
+                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
               </li>
               <li>
-                <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 977-222-333-444</a>
+                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
               </li>
             </ul>
-          </div>
-          <div class="links links-right pull-right">
-            <ul>
-              <li>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#login"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
-              </li>
-              <li>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#register"><i class="fa fa-pen" aria-hidden="true"></i> Register</a>
-              </li>
-              <li>
-                <ul class="social-links">
-                  <li>
-                    <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Navigation Bar -->
+  <div class="header_menu affix-top">
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ url_for('index') }}">
+            <img alt="Image" src="{{ url_for('static', filename='images/logo.png') }}" class="logo-white" />
+            <img alt="Image" src="{{ url_for('static', filename='images/logo-black.png') }}" class="logo-black" />
+          </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" id="responsive-menu">
+            <li>
+              <a href="{{ url_for('index') }}">Home</a>
+            </li>
+            <li class="submenu dropdown">
+              <a href="{{ url_for('detailfull') }}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">Habitaciones<i aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="{{ url_for('about') }}">Nosotros</a>
+            </li>
+            <li>
+              <a href="{{ url_for('service') }}">Servicios</a>
+            </li>
+            <li>
+              <a href="{{ url_for('gallery') }}">Galería</a>
+            </li>
+            <li>
+              <a href="{{ url_for('contact') }}">Información</a>
+            </li>
+          </ul>
+          <div class="nav-btn">
+            <a href="{{ url_for('roomlist') }}" class="btn btn-orange">Reservar ahora</a>
           </div>
         </div>
-      </div>
-      <!-- Navigation Bar -->
-      <div class="header_menu affix-top">
-        <div class="container">
-          <nav class="navbar navbar-default">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <a class="navbar-brand" href="{{ url_for('index') }}">
-                <img alt="Image" src="{{ url_for('static', filename='images/logo.png') }}" class="logo-white" />
-                <img alt="Image" src="{{ url_for('static', filename='images/logo-black.png') }}" class="logo-black" />
-              </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav" id="responsive-menu">
-                <li>
-                  <a href="{{ url_for('index') }}">Home</a>
-                </li>
-                <li class="submenu dropdown">
-                  <a href="{{ url_for('roomlist') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Habitaciones<i  aria-hidden="true"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="{{ url_for('about') }}">Nosotros</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('about') }}">Servicios</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('gallery') }}">Galería</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('contact') }}">Información</a>
-                </li>
-              </ul>
-              <div class="nav-btn">
-                <a href="{{ url_for('roomselect') }}" class="btn btn-orange">Reservar ahora</a>
-              </div>
-            </div>
-            <!-- /.navbar-collapse -->
-            <div id="slicknav-mobile"></div>
-          </nav>
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- Navigation Bar Ends -->
-    </header>
-    <!-- header Ends -->
+        <!-- /.navbar-collapse -->
+        <div id="slicknav-mobile"></div>
+      </nav>
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- Navigation Bar Ends -->
+</header>
+<!-- header Ends -->
