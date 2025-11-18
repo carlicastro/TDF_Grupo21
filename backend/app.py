@@ -1,115 +1,75 @@
 import os
 from flask import Flask, jsonify
-from sqlalchemy import create_engine, text
+from flask_migrate import Migrate
+from models import db, Usuario, Hospedaje, Reserva # Import db and models
+from datetime import date
 
-# Import model functions
-from models import (
-    obtener_todos_usuarios, obtener_todos_hospedajes, obtener_todas_reservas
-)
-
-# Crear la aplicación Flask
 app = Flask(__name__)
 
+# --- Configuration ---
+DB_USER = os.getenv('DB_USER', 'root')
+DB_PASS = os.getenv('DB_PASS', '')
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_NAME = os.getenv('DB_NAME', 'hotel_db')
 
-def set_connection():
-    """
-    Conectar a la base de datos usando SQLAlchemy
-    """
-    # Obtener credenciales de variables de entorno o valores por defecto
-    DB_USER = os.getenv('DB_USER', 'root')
-    DB_PASS = os.getenv('DB_PASS', '')
-    DB_HOST = os.getenv('DB_HOST', 'localhost')
-    DB_NAME = os.getenv('DB_NAME', 'hotel_db')
-    
-    # Crear URL de conexión
-    url = f"mysql+mysqlconnector://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
-    engine = create_engine(url)
-    
-    # Test de conexión
-    connection = engine.connect()
-    return connection
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-def mostrar_registros(connection, query="SELECT * FROM usuarios;"):
-    """
-    Ejecutar consulta SQL simple
-    """
-    try:
-        result = connection.execute(text(query))
-        
-        # Convertir resultado a lista simple
-        registros = []
-        for row in result:
-            # Convertir cada fila a diccionario simple
-            registro = {}
-            for i, valor in enumerate(row):
-                registro[f'columna_{i}'] = valor
-            registros.append(registro)
-        
-        return registros
-    except Exception as e:
-        print(f"Error ejecutando consulta: {e}")
-        raise
-
+# --- Extensions ---
+db.init_app(app)
+migrate = Migrate(app, db)
 
 @app.route('/api/usuarios', methods=['GET'])
 def listar_usuarios():
-    connection = None
     try:
-        connection = set_connection()
-        usuarios = obtener_todos_usuarios(connection)
-        return jsonify({'ok': True, 'data': usuarios}), 200
+        usuarios = Usuario.query.all()
+        return jsonify({'ok': True, 'data': [u.to_dict() for u in usuarios]}), 200
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
 
 @app.route('/api/hospedajes', methods=['GET'])
 def listar_hospedajes():
-    connection = None
     try:
-        connection = set_connection()
-        hospedajes = obtener_todos_hospedajes(connection)
-        return jsonify({'ok': True, 'data': hospedajes}), 200
+        hospedajes = Hospedaje.query.all()
+        return jsonify({'ok': True, 'data': [h.to_dict() for h in hospedajes]}), 200
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
 
 @app.route('/api/reservas', methods=['GET'])
 def listar_reservas():
-    connection = None
     try:
-        connection = set_connection()
-        reservas = obtener_todas_reservas(connection)
-        return jsonify({'ok': True, 'data': reservas}), 200
+        reservas = Reserva.query.all()
+        return jsonify({'ok': True, 'data': [r.to_dict() for r in reservas]}), 200
     except Exception as e:
         return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
 
+@app.cli.command("seed")
+def seed_db():
+    """Seeds the database with test data."""
+    print("Seeding database...")
+    
+    # 1. Users
+    admin = Usuario(nombre="Admin", email="admin@test.com", password="123", rol="admin")
+    user1 = Usuario(nombre="Juan", email="juan@test.com", password="123", rol="cliente")
+    
+    # 2. Hospedajes
+    hotel = Hospedaje(nombre="Hotel Sol", capacidad=2, precio=100.0, tipo="Hotel", descripcion="Lindo hotel")
+    
+    db.session.add_all([admin, user1, hotel])
+    db.session.commit()
 
-@app.route('/api/test-db', methods=['GET'])
-def test_db():
-    connection = None
-    try:
-        # Test de conexión usando el patrón set_connection
-        connection = set_connection()
-        # Creamos la query para ser ejecutada por la conexión
-        query = "SELECT 1 as test, 'Conexión OK' as mensaje"
-        result = mostrar_registros(connection, query)
-        return jsonify({'ok': True, 'test': result}), 200
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
+    # 3. Reserva
+    reserva = Reserva(
+        id_usuario=user1.id,
+        id_hospedaje=hotel.id,
+        checkin=date(2025, 12, 1),
+        checkout=date(2025, 12, 5),
+        cant_personas=2,
+        importe_total=400.0
+    )
+    db.session.add(reserva)
+    db.session.commit()
+    print("Database seeded successfully!")
 
 if __name__ == '__main__':
     app.run(debug=True)
