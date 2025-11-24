@@ -1,40 +1,128 @@
 """
 Funciones para manejar la tabla reservas
 """
-from sqlalchemy import text
+from flask import Blueprint, jsonify, request, session
+from db import get_connection
 
+reservas_bp = Blueprint('reservas', __name__)
 
-def obtener_todas_reservas(connection):
+def verificar_admin():
     """
-    Obtener todas las reservas con nombres de usuario y hospedaje
+    Verifica si el usuario es admin mediante sesión o header
     """
-    query = """
-        SELECT r.id_reserva, r.id_usuario, r.id_hospedaje, 
-               r.fecha_checkin, r.fecha_checkout, r.cant_personas, 
-               r.importe_total, r.estado,
-               u.nombre as usuario_nombre, 
-               h.nombre as hospedaje_nombre
+    if session.get('user_rol') == 'admin':
+        return True
+    
+    admin_session = request.headers.get('X-Admin-Session')
+    if admin_session and admin_session.startswith('admin_'):
+        return True
+    
+    return False
+
+@reservas_bp.route("/", methods=["GET"])
+def get_reservas():
+    """Ver todas las reservas (solo admin)"""
+    if not verificar_admin():
+        return jsonify({'error': 'Acceso denegado. Solo administradores.'}), 403
+    
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.*, u.nombre as usuario_nombre, h.nombre as hospedaje_nombre
         FROM reservas r
         LEFT JOIN usuarios u ON r.id_usuario = u.id_usuario
         LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
-    """
-    result = connection.execute(text(query))
+        ORDER BY r.fecha_creacion DESC
+    """)
+    reservas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(reservas)
+
+@reservas_bp.route("/<int:reserva_id>", methods=["GET"])
+def get_reserva_by_id(reserva_id):
+    """Ver reserva específica"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.*, u.nombre as usuario_nombre, h.nombre as hospedaje_nombre
+        FROM reservas r
+        LEFT JOIN usuarios u ON r.id_usuario = u.id_usuario
+        LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
+        WHERE r.id_reserva = %s
+    """, (reserva_id,))
+    reserva = cursor.fetchone()
+    cursor.close()
+    conn.close()
     
-    # Convertir resultado a lista simple
-    reservas = []
-    for row in result:
-        reserva = {
-            'id_reserva': row[0],
-            'id_usuario': row[1],
-            'id_hospedaje': row[2],
-            'fecha_checkin': row[3],
-            'fecha_checkout': row[4], 
-            'cant_personas': row[5],
-            'importe_total': row[6],
-            'estado': row[7],
-            'usuario_nombre': row[8],
-            'hospedaje_nombre': row[9]
-        }
-        reservas.append(reserva)
+    if not reserva:
+        return ("Reserva no encontrada", 404)
+    return jsonify(reserva)
+
+@reservas_bp.route("/usuario/<int:user_id>", methods=["GET"])
+def get_reservas_usuario(user_id):
+    """Ver reservas de un usuario específico"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.*, h.nombre as hospedaje_nombre, h.tipo, h.descripcion
+        FROM reservas r
+        LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
+        WHERE r.id_usuario = %s
+        ORDER BY r.fecha_creacion DESC
+    """, (user_id,))
+    reservas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(reservas)
+
+@reservas_bp.route("/", methods=["POST"])
+def crear_reserva():
+    """Crear nueva reserva (cualquier usuario logueado)"""
+    if not session.get('logged_in'):
+        return ("Debe estar logueado para hacer una reserva", 401)
     
-    return reservas
+    data = request.get_json()
+    id_usuario = data.get('id_usuario')
+    id_hospedaje = data.get('id_hospedaje')
+    fecha_checkin = data.get('fecha_checkin')
+    fecha_checkout = data.get('fecha_checkout')
+    cant_personas = data.get('cant_personas')
+    importe_total = data.get('importe_total', 0.00)
+    estado = data.get('estado', 'confirmada')
+    
+    if not all([id_usuario, id_hospedaje, fecha_checkin, fecha_checkout, cant_personas]):
+        return ("Todos los campos son requeridos", 400)
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO reservas (id_usuario, id_hospedaje, fecha_checkin, fecha_checkout, cant_personas, importe_total, estado)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (id_usuario, id_hospedaje, fecha_checkin, fecha_checkout, cant_personas, importe_total, estado))
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return ("Reserva creada exitosamente", 201)
+
+@reservas_bp.route("/<int:reserva_id>", methods=["DELETE"])
+def eliminar_reserva(reserva_id):
+    """Eliminar reserva (solo admin)"""
+    if not verificar_admin():
+        return jsonify({'error': 'Acceso denegado. Solo administradores.'}), 403
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT id_reserva FROM reservas WHERE id_reserva = %s", (reserva_id,))
+    if not cursor.fetchone():
+        cursor.close()
+        conn.close()
+        return ("Reserva no encontrada", 404)
+    
+    cursor.execute("DELETE FROM reservas WHERE id_reserva = %s", (reserva_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return ("Reserva eliminada exitosamente", 200)
