@@ -1,111 +1,95 @@
-from flask import Flask, render_template, send_from_directory
+"""
+Frontend de Hotel - Sistema de Gestión de Reservas
+Aplicación Flask organizada con Blueprints y Factory Pattern
+"""
+
 import os
+from flask import Flask
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+# Importar blueprints
+from routes.public_routes import public_bp
+from routes.auth_routes import auth_bp
+from routes.user_routes import user_bp
+from routes.reservas_routes import reservas_bp
+from routes.admin_routes import admin_bp
+from routes.habitaciones_routes import habitaciones_bp
 
-@app.route('/')
-def index():
-    return render_template('public/index.html')
+def create_app():
+    """
+    Factory para crear la aplicación Flask con configuración optimizada
+    """
+    app = Flask(__name__)
+    
+    # Configuración de la aplicación
+    app.config.update(
+        SECRET_KEY=os.environ.get('SECRET_KEY', 'hotel_sistema_secreto_2024_dev_muy_largo_y_seguro'),
+        DEBUG=True,
+        TEMPLATES_AUTO_RELOAD=True,
+        JSON_AS_ASCII=False,  # Para caracteres especiales en español
+        SESSION_PERMANENT=False,  # No forzar permanente, decidir por request
+        PERMANENT_SESSION_LIFETIME=14400,  # 4 horas en segundos (más tiempo)
+        SESSION_COOKIE_SECURE=False,  # True en producción con HTTPS
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Lax',
+        SESSION_REFRESH_EACH_REQUEST=True  # Refrescar sesión en cada request
+    )
+    
+    # Context processor para hacer disponible la sesión en todos los templates
+    @app.context_processor
+    def inject_session():
+        """Hacer variables de sesión disponibles en todos los templates"""
+        from flask import session
+        return {
+            'logged_in': session.get('logged_in', False),
+            'user_nombre': session.get('user_nombre', ''),
+            'user_email': session.get('user_email', ''),
+            'user_rol': session.get('user_rol', 'cliente'),
+            'user_id': session.get('user_id', '')
+        }
+    
+    # Middleware para mantener la sesión activa
+    @app.before_request
+    def make_session_permanent():
+        """Asegurar que la sesión se mantenga activa sin invalidar"""
+        from flask import session
+        
+        # Solo marcar como permanente si ya existe una sesión
+        if session.get('logged_in'):
+            session.permanent = True
+        
+        # No hacer verificaciones del backend aquí para evitar invalidaciones
+    
+    # Registrar blueprints
+    app.register_blueprint(public_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(user_bp)
+    app.register_blueprint(reservas_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(habitaciones_bp)
+    
+    # Manejadores de errores
+    @app.errorhandler(404)
+    def page_not_found(error):
+        """Manejador personalizado para error 404"""
+        from flask import render_template
+        return render_template('public/404.html'), 404
+    
+    @app.errorhandler(500)
+    def internal_error(error):
+        """Manejador personalizado para error 500"""
+        from flask import render_template
+        return render_template('public/404.html'), 500
+    
+    return app
 
-@app.route('/hospedaje/<int:id>')
-def detalle_hospedaje(id):
-    return render_template('hospedajes/detalle.html')
-
-
-@app.route('/reservas/consultar')
-def consultar():
-    return render_template('reservas/consultar.html')
-
-@app.route('/reservas/checkout')
-def reservas_checkout():
-    return render_template('reservas/checkout.html')
-
-@app.route('/perfil')
-def perfil():
-    return render_template('perfil/mis_reservas.html')
-
-@app.route('/prueba')
-def prueba():
-    return render_template('/public/prueba.html')
-
-
-@app.route("/about") 
-def about():
-    return render_template("public/about.html")
-
-@app.route("/aboutus")  
-def aboutus():
-    return render_template("public/about.html")
-
-@app.route("/contact")
-def contact():
-    return render_template("public/contact1.html")
-
-@app.route("/service-detail")  
-def service_detail():
-    return render_template("service-detail.html")
-
-
-@app.route("/faq.html")
-def faq():
-    return render_template("public/faq.html")
-
-@app.route("/forgotpass")
-def forgotpassword():
-    return render_template("forgot-password.html")  
-
-@app.route("/gallery")
-def gallery():
-    return render_template("public/gallery1.html")
-
-@app.route("/login")
-def login():
-    return render_template("auth/login.html")
-
-@app.route("/roomlist")
-def roomlist():
-    return render_template("habitaciones/lista-habitaciones.html")
-
-@app.route("/roomdetail")
-def roomdetail():
-    return render_template("habitaciones/detalles-habitacion.html")
-
-@app.route("/availability")
-def availability():
-    return render_template("availability.html")
-
-@app.route("/roomselect")
-def roomselect():
-    return render_template("public/room-select.html")
-
-@app.route("/booking")
-def booking():
-    return render_template("booking.html")
-
-@app.route("/checkout")
-def checkout():
-    return render_template("checkout.html")
-
-@app.route("/confirmation")
-def confirmation():
-    return render_template("public/confirmation.html")
-
-@app.route("/testimonial.html")
-def testimonial():
-    return render_template("public/testimonial.html")
-
-@app.route("/terms")
-def terms():
-    return render_template("public/terms.html")
-
-@app.route("/404")
-def error404():
-    return render_template("public/404-1.html")
-
-@app.route("/service")
-def service():
-    return render_template("public/service.html")
+# Crear la aplicación
+app = create_app()
 
 if __name__ == '__main__':
-    # Ejecutar en modo debug para desarrollo
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    # Configuración del servidor de desarrollo
+    app.run(
+        host='0.0.0.0',
+        port=int(os.environ.get('PORT', 3000)),
+        debug=True,
+        use_reloader=True
+    )

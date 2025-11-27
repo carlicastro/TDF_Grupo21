@@ -1,96 +1,139 @@
 <!-- Preloader -->
-    <div id="preloader">
-      <div id="status"></div>
-    </div>
-    <!-- Preloader Ends -->
+<div id="preloader">
+  <div id="status"></div>
+</div>
+<!-- Preloader Ends -->
 
-    <!-- header start -->
-    <header class="main_header_area">
-      <div class="header-content">
-        <div class="container">
-          <div class="links links-left">
-            <ul>
+<!-- header start -->
+<header class="main_header_area">
+  <div class="header-content">
+    <div class="container">
+      <div class="links links-left">
+        <ul>
+          <li>
+            <a <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=mtbciclismo866@gmail.com&su=Contacto%20desde%20la%20Aplicación&body=Hola%2C%20quisiera%20información%20sobre%20su%20aplicación."
+              target="_blank">
+              <i class="fa fa-envelope" aria-hidden="true"></i> info@hotux.com</a>
+          </li>
+          <li>
+            <a href="https://wa.me/+593967351920?text=Hola%2C%20quisiera%20pedir%20información%20desde%20la%20aplicación."
+              target="_blank">
+              <i class="fa fa-phone" aria-hidden="true"></i> 11 5699-0000
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="links links-right pull-right">
+        <ul>
+          {% if session.get('logged_in') %}
+          <li>
+            <a href="{{ url_for('user.perfil') }}">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              {{ session.get('user_nombre', 'Usuario') }}
+              {% if session.get('user_rol') == 'admin' %}
+              <span class="badge badge-warning ms-1">Admin</span>
+              {% endif %}
+            </a>
+          </li>
+          {% if session.get('user_rol') == 'admin' %}
+          <li>
+            <a href="{{ url_for('admin.admin_dashboard') }}"><i class="fa fa-cog" aria-hidden="true"></i> Panel
+              Admin</a>
+          </li>
+          {% endif %}
+          {% if session.get('user_rol') == 'admin' %}
+          <li>
+            <a href="{{ url_for('admin.reservas_admin') }}"><i class="fa fa-calendar" aria-hidden="true"></i>
+              Reservas</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ url_for('user.mis_reservas') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Mis
+              Reservas</a>
+          </li>
+          {% endif %}
+          <li>
+            <a href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt" aria-hidden="true"></i> Cerrar
+              Sesión</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ url_for('auth.login') }}"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+          </li>
+          <li>
+            <a href="{{ url_for('auth.registro') }}"><i class="fa fa-pen" aria-hidden="true"></i> Registro</a>
+          </li>
+          {% endif %}
+          <li>
+            <ul class="social-links">
               <li>
-                <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> info@hotux.com.np</a>
+                <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"
+                    aria-hidden="true"></i></a>
               </li>
               <li>
-                <a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 977-222-333-444</a>
+                <a href="https://www.x.com/" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"
+                    aria-hidden="true"></i></a>
+              </li>
+              <li>
+                <a href="https://www.google.com/maps/" target="_blank"><i class="fab fa-google-plus"
+                    aria-hidden="true"></i></a>
               </li>
             </ul>
-          </div>
-          <div class="links links-right pull-right">
-            <ul>
-              <li>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#login"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
-              </li>
-              <li>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#register"><i class="fa fa-pen" aria-hidden="true"></i> Register</a>
-              </li>
-              <li>
-                <ul class="social-links">
-                  <li>
-                    <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-                  </li>
-                  <li>
-                    <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
-      <!-- Navigation Bar -->
-      <div class="header_menu affix-top">
-        <div class="container">
-          <nav class="navbar navbar-default">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <a class="navbar-brand" href="{{ url_for('index') }}">
-                <img alt="Image" src="{{ url_for('static', filename='images/logo.png') }}" class="logo-white" />
-                <img alt="Image" src="{{ url_for('static', filename='images/logo-black.png') }}" class="logo-black" />
-              </a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav" id="responsive-menu">
-                <li>
-                  <a href="{{ url_for('index') }}">Home</a>
-                </li>
-                <li class="submenu dropdown">
-                  <a href="{{ url_for('roomlist') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-                    >Habitaciones<i  aria-hidden="true"></i
-                  ></a>
-                </li>
-                <li>
-                  <a href="{{ url_for('about') }}">Nosotros</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('about') }}">Servicios</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('gallery') }}">Galería</a>
-                </li>
-                <li>
-                  <a href="{{ url_for('contact') }}">Información</a>
-                </li>
-              </ul>
-              <div class="nav-btn">
-                <a href="{{ url_for('roomselect') }}" class="btn btn-orange">Reservar ahora</a>
-              </div>
-            </div>
-            <!-- /.navbar-collapse -->
-            <div id="slicknav-mobile"></div>
-          </nav>
+    </div>
+  </div>
+  <!-- Navigation Bar -->
+  <div class="header_menu affix-top">
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ url_for('public.index') }}">
+            <img alt="Image" src="{{ url_for('static', filename='images/logo.png') }}" class="logo-white" />
+            <img alt="Image" src="{{ url_for('static', filename='images/logo-black.png') }}" class="logo-black" />
+          </a>
         </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- Navigation Bar Ends -->
-    </header>
-    <!-- header Ends -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" id="responsive-menu">
+            <li>
+              <a href="{{ url_for('public.index') }}">Inicio</a>
+            </li>
+            <li class="submenu dropdown">
+              <a href="{{ url_for('habitaciones.lista') }}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">Habitaciones<i aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="{{ url_for('public.nosotros') }}">Nosotros</a>
+            </li>
+            <li>
+              <a href="{{ url_for('public.servicios') }}">Servicios</a>
+            </li>
+            <li>
+              <a href="{{ url_for('public.galeria') }}">Galería</a>
+            </li>
+            <li>
+              <a href="{{ url_for('public.contacto') }}">Contacto</a>
+            </li>
+          </ul>
+          {% if session.get('user_rol') != 'admin' %}
+          <div class="nav-btn">
+            <a href="{{ url_for('habitaciones.lista') }}" class="btn btn-orange">Reservar ahora</a>
+          </div>
+          {% endif %}
+        </div>
+        <!-- /.navbar-collapse -->
+        <div id="slicknav-mobile"></div>
+      </nav>
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- Navigation Bar Ends -->
+</header>
+<!-- header Ends -->

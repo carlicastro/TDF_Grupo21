@@ -7,11 +7,11 @@
 <section class="breadcrumb-outer">
   <div class="container">
     <div class="breadcrumb-content">
-      <h2>Room listing</h2>
+      <h2>Lista de Habitaciones</h2>
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Room List 1</li>
+          <li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Lista de Habitaciones</li>
         </ul>
       </nav>
     </div>
@@ -24,237 +24,78 @@
 <!-- room list starts -->
 <section class="room-list">
   <div class="container">
-    <div class="row flex-row-reverse">
-      <div class="col-lg-9">
+    <div class="row">
+      <div class="col-lg-12">
         <div class="list-results">
           <div class="list-results-sort pad-top-5">
-            <p class="mar-0">Showing 1-5 of 25 results</p>
+            <p class="mar-0">Mostrando {{ hospedajes|length }} habitación(es) disponible(s)</p>
           </div>
         </div>
+        
+        {% if hospedajes %}
         <div class="list-content">
           <div class="list-grid">
+            {% for hospedaje in hospedajes %}
             <div class="room-grid">
               <div class="grid-image">
-                <img src="{{ url_for('static', filename='images/room-list/grid1.jpg', _external=True)}}" alt="image" />
+                {% if hospedaje.foto %}
+                  <img src="{{ hospedaje.foto }}" alt="{{ hospedaje.nombre }}" />
+                {% else %}
+                  <img src="{{ url_for('static', filename='images/room-list/grid1.jpg') }}" alt="{{ hospedaje.nombre }}" />
+                {% endif %}
               </div>
               <div class="grid-content">
                 <div class="room-title">
-                  <h4>Standard Suite</h4>
-                  <p class="mar-top-5"><i class="fa fa-tag"></i> $900/Night</p>
-                  
+                  <h4>{{ hospedaje.nombre }}</h4>
+                  <p class="mar-top-5"><i class="fa fa-tag"></i> ${{ hospedaje.precio }}/Noche</p>
+                  {% if hospedaje.disponibilidad == 1 %}
+                    <span class="badge badge-success">Disponible</span>
+                  {% else %}
+                    <span class="badge badge-danger">No Disponible</span>
+                  {% endif %}
                 </div>
                 <div class="room-detail">
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae
-                    consectetur turpis
+                    {% if hospedaje.descripcion %}
+                      {{ hospedaje.descripcion }}
+                    {% else %}
+                      Hospedaje tipo {{ hospedaje.tipo|title }} con capacidad para {{ hospedaje.capacidad }} personas.
+                    {% endif %}
                   </p>
                 </div>
                 <div class="room-services">
                   <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Bedrooms</div>
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Quick Service</div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <i class="fa fa-users" aria-hidden="true"></i> {{ hospedaje.capacidad }} Huéspedes
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6">
+                      <i class="fa fa-home" aria-hidden="true"></i> {{ hospedaje.tipo|title }}
+                    </div>
                   </div>
                 </div>
 
                 <div class="grid-btn mar-top-20">
-                  <a href="#" class="btn btn-black mar-right-10">VIEW DETAILS</a>
-                  <a href="#" class="btn btn-orange">BOOK NOW</a>
+                  <a href="{{ url_for('habitaciones.detalle', id=hospedaje.id_hospedaje) }}" 
+                     class="btn btn-black mar-right-10">VER DETALLES</a>
+                  {% if hospedaje.disponibilidad == 1 %}
+                    <a href="{{ url_for('habitaciones.detalle', id=hospedaje.id_hospedaje) }}" 
+                       class="btn btn-orange">RESERVAR</a>
+                  {% else %}
+                    <span class="btn btn-secondary">NO DISPONIBLE</span>
+                  {% endif %}
                 </div>
               </div>
             </div>
-            <div class="room-grid">
-              <div class="grid-image">
-                <img src="{{ url_for('static', filename='images/room-list/grid2.jpg', _external=True)}}" alt="image" />
-              </div>
-              <div class="grid-content">
-                <div class="room-title">
-                  <h4>Deluxe Suite</h4>
-                  <p class="mar-top-5"><i class="fa fa-tag"></i> $800/Night</p>
-                  
-                </div>
-                <div class="room-detail">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae
-                    consectetur turpis
-                  </p>
-                </div>
-
-                <div class="room-services">
-                  <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Bedrooms</div>
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Quick Service</div>
-                  </div>
-                </div>
-
-                <div class="grid-btn mar-top-20">
-                  <a href="#" class="btn btn-black mar-right-10">VIEW DETAILS</a>
-                  <a href="#" class="btn btn-orange">BOOK NOW</a>
-                </div>
-              </div>
-            </div>
-            <div class="room-grid">
-              <div class="grid-image">
-                <img src="{{ url_for('static', filename='images/room-list/grid3.jpg', _external=True)}}" alt="image" />
-              </div>
-              <div class="grid-content">
-                <div class="room-title">
-                  <h4>Superior Suite</h4>
-                  <p class="mar-top-5"><i class="fa fa-tag"></i> $1000/Night</p>
-                  
-                </div>
-                <div class="room-detail">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae
-                    consectetur turpis
-                  </p>
-                </div>
-
-                <div class="room-services">
-                  <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Bedrooms</div>
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Quick Service</div>
-                  </div>
-                </div>
-
-                <div class="grid-btn mar-top-20">
-                  <a href="#" class="btn btn-black mar-right-10">VIEW DETAILS</a>
-                  <a href="#" class="btn btn-orange">BOOK NOW</a>
-                </div>
-              </div>
-            </div>
-            <div class="room-grid">
-              <div class="grid-image">
-                <img src="{{ url_for('static', filename='images/room-list/grid4.jpg', _external=True)}}" alt="image" />
-              </div>
-              <div class="grid-content">
-                <div class="room-title">
-                  <h4>Normal Suite</h4>
-                  <p class="mar-top-5"><i class="fa fa-tag"></i> $200/Night</p>
-                  
-                </div>
-                <div class="room-detail">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae
-                    consectetur turpis
-                  </p>
-                </div>
-
-                <div class="room-services">
-                  <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Bedrooms</div>
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Quick Service</div>
-                  </div>
-                </div>
-
-                <div class="grid-btn mar-top-20">
-                  <a href="#" class="btn btn-black mar-right-10">VIEW DETAILS</a>
-                  <a href="#" class="btn btn-orange">BOOK NOW</a>
-                </div>
-              </div>
-            </div>
-            <div class="room-grid">
-              <div class="grid-image">
-                <img src="{{ url_for('static', filename='images/room-list/grid5.jpg', _external=True)}}" alt="image" />
-              </div>
-              <div class="grid-content">
-                <div class="room-title">
-                  <h4>Royal Suite</h4>
-                  <p class="mar-top-5"><i class="fa fa-tag"></i> $1200/Night</p>
-                  
-                </div>
-                <div class="room-detail">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae
-                    consectetur turpis
-                  </p>
-                </div>
-
-                <div class="room-services">
-                  <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-bed" aria-hidden="true"></i> 3 Bedrooms</div>
-                    <div class="col-md-6 col-sm-6 col-xs-6"><i class="fa fa-wifi" aria-hidden="true"></i> Quick Service</div>
-                  </div>
-                </div>
-
-                <div class="grid-btn mar-top-20">
-                  <a href="#" class="btn btn-black mar-right-10">VIEW DETAILS</a>
-                  <a href="#" class="btn btn-orange">BOOK NOW</a>
-                </div>
-              </div>
-            </div>
+            {% endfor %}
           </div>
         </div>
-        <nav class="pagination-content text-center">
-          <ul class="pagination">
-            <li class="page-item">
-              <a href="#" class="page-link"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a>
-            </li>
-            <li class="page-item active"><a href="#" class="page-link">1</a></li>
-            <li class="page-item"><a href="#" class="page-link">2</a></li>
-            <li class="page-item"><a href="#" class="page-link">3</a></li>
-            <li class="page-item"><a href="#" class="page-link">4</a></li>
-            <li class="page-item"><a href="#" class="page-link">5</a></li>
-            <li>
-              <a href="#" class="page-link"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="col-lg-3 sidebar">
-        <div class="list-sidebar">
-          <div class="room-type list-sidebar-item">
-            <h4>Room Types</h4>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Single Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Double Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Studio Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Kingsize Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Presidentsuite Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse mar-bottom-15">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Murphy Rooms</label>
-              </div>
-            </div>
-            <div class="pretty p-default p-thick p-pulse">
-              <input type="checkbox" />
-              <div class="state p-warning-o">
-                <label>Connecting Rooms</label>
-              </div>
-            </div>
-          </div>
-          
-          <div class="info-1 list-sidebar-item">
-            <i class="fa fa-phone-volume"></i>
-            <h5>Need help? Call us</h5>
-            <a href="tel://004542344599" class="phone">+45 423 445 99</a>
-            <small>Monday to Friday 9.00am - 7.30pm</small>
-          </div>
+        {% else %}
+        <div class="alert alert-info text-center">
+          <h4>No hay habitaciones disponibles</h4>
+          <p>Actualmente no tenemos habitaciones registradas en el sistema.</p>
         </div>
+        {% endif %}
+        
       </div>
     </div>
   </div>

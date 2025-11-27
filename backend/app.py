@@ -1,115 +1,62 @@
+from flask import Flask, session, request
+from db import get_connection
 import os
-from flask import Flask, jsonify
-from sqlalchemy import create_engine, text
 
-# Import model functions
-from models import (
-    obtener_todos_usuarios, obtener_todos_hospedajes, obtener_todas_reservas
-)
+# Import blueprints
+from models.hospedajes import hospedajes_bp
+from models.reservas import reservas_bp
+from models.usuario import usuarios_bp
 
 # Crear la aplicación Flask
 app = Flask(__name__)
 
+# Configuración de sesiones - debe coincidir con el frontend
+app.secret_key = os.environ.get(
+    "SECRET_KEY", "hotel_sistema_secreto_2024_dev_muy_largo_y_seguro"
+)
 
-def set_connection():
+
+# Middleware para manejar autenticación por cookies (no headers)
+@app.before_request
+def handle_auth_cookies():
+    """Maneja la autenticación basada en cookies de sesión del frontend"""
+    # No limpiar la sesión - confiar en las cookies
+    # Mantener compatibilidad con headers si es necesario (pero ya no limpiar sesiones)
+    if request.headers.get("X-Admin-Session") == "true":
+        session["user_id"] = request.headers.get("X-User-ID", "1")
+        session["user_rol"] = request.headers.get("X-User-Role", "admin")
+        session["admin_authenticated"] = True
+
+
+# Registrar blueprints
+app.register_blueprint(hospedajes_bp, url_prefix="/hospedajes")
+app.register_blueprint(reservas_bp, url_prefix="/reservas")
+app.register_blueprint(usuarios_bp, url_prefix="/usuarios")
+
+
+# Ruta de salud del servidor
+@app.route("/health")
+def health_check():
     """
-    Conectar a la base de datos usando SQLAlchemy
-    """
-    # Obtener credenciales de variables de entorno o valores por defecto
-    DB_USER = os.getenv('DB_USER', 'root')
-    DB_PASS = os.getenv('DB_PASS', '')
-    DB_HOST = os.getenv('DB_HOST', 'localhost')
-    DB_NAME = os.getenv('DB_NAME', 'hotel_db')
-    
-    # Crear URL de conexión
-    url = f"mysql+mysqlconnector://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
-    engine = create_engine(url)
-    
-    # Test de conexión
-    connection = engine.connect()
-    return connection
-
-
-def mostrar_registros(connection, query="SELECT * FROM usuarios;"):
-    """
-    Ejecutar consulta SQL simple
+    Endpoint para verificar que el servidor está funcionando
     """
     try:
-        result = connection.execute(text(query))
-        
-        # Convertir resultado a lista simple
-        registros = []
-        for row in result:
-            # Convertir cada fila a diccionario simple
-            registro = {}
-            for i, valor in enumerate(row):
-                registro[f'columna_{i}'] = valor
-            registros.append(registro)
-        
-        return registros
+        # Probar conexión a la base de datos
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT 1")
+        cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "message": "API funcionando correctamente",
+        }
     except Exception as e:
-        print(f"Error ejecutando consulta: {e}")
-        raise
+        return {"status": "unhealthy", "database": "error", "message": str(e)}, 500
 
 
-@app.route('/api/usuarios', methods=['GET'])
-def listar_usuarios():
-    connection = None
-    try:
-        connection = set_connection()
-        usuarios = obtener_todos_usuarios(connection)
-        return jsonify({'ok': True, 'data': usuarios}), 200
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
-
-@app.route('/api/hospedajes', methods=['GET'])
-def listar_hospedajes():
-    connection = None
-    try:
-        connection = set_connection()
-        hospedajes = obtener_todos_hospedajes(connection)
-        return jsonify({'ok': True, 'data': hospedajes}), 200
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
-
-@app.route('/api/reservas', methods=['GET'])
-def listar_reservas():
-    connection = None
-    try:
-        connection = set_connection()
-        reservas = obtener_todas_reservas(connection)
-        return jsonify({'ok': True, 'data': reservas}), 200
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
-
-@app.route('/api/test-db', methods=['GET'])
-def test_db():
-    connection = None
-    try:
-        # Test de conexión usando el patrón set_connection
-        connection = set_connection()
-        # Creamos la query para ser ejecutada por la conexión
-        query = "SELECT 1 as test, 'Conexión OK' as mensaje"
-        result = mostrar_registros(connection, query)
-        return jsonify({'ok': True, 'test': result}), 200
-    except Exception as e:
-        return jsonify({'ok': False, 'error': str(e)}), 500
-    finally:
-        if connection:
-            connection.close()
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8080)

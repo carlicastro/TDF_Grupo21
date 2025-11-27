@@ -1,29 +1,155 @@
 """
 Funciones para manejar la tabla hospedajes
 """
-from sqlalchemy import text
+from flask import Blueprint, jsonify, request, session
+from db import get_connection
 
+hospedajes_bp = Blueprint('hospedajes', __name__)
 
-def obtener_todos_hospedajes(connection):
+def verificar_admin():
     """
-    Obtener todos los hospedajes
+    Verifica si el usuario es admin mediante sesión o cookies
     """
-    query = "SELECT * FROM hospedajes"
-    result = connection.execute(text(query))
+    # Verificar por sesión Flask (cuando viene del navegador directamente)
+    if session.get('user_rol') == 'admin':
+        return True
     
-    # Convertir resultado a lista simple
-    hospedajes = []
-    for row in result:
-        hospedaje = {
-            'id_hospedaje': row[0],
-            'nombre': row[1],
-            'descripcion': row[2], 
-            'tipo': row[3],
-            'precio_noche': row[4],
-            'ubicacion': row[5],
-            'capacidad_max': row[6],
-            'disponible': row[7]
-        }
-        hospedajes.append(hospedaje)
+    # Verificar por cookies (cuando viene del API client del frontend)
+    user_rol_cookie = request.cookies.get('user_rol')
+    if user_rol_cookie == 'admin':
+        return True
     
-    return hospedajes
+    return False
+
+@hospedajes_bp.route("/", methods=["GET"])
+def get_hospedajes():
+    """Ver todos los hospedajes"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM hospedajes")
+    hospedajes = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return jsonify(hospedajes)
+
+@hospedajes_bp.route("/<int:hospedaje_id>", methods=["GET"])
+def get_hospedaje_by_id(hospedaje_id):
+    """Ver hospedaje específico por ID"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM hospedajes WHERE id_hospedaje = %s", (hospedaje_id,))
+    hospedaje = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    
+    if not hospedaje:
+        return ("Hospedaje no encontrado", 404)
+    return jsonify(hospedaje)
+
+@hospedajes_bp.route("/", methods=["POST"])
+def crear_hospedaje():
+    """Crear hospedaje (solo admin)"""
+    if not verificar_admin():
+        return ("Solo administradores pueden crear hospedajes", 403)
+    
+    data = request.get_json()
+    
+    nombre = data.get('nombre')
+    descripcion = data.get('descripcion')
+    precio = data.get('precio')
+    capacidad = data.get('capacidad')
+    foto = data.get('foto', '')
+    disponibilidad = data.get('disponibilidad', 1)
+    tipo = data.get('tipo', '')
+    
+    if not all([nombre, precio, capacidad]):
+        return ("Nombre, precio y capacidad son requeridos", 400)
+    
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO hospedajes (nombre, descripcion, precio, capacidad, foto, disponibilidad, tipo)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (nombre, descripcion, precio, capacidad, foto, disponibilidad, tipo))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return ("Hospedaje creado exitosamente", 201)
+    except Exception as e:
+        return ("Error interno del servidor", 500)
+
+@hospedajes_bp.route("/<int:hospedaje_id>", methods=["PUT"])
+def actualizar_hospedaje(hospedaje_id):
+    """Editar hospedaje (solo admin)"""
+    if not verificar_admin():
+        return ("Solo administradores pueden editar hospedajes", 403)
+    
+    data = request.get_json()
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id_hospedaje FROM hospedajes WHERE id_hospedaje = %s", (hospedaje_id,))
+    if not cursor.fetchone():
+        cursor.close()
+        conn.close()
+        return ("Hospedaje no encontrado", 404)
+    
+    campos_actualizacion = []
+    valores = []
+    
+    if 'nombre' in data:
+        campos_actualizacion.append("nombre = %s")
+        valores.append(data['nombre'])
+    if 'descripcion' in data:
+        campos_actualizacion.append("descripcion = %s")
+        valores.append(data['descripcion'])
+    if 'precio' in data:
+        campos_actualizacion.append("precio = %s")
+        valores.append(data['precio'])
+    if 'capacidad' in data:
+        campos_actualizacion.append("capacidad = %s")
+        valores.append(data['capacidad'])
+    if 'foto' in data:
+        campos_actualizacion.append("foto = %s")
+        valores.append(data['foto'])
+    if 'disponibilidad' in data:
+        campos_actualizacion.append("disponibilidad = %s")
+        valores.append(data['disponibilidad'])
+    if 'tipo' in data:
+        campos_actualizacion.append("tipo = %s")
+        valores.append(data['tipo'])
+    
+    if not campos_actualizacion:
+        return ("No se proporcionaron campos para actualizar", 400)
+    
+    valores.append(hospedaje_id)
+    query = f"UPDATE hospedajes SET {', '.join(campos_actualizacion)} WHERE id_hospedaje = %s"
+    
+    cursor.execute(query, valores)
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return ("Hospedaje actualizado exitosamente", 200)
+
+@hospedajes_bp.route("/<int:hospedaje_id>", methods=["DELETE"])
+def eliminar_hospedaje(hospedaje_id):
+    """Eliminar hospedaje (solo admin)"""
+    if not verificar_admin():
+        return ("Solo administradores pueden eliminar hospedajes", 403)
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT id_hospedaje FROM hospedajes WHERE id_hospedaje = %s", (hospedaje_id,))
+    if not cursor.fetchone():
+        cursor.close()
+        conn.close()
+        return ("Hospedaje no encontrado", 404)
+    
+    cursor.execute("DELETE FROM hospedajes WHERE id_hospedaje = %s", (hospedaje_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return ("Hospedaje eliminado exitosamente", 200)

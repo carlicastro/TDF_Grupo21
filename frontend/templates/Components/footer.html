@@ -23,13 +23,13 @@
               </div>
               <div class="col-lg-3 col-md-6 mar-bottom-30">
                 <div class="quick-links">
-                  <h4>Quick Links</h4>
+                  <h4>Enlaces Rápidos</h4>
                   <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
-                    <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
-                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                    <li><a href="{{ url_for('public.index') }}">Inicio</a></li>
+                    <li><a href="{{ url_for('public.nosotros') }}">Nosotros</a></li>
+                    <li><a href="{{ url_for('habitaciones.lista') }}">Habitaciones</a></li>
+                    <li><a href="{{ url_for('public.galeria') }}">Galería</a></li>
+                    <li><a href="{{ url_for('public.contacto') }}">Contacto</a></li>
                   </ul>
                 </div>
               </div>
@@ -37,10 +37,10 @@
                 <div class="Rooms">
                   <h4>Páginas</h4>
                   <ul>
-                    <li><a href="#" onclick="alert('Página en desarrollo')">Servicios</a></li>
-                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
-                    <li><a href="{{ url_for('testimonial') }}">Testimonials</a></li>
-                    <li><a href="{{ url_for('terms') }}">Términos y Condiciones</a></li>
+                    <li><a href="{{ url_for('public.servicios') }}">Servicios</a></li>
+                    <li><a href="{{ url_for('public.faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('public.testimonios') }}">Testimonios</a></li>
+                    <li><a href="{{ url_for('public.terminos') }}">Términos y Condiciones</a></li>
                   </ul>
                 </div>
               </div>
@@ -89,9 +89,9 @@
             <div class="col-lg-4 mar-bottom-10">
               <div class="copyright-links mar-bottom-20">
                 <ul>
-                  <li><a href="{{ url_for('roomlist') }}">Habitaciones</a></li>
-                  <li><a href="{{ url_for('roomselect') }}">Reservar</a></li>
-                  <li><a href="{{ url_for('terms') }}">Terms and Conditions</a></li>
+                  <li><a href="{{ url_for('habitaciones.lista') }}">Habitaciones</a></li>
+                  <li><a href="{{ url_for('habitaciones.lista') }}">Reservar</a></li>
+                  <li><a href="{{ url_for('public.terminos') }}">Términos y Condiciones</a></li>
                 </ul>
               </div>
               <div class="playstore-links">

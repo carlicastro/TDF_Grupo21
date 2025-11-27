@@ -1,93 +1,46 @@
-# Backend del Sistema de Hotel (Flask + MySQL)
+# Backend - API REST Hotel
 
+API REST desarrollada con Flask para gestión de reservas hoteleras.
 
-## ✅ Características
-
-- **Flask**: Servidor web 
-- **MySQL**: Base de datos con SQLAlchemy + mysql-connector-python
-
-## 🚀 Instalación y Uso
-
-### 1. Crear entorno virtual e instalar dependencias
+## 🚀 Instalación
 
 ```bash
-python -m venv .venv
-source .venv/Scripts/activate    # Windows
+# Instalar dependencias
 pip install -r requirements.txt
-```
 
-### 2. Configurar base de datos MySQL
+# Configurar base de datos
+mysql -u root -p
+CREATE DATABASE hotel_db;
+USE hotel_db;
+SOURCE schema.sql;
 
-- Base de datos: `hotel_db`
-- Usuario: `root` (sin contraseña por defecto)
-- Ejecutar el archivo `schema.sql` para crear las tablas
+# Variables de entorno (.env)
+DATABASE_HOST=localhost
+DATABASE_USER=root
+DATABASE_PASSWORD=tu_password
+DATABASE_NAME=hotel_db
+SECRET_KEY=clave_secreta_muy_segura
 
-### 3. Ejecutar el servidor
-
-```bash
+# Ejecutar servidor
 python app.py
 ```
 
-El servidor estará disponible en: `http://127.0.0.1:5000`
+## 📡 Endpoints
 
-## 📋 Endpoints API
+- `POST /usuarios/register` - Registro
+- `POST /usuarios/login` - Autenticación  
+- `GET /usuarios/` - Listar usuarios (admin)
+- `GET /hospedajes/` - Listar hospedajes
+- `GET /reservas/` - Listar reservas (admin)
+- `POST /reservas/` - Crear reserva
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/test-db` | Test de conexión a la base de datos |
-| GET | `/api/usuarios` | Obtener todos los usuarios |
-| GET | `/api/hospedajes` | Obtener todos los hospedajes |
-| GET | `/api/reservas` | Obtener todas las reservas (con JOIN) |
+## 🔧 Dependencias
 
-### Ejemplo de respuesta
+- Flask 3.0.3
+- Flask-CORS 4.0.1
+- mysql-connector-python 9.0.0
+- python-dotenv 1.0.1
 
-```json
-{
-  "ok": true,
-  "data": [
-    {
-      "id_usuario": 1,
-      "nombre": "Juan Pérez",
-      "email": "juan@email.com",
-      "rol": "cliente"
-    }
-  ]
-}
-```
+## 🌐 Puerto
 
-## 📁 Estructura del Proyecto
-
-```text
-backend/
-├── app.py                 # Servidor Flask principal
-├── models/
-│   ├── __init__.py        # Importaciones del paquete
-│   ├── usuario.py         # Funciones CRUD usuarios
-│   ├── hospedajes.py      # Funciones CRUD hospedajes
-│   └── reservas.py        # Funciones CRUD reservas
-├── requirements.txt       # Dependencias Python
-├── schema.sql            # Esquema de base de datos
-├── database.dbml         # Diagrama de base de datos
-└── .venv/                # Entorno virtual
-```
-
-## 🔧 Configuración (Variables de Entorno)
-
-Por defecto usa estas credenciales:
-
-- `DB_USER=root`
-- `DB_PASS=` (vacío)
-- `DB_HOST=localhost`
-- `DB_NAME=hotel_db`
-
-Para cambiar, define las variables de entorno antes de ejecutar.
-
-## 📊 Base de Datos
-
-El sistema maneja 3 tablas principales:
-
-- **usuarios**: Clientes y administradores del sistema
-- **hospedajes**: Habitaciones y propiedades disponibles
-- **reservas**: Reservas realizadas por los usuarios
-
-Ver `schema.sql` para el esquema completo.
+Servidor ejecutándose en **puerto 8080**

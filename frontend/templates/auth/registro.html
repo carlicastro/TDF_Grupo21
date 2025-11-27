@@ -1,10 +1,82 @@
 {% extends "base.html" %}
 
-{% block title %}Registro - Gameoteca{% endblock %}
+{% block title %}Registro | Hotux{% endblock %}
+
+{% block breadcrumb %}
+<!-- breadcrumb Starts -->
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Registro</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Registro</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb Ends -->
+{% endblock %}
 
 {% block content %}
-
-
-
-
+<!-- registro Starts -->
+<section class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="login-image text-center">
+          <img src="{{ url_for('static', filename='images/logo-black.png', _external=True)}}" alt="image" />
+          <p class="mar-top-10">Crear nueva cuenta</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <div class="login-content pad-0">
+          <h3>Crear Cuenta Nueva</h3>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <form method="POST" action="/registro">
+            <div class="form-group">
+              <input type="text" name="nombre" placeholder="Nombre completo" value="{{ request.form.nombre or '' }}" required />
+            </div>
+            <div class="form-group">
+              <input type="email" name="email" placeholder="Correo electrónico" value="{{ request.form.email or '' }}" required />
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" placeholder="Contraseña" required />
+            </div>
+            <div class="form-group">
+              <input type="password" name="confirm_password" placeholder="Confirmar contraseña" required />
+            </div>
+            <div class="form-btn">
+              <button type="submit" class="btn btn-orange">REGISTRARSE</button>
+              <p>¿Ya tienes cuenta?<a href="{{ url_for('auth.login') }}"> Iniciar sesión</a></p>
+            </div>
+          </form>
+          <ul class="social-links">
+            <li>
+              <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- registro Ends -->
 {% endblock %}
