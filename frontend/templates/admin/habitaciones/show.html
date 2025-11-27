@@ -1,0 +1,247 @@
+{% extends 'Components/base_admin.html' %}
+
+{% block title %}Detalles Habitación - Panel Administración{% endblock %}
+
+{% block content %}
+<div class="search-box p-4 bg-white rounded mb-3 box-shadow">
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <h5>Detalles de la Habitación #{{ "%03d"|format(hospedaje.id_hospedaje) }}</h5>
+    </div>
+    <div class="col-lg-6 text-end">
+      <a href="{{ url_for('habitaciones.admin_lista') }}" class="btn btn-secondary me-2">
+        <i class="link-icon" data-feather="arrow-left"></i> Volver
+      </a>
+      <a href="{{ url_for('habitaciones.admin_editar', id=hospedaje.id_hospedaje) }}" class="btn btn-warning me-2">
+        <i class="link-icon" data-feather="edit"></i> Editar
+      </a>
+      <a href="{{ url_for('habitaciones.admin_eliminar', id=hospedaje.id_hospedaje) }}" 
+         onclick="return confirm('¿Seguro que desea eliminar esta habitación?')"
+         class="btn btn-danger">
+        <i class="link-icon" data-feather="trash-2"></i> Eliminar
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Información de la Habitación</h6>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">ID Habitación</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            #{{ "%03d"|format(hospedaje.id_hospedaje) }}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Nombre</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <h5 class="mb-0">{{ hospedaje.nombre }}</h5>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Descripción</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            {{ hospedaje.descripcion or 'Sin descripción' }}
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Tipo</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <span class="badge bg-info">{{ hospedaje.tipo or 'No especificado' }}</span>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Capacidad</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <i class="link-icon" data-feather="users"></i> {{ hospedaje.capacidad }} personas
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Precio por noche</h6>
+          </div>
+          <div class="col-sm-9">
+            <h4 class="text-success mb-0">
+              <i class="link-icon" data-feather="dollar-sign"></i> {{ hospedaje.precio }}
+            </h4>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Disponibilidad</h6>
+          </div>
+          <div class="col-sm-9">
+            {% if hospedaje.disponibilidad == 1 %}
+              <span class="badge bg-success">
+                <i class="link-icon" data-feather="check-circle"></i> Disponible
+              </span>
+            {% else %}
+              <span class="badge bg-danger">
+                <i class="link-icon" data-feather="x-circle"></i> No Disponible
+              </span>
+            {% endif %}
+          </div>
+        </div>
+        {% if hospedaje.imagen %}
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Imagen</h6>
+          </div>
+          <div class="col-sm-9">
+            <img src="{{ hospedaje.imagen }}" alt="{{ hospedaje.nombre }}" class="img-thumbnail" style="max-width: 200px;">
+          </div>
+        </div>
+        {% endif %}
+        <div class="row mb-3">
+          <div class="col-sm-3">
+            <h6 class="mb-0">Fecha de Creación</h6>
+          </div>
+          <div class="col-sm-9 text-secondary">
+            <i class="link-icon" data-feather="calendar-plus"></i> 
+            {{ hospedaje.fecha_creacion if hospedaje.fecha_creacion else 'No disponible' }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Estadísticas</h6>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2">
+          <div>
+            <i class="link-icon text-primary" data-feather="calendar-check"></i>
+            <span class="ms-1">Reservas Activas</span>
+          </div>
+          <div class="text-secondary">
+            {{ reservas_activas or 0 }}
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-2 pt-2">
+          <div>
+            <i class="link-icon text-success" data-feather="dollar-sign"></i>
+            <span class="ms-1">Ingresos Total</span>
+          </div>
+          <div class="text-secondary">
+            ${{ ingresos_total or 0 }}
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center pt-2">
+          <div>
+            <i class="link-icon text-info" data-feather="star"></i>
+            <span class="ms-1">Calificación</span>
+          </div>
+          <div class="text-secondary">
+            {{ calificacion or 'N/A' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h6 class="card-title">Acciones Rápidas</h6>
+        <div class="d-grid gap-2">
+          <a href="{{ url_for('habitaciones.admin_editar', id=hospedaje.id_hospedaje) }}" class="btn btn-outline-warning btn-sm">
+            <i class="link-icon" data-feather="edit"></i> Editar Habitación
+          </a>
+          {% if hospedaje.disponibilidad == 1 %}
+            <button class="btn btn-outline-secondary btn-sm" onclick="toggleDisponibilidad({{ hospedaje.id_hospedaje }})">
+              <i class="link-icon" data-feather="eye-off"></i> Marcar No Disponible
+            </button>
+          {% else %}
+            <button class="btn btn-outline-success btn-sm" onclick="toggleDisponibilidad({{ hospedaje.id_hospedaje }})">
+              <i class="link-icon" data-feather="eye"></i> Marcar Disponible
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-3">
+      <div class="card-body">
+        <h6 class="card-title text-danger">Zona de Peligro</h6>
+        <p class="text-muted small">Una vez que elimines esta habitación, no habrá vuelta atrás.</p>
+        <a href="{{ url_for('habitaciones.admin_eliminar', id=hospedaje.id_hospedaje) }}" 
+           onclick="return confirm('⚠️ ¿Estás absolutamente seguro?\n\nEsta acción eliminará permanentemente esta habitación y todas las reservas asociadas.\n\n¿Deseas continuar?')"
+           class="btn btn-outline-danger btn-sm w-100">
+          <i class="link-icon" data-feather="trash-2"></i> Eliminar Habitación
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if reservas_recientes %}
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Reservas Recientes</h6>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Estado</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for reserva in reservas_recientes %}
+              <tr>
+                <td>#{{ "%03d"|format(reserva.id_reserva) }}</td>
+                <td>{{ reserva.usuario_nombre or 'N/A' }}</td>
+                <td>{{ reserva.fecha_checkin }}</td>
+                <td>{{ reserva.fecha_checkout }}</td>
+                <td>
+                  {% if reserva.estado == 'confirmada' %}
+                    <span class="badge bg-success">Confirmada</span>
+                  {% elif reserva.estado == 'pendiente' %}
+                    <span class="badge bg-warning">Pendiente</span>
+                  {% elif reserva.estado == 'cancelada' %}
+                    <span class="badge bg-danger">Cancelada</span>
+                  {% elif reserva.estado == 'completada' %}
+                    <span class="badge bg-info">Completada</span>
+                  {% else %}
+                    <span class="badge bg-secondary">{{ reserva.estado|title }}</span>
+                  {% endif %}
+                </td>
+                <td class="text-success fw-bold">${{ reserva.precio_total }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+function toggleDisponibilidad(id) {
+    if (confirm('¿Cambiar el estado de disponibilidad de esta habitación?')) {
+        // Aquí iría la lógica AJAX para cambiar la disponibilidad
+        window.location.reload();
+    }
+}
+</script>
+{% endblock %}

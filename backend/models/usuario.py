@@ -9,18 +9,20 @@ usuarios_bp = Blueprint('usuarios', __name__)
 
 def verificar_admin():
     """
-    Verifica si el usuario es admin mediante sesión o header
+    Verifica si el usuario es admin mediante sesión o cookies
     """
+    # Verificar por sesión Flask (cuando viene del navegador directamente)
     if session.get('user_rol') == 'admin':
         return True
     
-    admin_session = request.headers.get('X-Admin-Session')
-    if admin_session and admin_session.startswith('admin_'):
+    # Verificar por cookies (cuando viene del API client del frontend)
+    user_rol_cookie = request.cookies.get('user_rol')
+    if user_rol_cookie == 'admin':
         return True
     
     return False
 
-# rutas de autentificacion
+# ===== RUTAS DE AUTENTICACIÓN =====
 
 @usuarios_bp.route('/login', methods=['POST'])
 def login():
@@ -97,7 +99,7 @@ def register():
     
     return jsonify({'success': True, 'message': 'Usuario registrado exitosamente', 'user_id': user_id}), 201
 
-# rutas crud
+# ===== RUTAS CRUD BÁSICAS =====
 
 @usuarios_bp.route("/", methods=["GET"])
 def get_usuarios():
@@ -147,3 +149,21 @@ def eliminar_usuario(user_id):
     cursor.close()
     conn.close()
     return ("Usuario eliminado exitosamente", 200)
+
+@usuarios_bp.route("/<int:user_id>/reservas", methods=["GET"])
+def get_reservas_usuario(user_id):
+    """Ver reservas de un usuario específico"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("""
+        SELECT r.*, h.nombre as hospedaje_nombre, h.tipo, h.descripcion
+        FROM reservas r
+        LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
+        WHERE r.id_usuario = %s
+        ORDER BY r.fecha_creacion DESC
+    """, (user_id,))
+    reservas = cursor.fetchall()
+    
+    cursor.close()
+    conn.close()
+    return jsonify(reservas)

@@ -1,0 +1,84 @@
+{% extends 'Components/base_admin.html' %}
+
+{% block title %}Usuarios - Panel Administración{% endblock %}
+
+{% block content %}
+<div class="search-box p-4 bg-white rounded mb-3 box-shadow">
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <h5>Lista de Usuarios</h5>
+    </div>
+    <div class="col-lg-6 text-end">
+      <span class="text-muted">Total: {{ usuarios|length }} usuarios</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Rol</th>
+                <th>Fecha Registro</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if usuarios %}
+                {% for usuario in usuarios %}
+                <tr>
+                  <td>#{{ "%03d"|format(usuario.id_usuario) }}</td>
+                  <td>{{ usuario.nombre }}</td>
+                  <td>{{ usuario.email }}</td>
+                  <td>{{ usuario.telefono or 'N/A' }}</td>
+                  <td>
+                    {% if usuario.rol == 'admin' %}
+                      <span class="badge bg-danger">Admin</span>
+                    {% else %}
+                      <span class="badge bg-primary">Cliente</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ usuario.fecha_registro if usuario.fecha_registro else 'N/A' }}</td>
+                  <td class="text-center">
+                    <a href="{{ url_for('admin.mostrar_usuario_admin', id_usuario=usuario.id_usuario) }}" 
+                       class="btn btn-sm btn-info me-1" title="Ver">
+                      <i class="link-icon" data-feather="eye"></i>
+                    </a>
+                    {% if usuario.id_usuario != session.user_id %}
+                    <form method="POST" action="{{ url_for('admin.eliminar_usuario_admin', id_usuario=usuario.id_usuario) }}" style="display: inline-block;">
+                      <button type="submit" 
+                              onclick="return confirm('¿Seguro que desea eliminar este usuario?')"
+                              class="btn btn-sm btn-danger" title="Eliminar">
+                        <i class="link-icon" data-feather="trash-2"></i>
+                      </button>
+                    </form>
+                    {% else %}
+                    <span class="text-muted">Usuario actual</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              {% else %}
+                <tr>
+                  <td colspan="7" class="text-center text-muted">
+                    <i data-feather="users" class="icon-lg mb-2"></i>
+                    <p class="mb-0">No hay usuarios registrados</p>
+                  </td>
+                </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -6,6 +6,21 @@ from db import get_connection
 
 hospedajes_bp = Blueprint('hospedajes', __name__)
 
+def verificar_admin():
+    """
+    Verifica si el usuario es admin mediante sesión o cookies
+    """
+    # Verificar por sesión Flask (cuando viene del navegador directamente)
+    if session.get('user_rol') == 'admin':
+        return True
+    
+    # Verificar por cookies (cuando viene del API client del frontend)
+    user_rol_cookie = request.cookies.get('user_rol')
+    if user_rol_cookie == 'admin':
+        return True
+    
+    return False
+
 @hospedajes_bp.route("/", methods=["GET"])
 def get_hospedajes():
     """Ver todos los hospedajes"""
@@ -34,15 +49,10 @@ def get_hospedaje_by_id(hospedaje_id):
 @hospedajes_bp.route("/", methods=["POST"])
 def crear_hospedaje():
     """Crear hospedaje (solo admin)"""
-    print(f"[CREATE] Session: {dict(session)}")
-    print(f"[CREATE] User rol: {session.get('user_rol')}")
-    
-    if session.get('user_rol') != 'admin':
-        print(f"[CREATE] DENIED - Role: {session.get('user_rol')} != 'admin'")
+    if not verificar_admin():
         return ("Solo administradores pueden crear hospedajes", 403)
     
     data = request.get_json()
-    print(f"[CREATE] Data received: {data}")
     
     nombre = data.get('nombre')
     descripcion = data.get('descripcion')
@@ -53,7 +63,6 @@ def crear_hospedaje():
     tipo = data.get('tipo', '')
     
     if not all([nombre, precio, capacidad]):
-        print(f"[CREATE] VALIDATION ERROR - Missing fields")
         return ("Nombre, precio y capacidad son requeridos", 400)
     
     try:
@@ -67,16 +76,14 @@ def crear_hospedaje():
         conn.commit()
         cursor.close()
         conn.close()
-        print(f"[CREATE] SUCCESS - Hospedaje creado: {nombre}")
         return ("Hospedaje creado exitosamente", 201)
     except Exception as e:
-        print(f"[CREATE] DATABASE ERROR: {e}")
         return ("Error interno del servidor", 500)
 
 @hospedajes_bp.route("/<int:hospedaje_id>", methods=["PUT"])
 def actualizar_hospedaje(hospedaje_id):
     """Editar hospedaje (solo admin)"""
-    if session.get('user_rol') != 'admin':
+    if not verificar_admin():
         return ("Solo administradores pueden editar hospedajes", 403)
     
     data = request.get_json()
@@ -129,7 +136,7 @@ def actualizar_hospedaje(hospedaje_id):
 @hospedajes_bp.route("/<int:hospedaje_id>", methods=["DELETE"])
 def eliminar_hospedaje(hospedaje_id):
     """Eliminar hospedaje (solo admin)"""
-    if session.get('user_rol') != 'admin':
+    if not verificar_admin():
         return ("Solo administradores pueden eliminar hospedajes", 403)
     
     conn = get_connection()

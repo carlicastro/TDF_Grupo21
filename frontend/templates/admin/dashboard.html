@@ -1,0 +1,333 @@
+{% extends 'Components/base_admin.html' %} {% block title %}Dashboard - Panel de
+Administración{% endblock %} {% block content %}
+<!-- Tarjetas de estadísticas -->
+<div class="row mb-4">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="card-title mb-2">Total Reservas</h6>
+            <h3 class="mb-0">
+              {{ estadisticas.total_reservas if estadisticas else 0 }}
+            </h3>
+            <p class="text-muted mb-0">
+              <span class="text-success me-1"
+                >+{{ (estadisticas.total_reservas * 0.12)|round|int if
+                estadisticas else 0 }}%</span
+              >desde el mes pasado
+            </p>
+          </div>
+          <div class="icon-lg bg-primary-subtle text-primary rounded-3">
+            <i data-feather="calendar" class="icon-md"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="card-title mb-2">Hospedajes Activos</h6>
+            <h3 class="mb-0">
+              {{ estadisticas.total_hospedajes if estadisticas else 0 }}
+            </h3>
+            <p class="text-muted mb-0">
+              <span class="text-info me-1">Habitaciones</span>disponibles
+            </p>
+          </div>
+          <div class="icon-lg bg-success-subtle text-success rounded-3">
+            <i data-feather="home" class="icon-md"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="card-title mb-2">Ocupación Estimada</h6>
+            <h3 class="mb-0">
+              {{ ((estadisticas.total_reservas / (estadisticas.total_hospedajes
+              if estadisticas.total_hospedajes > 0 else 1)) * 100)|round|int if
+              estadisticas else 0 }}%
+            </h3>
+            <div class="progress mt-2" style="height: 4px">
+              <div
+                class="progress-bar bg-info"
+                role="progressbar"
+                style="width: {{ ((estadisticas.total_reservas / (estadisticas.total_hospedajes if estadisticas.total_hospedajes > 0 else 1)) * 100)|round|int if estadisticas else 0 }}%"
+                aria-valuenow="{{ ((estadisticas.total_reservas / (estadisticas.total_hospedajes if estadisticas.total_hospedajes > 0 else 1)) * 100)|round|int if estadisticas else 0 }}"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="icon-lg bg-info-subtle text-info rounded-3">
+            <i data-feather="trending-up" class="icon-md"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="card-title mb-2">Usuarios Registrados</h6>
+            <h3 class="mb-0">
+              {{ estadisticas.total_usuarios if estadisticas else 0 }}
+            </h3>
+            <p class="text-muted mb-0">
+              <span class="text-warning me-1"
+                >+{{ (estadisticas.total_usuarios * 0.05)|round|int if
+                estadisticas else 0 }}</span
+              >nuevos esta semana
+            </p>
+          </div>
+          <div class="icon-lg bg-warning-subtle text-warning rounded-3">
+            <i data-feather="users" class="icon-md"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Gráficos y tablas -->
+<div class="row">
+  <!-- Reservas Recientes -->
+  <div class="col-lg-8 mb-4">
+    <div class="card">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        <h5 class="card-title mb-0">Reservas Recientes</h5>
+        <a
+          href="{{ url_for('admin.reservas_admin') }}"
+          class="btn btn-sm btn-outline-primary"
+          >Ver todas</a
+        >
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Habitación</th>
+                <th>Check-in</th>
+                <th>Estado</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if estadisticas and estadisticas.reservas_recientes %} {% for
+              reserva in estadisticas.reservas_recientes %}
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="avatar-sm me-2">
+                      <div
+                        class="avatar-title bg-primary-subtle text-primary rounded-circle"
+                      >
+                        {{ reserva.usuario_nombre[:2].upper() if
+                        reserva.usuario_nombre else 'NN' }}
+                      </div>
+                    </div>
+                    <div>
+                      <h6 class="mb-0">
+                        {{ reserva.usuario_nombre or 'Usuario ID: ' +
+                        reserva.id_usuario|string }}
+                      </h6>
+                      <small class="text-muted"
+                        >ID: {{ reserva.id_reserva }}</small
+                      >
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  {{ reserva.hospedaje_nombre or 'Hospedaje ID: ' +
+                  reserva.id_hospedaje|string }}
+                </td>
+                <td>{{ reserva.fecha_checkin }}</td>
+                <td>
+                  {% if reserva.estado == 'confirmada' %}
+                  <span class="badge bg-success">Confirmada</span>
+                  {% elif reserva.estado == 'pendiente' %}
+                  <span class="badge bg-warning">Pendiente</span>
+                  {% elif reserva.estado == 'cancelada' %}
+                  <span class="badge bg-danger">Cancelada</span>
+                  {% else %}
+                  <span class="badge bg-secondary"
+                    >{{ reserva.estado|title }}</span
+                  >
+                  {% endif %}
+                </td>
+                <td class="fw-bold">${{ reserva.precio_total }}</td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="5" class="text-center text-muted">
+                  <i data-feather="calendar" class="icon-lg mb-2"></i>
+                  <p class="mb-0">No hay reservas recientes</p>
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Check-ins de Hoy -->
+  <div class="col-lg-4 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Check-ins de Hoy</h5>
+      </div>
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+          <div class="avatar-sm me-3">
+            <div class="avatar-title bg-primary rounded-circle">PR</div>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="mb-1">Pedro Rodríguez</h6>
+            <p class="mb-0 text-muted">Habitación Doble #202</p>
+            <small class="text-muted">14:30 - Llegada programada</small>
+          </div>
+          <span class="badge bg-primary">Pendiente</span>
+        </div>
+
+        <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+          <div class="avatar-sm me-3">
+            <div class="avatar-title bg-info rounded-circle">CS</div>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="mb-1">Carmen Silva</h6>
+            <p class="mb-0 text-muted">Junior Suite #305</p>
+            <small class="text-muted">16:00 - Llegada programada</small>
+          </div>
+          <span class="badge bg-primary">Pendiente</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <div class="avatar-sm me-3">
+            <div class="avatar-title bg-success rounded-circle">RG</div>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="mb-1">Roberto García</h6>
+            <p class="mb-0 text-muted">Habitación Individual #101</p>
+            <small class="text-muted">15:45 - Check-in completado</small>
+          </div>
+          <span class="badge bg-success">Completado</span>
+        </div>
+
+        <div class="mt-3 text-center">
+          <a href="#" class="btn btn-sm btn-outline-primary"
+            >Gestionar check-ins</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Habitaciones más populares y Estado de habitaciones -->
+<div class="row">
+  <div class="col-lg-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Habitaciones Más Populares</h5>
+      </div>
+      <div class="card-body">
+        <div class="row text-center">
+          <div class="col-4">
+            <div class="border rounded p-3">
+              <h4 class="text-primary mb-1">35%</h4>
+              <p class="mb-0 text-muted">Suite Presidencial</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="border rounded p-3">
+              <h4 class="text-success mb-1">28%</h4>
+              <p class="mb-0 text-muted">Habitación Doble</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="border rounded p-3">
+              <h4 class="text-info mb-1">22%</h4>
+              <p class="mb-0 text-muted">Junior Suite</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Estado de Habitaciones</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6 mb-3">
+            <div class="d-flex align-items-center">
+              <div class="icon-sm bg-success-subtle text-success rounded me-2">
+                <i data-feather="check-circle" class="icon-xs"></i>
+              </div>
+              <div>
+                <p class="mb-0 text-muted">Disponibles</p>
+                <h5 class="mb-0">15</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mb-3">
+            <div class="d-flex align-items-center">
+              <div class="icon-sm bg-warning-subtle text-warning rounded me-2">
+                <i data-feather="user" class="icon-xs"></i>
+              </div>
+              <div>
+                <p class="mb-0 text-muted">Ocupadas</p>
+                <h5 class="mb-0">8</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <div class="icon-sm bg-danger-subtle text-danger rounded me-2">
+                <i data-feather="tool" class="icon-xs"></i>
+              </div>
+              <div>
+                <p class="mb-0 text-muted">Mantenimiento</p>
+                <h5 class="mb-0">2</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center">
+              <div class="icon-sm bg-info-subtle text-info rounded me-2">
+                <i data-feather="clock" class="icon-xs"></i>
+              </div>
+              <div>
+                <p class="mb-0 text-muted">Limpieza</p>
+                <h5 class="mb-0">3</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

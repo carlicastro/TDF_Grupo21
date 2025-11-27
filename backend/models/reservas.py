@@ -8,13 +8,15 @@ reservas_bp = Blueprint('reservas', __name__)
 
 def verificar_admin():
     """
-    Verifica si el usuario es admin mediante sesión o header
+    Verifica si el usuario es admin mediante sesión o cookies
     """
+    # Verificar por sesión Flask (cuando viene del navegador directamente)
     if session.get('user_rol') == 'admin':
         return True
     
-    admin_session = request.headers.get('X-Admin-Session')
-    if admin_session and admin_session.startswith('admin_'):
+    # Verificar por cookies (cuando viene del API client del frontend)
+    user_rol_cookie = request.cookies.get('user_rol')
+    if user_rol_cookie == 'admin':
         return True
     
     return False

@@ -29,61 +29,32 @@
           <p class="mar-top-10">Conscientious & Professional</p>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6">
+      <div class="col-lg-6 col-md-8 mx-auto">
         <div class="login-content pad-0">
-          <h3>Hello! Sign into your account</h3>
-          <form>
+          <h3>Iniciar Sesión</h3>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          <form method="POST" action="/login">
             <div class="form-group">
-              <input type="email" placeholder="Enter email address" />
+              <input type="email" name="email" placeholder="Correo electrónico" required />
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Enter password" />
+              <input type="password" name="password" placeholder="Contraseña" required />
             </div>
             <div class="form-group form-checkbox">
-              <input type="checkbox" /> Remember Me
-              <a href="#">Forgot password?</a>
+              <input type="checkbox" name="remember" /> Recordarme
+              <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+            <div class="form-btn">
+              <button type="submit" class="btn btn-orange">INICIAR SESIÓN</button>
+              <p>¿Necesitas una cuenta?<a href="{{ url_for('auth.registro') }}"> Crear cuenta</a></p>
             </div>
           </form>
-          <div class="form-btn">
-            <a href="#" class="btn btn-orange">LOGIN</a>
-            <p>Need an Account?<a href="#"> Create your Hotux account</a></p>
-          </div>
-          <ul class="social-links">
-            <li>
-              <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            </li>
-            <li>
-              <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-6 col-md-6">
-        <div class="login-content pad-0">
-          <h3>Create a Hotux Account</h3>
-          <form>
-            <div class="form-group">
-              <input type="text" placeholder="Enter username" />
-            </div>
-            <div class="form-group">
-              <input type="email" placeholder="Enter email address" />
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Enter password" />
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Confirm password" />
-            </div>
-          </form>
-          <div class="form-btn">
-            <a href="#" class="btn btn-orange">SIGN UP</a>
-          </div>
           <ul class="social-links">
             <li>
               <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>

@@ -1,0 +1,88 @@
+{% extends "Components/base_admin.html" %}
+
+{% block title %}Detalles de Reserva{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <div class="page-header">
+    <h3 class="page-title">
+      <span class="page-title-icon bg-gradient-primary text-white mr-2">
+        <i class="mdi mdi-bookmark"></i>
+      </span>
+      Detalles de Reserva #{{ reserva.id_reserva }}
+    </h3>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="card-title">Información de la Reserva</h4>
+            <a href="{{ url_for('admin.reservas_admin') }}" class="btn btn-secondary">
+              <i class="mdi mdi-arrow-left"></i> Volver
+            </a>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td><strong>ID Reserva:</strong></td>
+                  <td>{{ reserva.id_reserva }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Usuario:</strong></td>
+                  <td>{{ reserva.usuario_nombre or "No disponible" }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Hospedaje:</strong></td>
+                  <td>{{ reserva.hospedaje_nombre or "No disponible" }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Fecha Check-in:</strong></td>
+                  <td>{{ reserva.fecha_checkin }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Fecha Check-out:</strong></td>
+                  <td>{{ reserva.fecha_checkout }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Cantidad de Personas:</strong></td>
+                  <td>{{ reserva.cant_personas }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Estado:</strong></td>
+                  <td>
+                    {% if reserva.estado == "confirmada" %}
+                      <span class="badge badge-success">Confirmada</span>
+                    {% elif reserva.estado == "pendiente" %}
+                      <span class="badge badge-warning">Pendiente</span>
+                    {% elif reserva.estado == "cancelada" %}
+                      <span class="badge badge-danger">Cancelada</span>
+                    {% else %}
+                      <span class="badge badge-secondary">{{ reserva.estado|title }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Precio Total:</strong></td>
+                  <td><span class="text-success font-weight-bold">${{ reserva.precio_total }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="mt-4">
+            <a href="{{ url_for('admin.eliminar_reserva_admin', id_reserva=reserva.id_reserva) }}" 
+               onclick="return confirm('¿Seguro que desea eliminar esta reserva?')"
+               class="btn btn-danger">
+              <i class="mdi mdi-delete"></i> Eliminar Reserva
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'Components/base_admin.html' %}
+
+{% block title %}Crear Habitación{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6 mx-auto">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Nueva Habitación</h5>
+        </div>
+        <div class="card-body">
+          <!-- Mensajes flash -->
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, msg in messages %}
+                <div class="alert alert-{{ 'success' if category=='success' else 'danger' }} alert-dismissible">
+                  {{ msg }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+          
+          <form action="{{ url_for('habitaciones.admin_crear') }}" method="POST">
+            
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control mb-3" name="nombre" id="nombre" required>
+
+            <label for="tipo" class="form-label">Tipo:</label>
+            <select class="form-select mb-3" name="tipo" id="tipo">
+              <option value="habitacion">Habitación</option>
+              <option value="suite">Suite</option>
+              <option value="cabaña">Cabaña</option>
+            </select>
+
+            <label for="capacidad" class="form-label">Capacidad:</label>
+            <select class="form-select mb-3" name="capacidad" id="capacidad" required>
+              <option value="2">2 personas</option>
+              <option value="4">4 personas</option>
+              <option value="6">6 personas</option>
+            </select>
+
+            <label for="precio" class="form-label">Precio por noche ($):</label>
+            <input type="number" step="0.01" class="form-control mb-3" name="precio" id="precio" required>
+
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <textarea class="form-control mb-3" name="descripcion" id="descripcion" rows="2"></textarea>
+
+            <input type="hidden" name="disponibilidad" value="0">
+            <div class="form-check mb-4">
+              <input class="form-check-input" type="checkbox" name="disponibilidad" id="disponibilidad" value="1" checked>
+              <label class="form-check-label" for="disponibilidad">Disponible</label>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Crear Habitación</button>
+            <a href="{{ url_for('habitaciones.admin_lista') }}" class="btn btn-outline-secondary ms-2">Cancelar</a>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

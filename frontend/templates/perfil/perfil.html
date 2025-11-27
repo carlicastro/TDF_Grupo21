@@ -1,6 +1,103 @@
 {% extends 'base.html' %}
-{% block title %}Mis reservas{% endblock %}
+
+{% block title %}Mi Perfil | Hotux{% endblock %}
+
+{% block breadcrumb %}
+<!-- breadcrumb Starts -->
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Mi Perfil</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb Ends -->
+{% endblock %}
+
 {% block content %}
-<h1>Mis reservas</h1>
-<p>Lista de reservas del usuario (placeholder). Consumirá /api/usuarios/{id}/reservas</p>
+<section class="profile-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="profile-sidebar">
+          <div class="profile-info text-center">
+            <h4>{{ session.user_nombre }}</h4>
+            <p>{{ session.user_email }}</p>
+            {% if session.user_rol == 'admin' %}
+              <span class="badge badge-warning">Administrador</span>
+            {% else %}
+              <span class="badge badge-info">Cliente</span>
+            {% endif %}
+          </div>
+          <div class="profile-menu">
+            <ul class="list-group">
+              <li class="list-group-item active">
+                <a href="/perfil">Mi Perfil</a>
+              </li>
+              <li class="list-group-item">
+                <a href="/mis-reservas">Mis Reservas</a>
+              </li>
+              {% if session.user_rol == 'admin' %}
+              <li class="list-group-item">
+                <a href="/admin">Panel Admin</a>
+              </li>
+              {% endif %}
+              <li class="list-group-item">
+                <a href="/logout">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="profile-content">
+          <h3>Información Personal</h3>
+          {% if success %}
+            <div class="alert alert-success">{{ success }}</div>
+          {% endif %}
+          {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+          {% endif %}
+          <form method="POST" action="/perfil">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nombre Completo</label>
+                  <input type="text" name="nombre" class="form-control" value="{{ session.user_nombre }}" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Correo Electrónico</label>
+                  <input type="email" name="email" class="form-control" value="{{ session.user_email }}" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nueva Contraseña (opcional)</label>
+                  <input type="password" name="new_password" class="form-control" placeholder="Dejar vacío para no cambiar">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Confirmar Contraseña</label>
+                  <input type="password" name="confirm_password" class="form-control" placeholder="Solo si cambia contraseña">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-orange">Actualizar Perfil</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

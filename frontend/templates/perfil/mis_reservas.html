@@ -1,6 +1,116 @@
 {% extends 'base.html' %}
-{% block title %}Mis reservas{% endblock %}
+
+{% block title %}Mis Reservas | Hotux{% endblock %}
+
+{% block breadcrumb %}
+<!-- breadcrumb Starts -->
+<section class="breadcrumb-outer">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <h2>Mis Reservas</h2>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('user.perfil') }}">Mi Perfil</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Mis Reservas</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb Ends -->
+{% endblock %}
+
 {% block content %}
-<h1>Mis reservas</h1>
-<p>Lista de reservas del usuario (placeholder). Consumirá /api/usuarios/{id}/reservas</p>
+<section class="reservas-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="profile-sidebar">
+          <div class="profile-info text-center">
+            <h4>{{ session.user_nombre }}</h4>
+            <p>{{ session.user_email }}</p>
+            {% if session.user_rol == 'admin' %}
+            <span class="badge badge-warning">Administrador</span>
+            {% else %}
+            <span class="badge badge-info">Cliente</span>
+            {% endif %}
+          </div>
+          <div class="profile-menu">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <a href="{{ url_for('user.perfil') }}">Mi Perfil</a>
+              </li>
+              <li class="list-group-item active">
+                <a href="{{ url_for('user.mis_reservas') }}">Mis Reservas</a>
+              </li>
+              {% if session.user_rol == 'admin' %}
+              <li class="list-group-item">
+                <a href="{{ url_for('admin.index') }}">Panel Admin</a>
+              </li>
+              {% endif %}
+              <li class="list-group-item">
+                <a href="{{ url_for('auth.logout') }}">Cerrar Sesión</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="reservas-content">
+          <h3>Mis Reservas</h3>
+          {% if reservas %}
+          <div class="row">
+            {% for reserva in reservas %}
+            <div class="col-lg-12 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <img src="{{ url_for('static', filename='images/room-list/grid1.jpg') }}"
+                        class="img-fluid rounded" alt="Habitación">
+                    </div>
+                    <div class="col-md-6">
+                      <h5>{{ reserva.hospedaje_nombre or 'Hospedaje ID: ' + reserva.id_hospedaje|string }}</h5>
+                      <p><strong>Fechas:</strong> {{ reserva.fecha_checkin }} - {{ reserva.fecha_checkout }}</p>
+                      <p><strong>Huéspedes:</strong> {{ reserva.cant_personas }}</p>
+                      <p><strong>Estado:</strong>
+                        {% if reserva.estado == 'confirmada' %}
+                        <span class="badge badge-success">Confirmada</span>
+                        {% elif reserva.estado == 'pendiente' %}
+                        <span class="badge badge-warning">Pendiente</span>
+                        {% elif reserva.estado == 'cancelada' %}
+                        <span class="badge badge-danger">Cancelada</span>
+                        {% endif %}
+                      </p>
+                    </div>
+                    <div class="col-md-3 text-right">
+                      <h4>${{ reserva.importe_total }}</h4>
+                      <small>Total pagado</small>
+                      <br>
+                      {% if reserva.estado == 'confirmada' %}
+                      <a href="/reserva/{{ reserva.id_reserva }}/cancelar/" class="btn btn-sm btn-danger mt-2"
+                        onclick="return confirm('¿Seguro que quiere cancelar?')">
+                        Cancelar
+                      </a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="text-center">
+            <h4>No tienes reservas aún</h4>
+            <p>¡Explora nuestras habitaciones y haz tu primera reserva!</p>
+            <a href="{{ url_for('habitaciones.lista') }}" class="btn btn-orange">Ver Habitaciones</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
