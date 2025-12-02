@@ -28,12 +28,12 @@
       <div class="col-lg-3">
         <div class="profile-sidebar">
           <div class="profile-info text-center">
-            <h4>{{ session.user_nombre }}</h4>
-            <p>{{ session.user_email }}</p>
-            {% if session.user_rol == 'admin' %}
-            <span class="badge badge-warning">Administrador</span>
+            <h4>{{ user_nombre }}</h4>
+            <p>{{ user_email }}</p>
+            {% if user_rol == 'admin' %}
+              <span class="badge badge-warning">Administrador</span>
             {% else %}
-            <span class="badge badge-info">Cliente</span>
+              <span class="badge badge-info">Cliente</span>
             {% endif %}
           </div>
           <div class="profile-menu">
@@ -44,9 +44,9 @@
               <li class="list-group-item active">
                 <a href="{{ url_for('user.mis_reservas') }}">Mis Reservas</a>
               </li>
-              {% if session.user_rol == 'admin' %}
+              {% if user_rol == 'admin' %}
               <li class="list-group-item">
-                <a href="{{ url_for('admin.index') }}">Panel Admin</a>
+                <a href="{{ url_for('admin.admin_dashboard') }}">Panel Admin</a>
               </li>
               {% endif %}
               <li class="list-group-item">
@@ -59,47 +59,56 @@
       <div class="col-lg-9">
         <div class="reservas-content">
           <h3>Mis Reservas</h3>
+          
           {% if reservas %}
-          <div class="row">
-            {% for reserva in reservas %}
-            <div class="col-lg-12 mb-3">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-3">
-                      <img src="{{ url_for('static', filename='images/room-list/grid1.jpg') }}"
-                        class="img-fluid rounded" alt="Habitación">
-                    </div>
-                    <div class="col-md-6">
-                      <h5>{{ reserva.hospedaje_nombre or 'Hospedaje ID: ' + reserva.id_hospedaje|string }}</h5>
-                      <p><strong>Fechas:</strong> {{ reserva.fecha_checkin }} - {{ reserva.fecha_checkout }}</p>
-                      <p><strong>Huéspedes:</strong> {{ reserva.cant_personas }}</p>
-                      <p><strong>Estado:</strong>
+            <div class="row">
+              {% for reserva in reservas %}
+              <div class="col-lg-12 mb-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img src="{{ url_for('static', filename='images/room-list/grid1.jpg') }}" 
+                             class="img-fluid rounded" alt="Habitación">
+                      </div>
+                      <div class="col-md-6">
+                        <h5>{{ reserva.hotel_nombre or 'Hospedaje ID: ' + reserva.id_hospedaje|string }}</h5>
+                        <p><strong>Fechas:</strong> {{ reserva.fecha_checkin }} - {{ reserva.fecha_checkout }}</p>
+                        <p><strong>Huéspedes:</strong> {{ reserva.cant_personas }}</p>
+                        <p><strong>Estado:</strong> 
+                          {% if reserva.estado == 'confirmada' %}
+                            <span class="mb-2">Confirmada</span>
+                          {% elif reserva.estado == 'pendiente' %}
+                            <span class="mb-2">Pendiente</span>
+                          {% elif reserva.estado == 'cancelada' %}
+                            <span class="mb-2">Cancelada</span>
+                          {% endif %}
+                        </p>
+                      </div>
+                      <div class="col-md-3 text-right">
+                        <h4>${{ reserva.importe_total }}</h4>
+                        <small>Total pagado</small>
+                        <br>
                         {% if reserva.estado == 'confirmada' %}
-                        <span class="mb-2">Confirmada</span>
-                        {% elif reserva.estado == 'pendiente' %}
-                        <span class="mb-2">Pendiente</span>
-                        {% elif reserva.estado == 'cancelada' %}
-                        <span class="mb-2">Cancelada</span>
+                          <a href="/reserva/{{ reserva.id_reserva }}/cancelar" 
+                             class="btn btn-sm btn-danger mt-2"
+                             onclick="return confirm('¿Seguro que quiere cancelar?')">
+                             Cancelar
+                          </a>
                         {% endif %}
-                      </p>
-                    </div>
-                    <div class="col-md-3 text-right">
-                      <h4>${{ reserva.importe_total }}</h4>
-                      <small>Total pagado</small>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              {% endfor %}
             </div>
-            {% endfor %}
-          </div>
           {% else %}
-          <div class="text-center">
-            <h4>No tienes reservas aún</h4>
-            <p>¡Explora nuestras habitaciones y haz tu primera reserva!</p>
-            <a href="{{ url_for('habitaciones.lista') }}" class="btn btn-orange">Ver Habitaciones</a>
-          </div>
+            <div class="text-center">
+              <h4>No tienes reservas aún</h4>
+              <p>¡Explora nuestras habitaciones y haz tu primera reserva!</p>
+              <a href="{{ url_for('habitaciones.lista') }}" class="btn btn-orange">Ver Habitaciones</a>
+            </div>
           {% endif %}
         </div>
       </div>

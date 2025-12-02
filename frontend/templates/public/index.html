@@ -140,7 +140,62 @@
   </div>
 </section>
 <!-- Services Ends -->
-
+ 
+<!-- Reviews Starts -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-title title-white">
+      <h2> Explorar <span>Reseñas</span></h2>
+    </div>
+    <div class="review-slider">
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Me hospedé durante una conferencia y el hotel superó mis expectativas. Las salas de reuniones estaban bien
+            equipadas y el personal siempre atento. Sin duda volvería para futuros viajes de trabajo.
+          </p>
+          <h4>Micheal Clordy</h4>
+          <span>Australia</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>El hotel es un verdadero oasis. La habitación tenia una vista espectacular al mar y estaba impecable.
+            El desayuno buffet fue variado y delicioso, con opciones locales y saludables. Perfecto para una escapada romántica.
+          </p>
+          <h4>Kelly Schmidt</h4>
+          <span>Alemania</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Fuimos en familia y la experiencia fue excelente. La pileta fue un éxito para los chicos, mientras que
+             nosotros disfrutamos del spa. ¡Muy recomendable! </p>
+          <h4>Gabriel Castillo</h4>
+          <span>Italia</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Reviews Ends -->
 {% endblock %}
 
 {% block extra_js %}

@@ -180,13 +180,15 @@
 <section class="check-in">
   <div class="container">
     <h4 class="text-center mb-4">Reservar Habitación</h4>
-    <form action="{{ url_for('reservas.reservar', id_hospedaje=hospedaje.id_hospedaje) }}" method="POST">
+    {% if logged_in and puede_reservar %}
+    <form action="{{ url_for('reservas.reservar', id_hospedaje=hospedaje.id_hospedaje) }}" method="POST" id="reservaForm">
       <div class="form-content">
         <div class="table-item">
           <div class="form-group">
             <div class="date-range-inner-wrapper">
-              <input id="date-range2" type="date" name="fecha_checkin" class="form-control" 
-                     value="{{ fecha_checkin if fecha_checkin else '' }}" required />
+              <input type="date" name="fecha_checkin" class="form-control" 
+                     value="{{ fecha_checkin if fecha_checkin else '' }}" 
+                     min="{{ fecha_minima }}" required />
               <span class="input-group-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>
@@ -196,8 +198,9 @@
         <div class="table-item">
           <div class="form-group">
             <div class="date-range-inner-wrapper">
-              <input id="date-range3" type="date" name="fecha_checkout" class="form-control" 
-                     value="{{ fecha_checkout if fecha_checkout else '' }}" required />
+              <input type="date" name="fecha_checkout" class="form-control" 
+                     value="{{ fecha_checkout if fecha_checkout else '' }}" 
+                     min="{{ fecha_minima }}" required />
               <span class="input-group-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>
@@ -226,6 +229,15 @@
         </div>
       </div>
     </form>
+    {% else %}
+    <div class="text-center">
+      <div class="alert alert-info">
+        <h5><i class="fa fa-info-circle"></i> Inicia sesión para reservar</h5>
+        <p>Necesitas estar logueado para poder hacer una reserva</p>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-orange">Iniciar Sesión</a>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </section>
 <!-- check-in Ends -->
@@ -625,12 +637,7 @@
 {% endblock %}
 
 {% block extra_js %}
-
 <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4JwWo5VPt9WyNp3Ne2uc2FMGEePHpqJ8&amp;callback=initMap"
   async defer></script>
-  
-<script src="{{ url_for('static', filename='js/custom-swiper1.js', _external=True)}}"></script>
-<script src="{{ url_for('static', filename='js/custom-singledate.js', _external=True)}}"></script>
-
 {% endblock %}
