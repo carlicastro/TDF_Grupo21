@@ -76,24 +76,17 @@
                       <p><strong>Huéspedes:</strong> {{ reserva.cant_personas }}</p>
                       <p><strong>Estado:</strong>
                         {% if reserva.estado == 'confirmada' %}
-                        <span class="badge badge-success">Confirmada</span>
+                        <span class="mb-2">Confirmada</span>
                         {% elif reserva.estado == 'pendiente' %}
-                        <span class="badge badge-warning">Pendiente</span>
+                        <span class="mb-2">Pendiente</span>
                         {% elif reserva.estado == 'cancelada' %}
-                        <span class="badge badge-danger">Cancelada</span>
+                        <span class="mb-2">Cancelada</span>
                         {% endif %}
                       </p>
                     </div>
                     <div class="col-md-3 text-right">
                       <h4>${{ reserva.importe_total }}</h4>
                       <small>Total pagado</small>
-                      <br>
-                      {% if reserva.estado == 'confirmada' %}
-                      <a href="/reserva/{{ reserva.id_reserva }}/cancelar/" class="btn btn-sm btn-danger mt-2"
-                        onclick="return confirm('¿Seguro que quiere cancelar?')">
-                        Cancelar
-                      </a>
-                      {% endif %}
                     </div>
                   </div>
                 </div>

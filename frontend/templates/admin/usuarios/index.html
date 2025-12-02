@@ -41,9 +41,13 @@
                   <td>{{ usuario.telefono or 'N/A' }}</td>
                   <td>
                     {% if usuario.rol == 'admin' %}
-                      <span class="badge bg-danger">Admin</span>
+                      <span class="badge bg-danger">Admin</span>                
                     {% else %}
-                      <span class="badge bg-primary">Cliente</span>
+                      {% if usuario.rol == 'empleado' %}                    
+                        <span class="badge bg-danger">Empleado</span>
+                      {% else %}
+                        <span class="badge bg-primary">Cliente</span>
+                      {% endif %}
                     {% endif %}
                   </td>
                   <td>{{ usuario.fecha_registro if usuario.fecha_registro else 'N/A' }}</td>
