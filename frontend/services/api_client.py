@@ -308,32 +308,3 @@ def obtener_reservas_hospedaje(id_hospedaje):
     except Exception as e:
         return []
 
-
-# ===== CLIENTE API GENÉRICO =====
-
-
-class ApiClient:
-    """Cliente API genérico para peticiones HTTP"""
-
-    def __init__(self, base_url=API_BASE):
-        self.base_url = base_url
-
-    def post(self, endpoint, data):
-        """Realizar petición POST"""
-        try:
-            response = make_request("POST", f"{self.base_url}{endpoint}", json=data)
-            return response
-        except Exception as e:
-            return None
-
-    def get(self, endpoint):
-        """Realizar petición GET"""
-        try:
-            response = make_request("GET", f"{self.base_url}{endpoint}")
-            return response
-        except Exception as e:
-            return None
-
-
-# Instancia global del cliente API
-api_client = ApiClient()
