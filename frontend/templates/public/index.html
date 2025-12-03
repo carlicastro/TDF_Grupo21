@@ -93,11 +93,7 @@
 <section class="rooms">
   <div class="container">
     <div class="section-title">
-      <h2>Explore <span>Rooms</span></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor vulputate quam donec vitae consectetur
-        turpis
-      </p>
+      <h2>Explorar <span>Habitaciones</span></h2>
     </div>
     <div class="room-outer">
       <div class="row">
@@ -107,7 +103,7 @@
             <div class="room-item">
               <div class="room-image">
                 {% if hospedaje.foto %}
-                  <img src="{{ hospedaje.foto }}" alt="{{ hospedaje.nombre }}" />
+                  <img src="{{ url_for('static', filename='images/' ~ hospedaje.foto, _external=True)}}" alt="{{ hospedaje.nombre }}" />
                 {% else %}
                   <img src="{{ url_for('static', filename='images/room1.jpg', _external=True)}}" alt="image" />
                 {% endif %}
