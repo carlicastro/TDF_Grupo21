@@ -5,6 +5,8 @@ Rutas de usuario SIMPLES
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from services.api_client import obtener_reservas_usuario
 
+user_bp = Blueprint('user', __name__)
+
 # Pre: Sesión Flask activa
 # Post: Si usuario logueado retorna None, si no logueado retorna redirect a login
 def validar_sesion():
@@ -26,7 +28,6 @@ def validar_admin():
         return redirect(url_for('public.index'))
     return None
 
-user_bp = Blueprint('user', __name__)
 
 # Pre: Usuario debe estar logueado
 # Post: Si logueado, muestra página de perfil. Si no logueado, redirige a login

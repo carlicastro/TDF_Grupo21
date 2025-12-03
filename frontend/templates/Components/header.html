@@ -34,11 +34,6 @@
                 <li>
                   <a href="{{ url_for('admin.admin_dashboard') }}"><i class="fa fa-cog" aria-hidden="true"></i> Panel Admin</a>
                 </li>
-                {% endif %}
-                {% if user_rol == 'admin' %}
-                <li>
-                  <a href="{{ url_for('admin.reservas_admin') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Reservas</a>
-                </li>
                 {% else %}
                 <li>
                   <a href="{{ url_for('user.mis_reservas') }}"><i class="fa fa-calendar" aria-hidden="true"></i> Mis Reservas</a>

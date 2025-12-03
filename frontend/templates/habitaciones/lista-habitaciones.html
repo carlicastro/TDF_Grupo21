@@ -48,11 +48,6 @@
                 <div class="room-title">
                   <h4>{{ hospedaje.nombre }}</h4>
                   <p class="mar-top-5"><i class="fa fa-tag"></i> ${{ hospedaje.precio }}/Noche</p>
-                  {% if hospedaje.disponibilidad == 1 %}
-                    <span class="badge badge-success">Disponible</span>
-                  {% else %}
-                    <span class="badge badge-danger">No Disponible</span>
-                  {% endif %}
                 </div>
                 <div class="room-detail">
                   <p>
@@ -76,13 +71,7 @@
 
                 <div class="grid-btn mar-top-20">
                   <a href="{{ url_for('habitaciones.detalle', id=hospedaje.id_hospedaje) }}" 
-                     class="btn btn-black mar-right-10">VER DETALLES</a>
-                  {% if hospedaje.disponibilidad == 1 %}
-                    <a href="{{ url_for('habitaciones.detalle', id=hospedaje.id_hospedaje) }}" 
-                       class="btn btn-orange">RESERVAR</a>
-                  {% else %}
-                    <span class="btn btn-secondary">NO DISPONIBLE</span>
-                  {% endif %}
+                     class="btn btn-orange">VER DETALLES</a>
                 </div>
               </div>
             </div>

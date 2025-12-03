@@ -1,46 +1,62 @@
-# Backend - API REST Hotel
+# Backend - Sistema Hotel 🏨
 
-API REST desarrollada con Flask para gestión de reservas hoteleras.
+**API REST simplificada con Flask para gestión de reservas hoteleras**
 
-## 🚀 Instalación
+## 🚀 Inicio Rápido
 
 ```bash
-# Instalar dependencias
+# 1. Instalar dependencias
 pip install -r requirements.txt
 
-# Configurar base de datos
-mysql -u root -p
-CREATE DATABASE hotel_db;
-USE hotel_db;
-SOURCE schema.sql;
+# 2. Base de datos MySQL
+mysql -u root -p < schema.sql
 
-# Variables de entorno (.env)
-DATABASE_HOST=localhost
-DATABASE_USER=root
-DATABASE_PASSWORD=tu_password
-DATABASE_NAME=hotel_db
-SECRET_KEY=clave_secreta_muy_segura
-
-# Ejecutar servidor
+# 3. Ejecutar
 python app.py
 ```
 
-## 📡 Endpoints
+**✅ Servidor corriendo en:** `http://localhost:8080`
 
-- `POST /usuarios/register` - Registro
-- `POST /usuarios/login` - Autenticación  
-- `GET /usuarios/` - Listar usuarios (admin)
-- `GET /hospedajes/` - Listar hospedajes
-- `GET /reservas/` - Listar reservas (admin)
+## 📁 Estructura
+
+```
+backend/
+├── app.py              # Servidor principal Flask
+├── db.py               # Conexión MySQL
+├── schema.sql          # Base de datos + datos prueba
+└── models/
+    ├── usuario.py      # CRUD usuarios + auth
+    ├── hospedajes.py   # CRUD habitaciones
+    ├── reservas.py     # CRUD reservas
+    └── auth.py         # Login/logout
+```
+
+## 🔌 API Endpoints
+
+### Usuarios
+- `POST /usuarios/login` - Iniciar sesión
+- `POST /usuarios/register` - Registrarse
+- `GET /usuarios/{id}/reservas` - Ver reservas usuario
+
+### Hospedajes
+- `GET /hospedajes/` - Listar habitaciones
+- `POST /hospedajes/` - Crear habitación (admin)
+
+### Reservas  
 - `POST /reservas/` - Crear reserva
+- `GET /reservas/` - Listar todas (admin)
 
-## 🔧 Dependencias
+## 👤 Usuarios de Prueba
 
-- Flask 3.0.3
-- Flask-CORS 4.0.1
-- mysql-connector-python 9.0.0
-- python-dotenv 1.0.1
+```
+Admin: admin@hotel.com / admin123
+Cliente: juan@example.com / cliente123
+Tu usuario: rmallqui@fi.uba.ar / rmallqui@fi.uba.ar
+```
 
-## 🌐 Puerto
+## 🛠️ Tecnologías
 
-Servidor ejecutándose en **puerto 8080**
+- **Flask** - Framework web
+- **MySQL** - Base de datos  
+- **Sessions** - Autenticación
+- **CORS** - API accesible desde frontend

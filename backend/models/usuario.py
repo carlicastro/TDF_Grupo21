@@ -21,23 +21,6 @@ def logout():
     # Cerrar sesión
     return logout_usuario()
 
-# Pre: Usuario debe estar logueado
-# Post: Si está logueado, retorna datos del usuario de la sesión. Si no está logueado, error 401
-@usuarios_bp.route('/me', methods=['GET'])
-def mi_usuario():
-    # Ver mi info
-    if esta_logueado() == False:
-        return jsonify({'error': 'Debes estar logueado'}), 401
-    
-    return jsonify({
-        'user': {
-            'id': session.get('user_id'),
-            'nombre': session.get('user_nombre'),
-            'email': session.get('user_email'),
-            'rol': session.get('user_rol')
-        }
-    })
-
 # Pre: Request POST con JSON conteniendo nombre, email, password. Email no debe existir en BD
 # Post: Si datos válidos, usuario creado en BD con rol cliente. Si email existe, retorna error
 @usuarios_bp.route('/register', methods=['POST'])

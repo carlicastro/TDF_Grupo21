@@ -5,8 +5,10 @@ CRUD básico: Create, Read, Update, Delete
 
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from datetime import datetime
+import calendar
 from services.api_client import (
-    obtener_hospedajes, obtener_hospedaje, crear_hospedaje, actualizar_hospedaje, eliminar_hospedaje
+    obtener_hospedajes, obtener_hospedaje, crear_hospedaje, actualizar_hospedaje, 
+    eliminar_hospedaje, obtener_reservas_hospedaje
 )
 from .user_routes import validar_admin
 
@@ -33,10 +35,31 @@ def detalle(id):
     fecha_minima = datetime.now().date().strftime('%Y-%m-%d')
     puede_reservar = session.get('logged_in', False)
     
+    # Obtener solo fechas ocupadas para mostrar en calendario estático
+    fechas_ocupadas = obtener_reservas_hospedaje(id)
+    
+    # Datos para calendario estático
+    hoy = datetime.now().date()
+    mes_actual = hoy.month
+    año_actual = hoy.year
+    primer_dia = datetime(año_actual, mes_actual, 1)
+    
+    # Calcular días del mes y día de la semana que empieza
+    dias_en_mes = calendar.monthrange(año_actual, mes_actual)[1]
+    primer_dia_semana = primer_dia.weekday() + 1  # Lunes=0, convertir a Domingo=1
+    if primer_dia_semana == 7:
+        primer_dia_semana = 0
+    
     return render_template('habitaciones/detalles-habitacion.html', 
                          hospedaje=hospedaje,
                          fecha_minima=fecha_minima,
-                         puede_reservar=puede_reservar)
+                         puede_reservar=puede_reservar,
+                         fechas_ocupadas=fechas_ocupadas,
+                         hoy=hoy,
+                         mes_actual=mes_actual,
+                         año_actual=año_actual,
+                         dias_en_mes=dias_en_mes,
+                         primer_dia_semana=primer_dia_semana)
 
 # ===== RUTAS ADMIN (para administradores) =====
 

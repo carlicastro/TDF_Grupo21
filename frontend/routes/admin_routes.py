@@ -129,12 +129,3 @@ def eliminar_reserva_admin(id_reserva):
         flash("Error al eliminar reserva", "error")
     
     return redirect(url_for('admin.reservas_admin'))
-
-# Pre: Usuario con sesión activa
-# Post: Sesión completamente limpia, redirige a página principal
-@admin_bp.route('/admin/logout')
-def admin_logout():
-    # Cerrar sesión de admin
-    session.clear()
-    flash("Sesión cerrada exitosamente", "success")
-    return redirect(url_for('public.index'))

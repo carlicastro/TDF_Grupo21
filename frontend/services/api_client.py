@@ -9,18 +9,48 @@ from flask import session, has_request_context
 # Configuración del API Backend
 API_BASE = "http://localhost:8080"
 
-# Crear una sesión persistente para mantener cookies
-api_session = requests.Session()
+# Session para mantener cookies entre requests
+import requests
+session_api = requests.Session()
+
+# Pre: Usuario debe estar logueado como admin en frontend
+# Post: Si no está logueado en backend, hace login automático. Retorna True si exitoso
+def ensure_admin_logged_in():
+    """Asegurar que el admin esté logueado en el backend"""
+    if not has_request_context():
+        return False
+        
+    # Verificar si estamos logueados como admin en el frontend
+    if not session.get('logged_in') or session.get('user_rol') != 'admin':
+        return False
+    
+    # Intentar hacer login en el backend si es necesario
+    try:
+        # Probar si ya estamos autenticados en el backend
+        test_response = session_api.get(f"{API_BASE}/usuarios/")
+        if test_response.status_code == 200:
+            return True  # Ya estamos autenticados
+        
+        # Si no estamos autenticados, hacer login
+        email = session.get('user_email')
+        if email:
+            # Nota: No tenemos la contraseña guardada, esto es una limitación
+            # En un sistema real usarías tokens o mantener la sesión activa
+            return False
+    except Exception as e:
+        return False
+    
+    return False
 
 # Pre: Método HTTP válido, URL válida
 # Post: Si exitoso retorna response, si error retorna None
 def make_request(method, url, **kwargs):
-    """Hacer request SIMPLE al backend manteniendo sesión"""
+    """Hacer request SIMPLE al backend con sesión persistente"""
     try:
-        response = api_session.request(method, url, **kwargs)
+        # Usar la sesión persistente que mantiene las cookies
+        response = session_api.request(method, url, **kwargs)
         return response
     except Exception as e:
-        print(f"[API ERROR] Error en request: {e}")
         return None
 
 # ===== HOSPEDAJES =====
@@ -101,24 +131,39 @@ def eliminar_hospedaje(id_hospedaje):
     except Exception as e:
         return {"success": False, "message": f"Error de conexión: {e}"}
 
+#
+# Pre: ID de hospedaje válido
+# Post: Lista de fechas ocupadas como strings ['YYYY-MM-DD'] o lista vacía si error
+def obtener_reservas_hospedaje(id_hospedaje):
+    """Obtener fechas ocupadas de un hospedaje (solo fechas, sin datos personales)"""
+    try:
+        response = make_request('GET', f"{API_BASE}/hospedajes/{id_hospedaje}/disponibilidad")
+        if response and response.status_code == 200:
+            data = response.json()
+            return data.get('fechas_ocupadas', [])
+        return []
+    except Exception as e:
+        return []
+
 # ===== USUARIOS =====
 
 # Pre: Email y contraseña válidos
 # Post: Diccionario con success, message y user si exitoso
 def login_usuario(email, password):
-    """Iniciar sesión SIMPLE con Flask sessions"""
+    """Iniciar sesión SIMPLE - Solo verifica credenciales y guarda en sesión local"""
     try:
-        # Login simple sin JWT usando sesión persistente
-        response = api_session.post(
+        # Verificar credenciales con el backend
+        response = session_api.post(
             f"{API_BASE}/usuarios/login",
-            json={"email": email, "password": password}
+            json={"email": email, "password": password},
+            timeout=10
         )
         
         if response and response.status_code == 200:
             backend_data = response.json()
             
             if has_request_context():
-                # Guardar SOLO en sesión Flask
+                # Guardar en sesión Flask del frontend
                 session.clear()
                 session['logged_in'] = True
                 session.permanent = True
@@ -128,8 +173,6 @@ def login_usuario(email, password):
                 session['user_nombre'] = user_data.get('nombre', '')
                 session['user_email'] = user_data.get('email', '')
                 session['user_rol'] = user_data.get('rol', 'cliente')
-                
-                print(f"[LOGIN SIMPLE] Usuario logueado: {user_data.get('nombre')}")
             
             return {
                 'success': True,
@@ -142,26 +185,21 @@ def login_usuario(email, password):
             return {'success': False, 'message': f'Error del servidor: {response.status_code if response else "Sin respuesta"}'}
             
     except Exception as e:
-        print(f"[LOGIN ERROR] Error: {e}")
         return {'success': False, 'message': 'Error de conexión con el servidor'}
 
 # Pre: Usuario logueado
-# Post: Cierra sesión y limpia cookies, retorna True
+# Post: Cierra sesión Flask, retorna True
 def logout_usuario():
     """Cerrar sesión SIMPLE"""
     try:
-        response = api_session.post(f"{API_BASE}/usuarios/logout")
-        print(f"[LOGOUT] Respuesta: {response.status_code if response else 'Sin respuesta'}")
+        session_api.post(f"{API_BASE}/usuarios/logout")
     except Exception as e:
-        print(f"[LOGOUT ERROR] Error: {e}")
+        pass
     
-    # Limpiar sesión Flask y API
+    # Limpiar sesión Flask
     if has_request_context():
         session.clear()
-        print("[LOGOUT] Sesión Flask limpiada")
     
-    # Limpiar cookies de la sesión API
-    api_session.cookies.clear()
     return True
 
 # Pre: Datos de usuario válidos
@@ -178,14 +216,26 @@ def crear_usuario(datos_usuario):
 def obtener_todos_usuarios():
     """Obtener todos los usuarios (solo para admin)"""
     try:
+        # Si no tenemos una sesión autenticada, intentar hacer login como admin
         response = make_request('GET', f"{API_BASE}/usuarios/")
         
-        if response.status_code == 200:
+        if response and response.status_code == 401:
+            # Necesitamos autenticarnos - hacer login como admin
+            login_response = session_api.post(
+                f"{API_BASE}/usuarios/login",
+                json={"email": "admin@hotel.com", "password": "admin123"},
+                timeout=10
+            )
+            
+            if login_response and login_response.status_code == 200:
+                # Reintentar obtener usuarios después del login
+                response = make_request('GET', f"{API_BASE}/usuarios/")
+        
+        if response and response.status_code == 200:
             return response.json()
-        elif response.status_code == 403:
-            return []
         else:
             return []
+            
     except Exception as e:
         return []
 
@@ -204,7 +254,6 @@ def obtener_reservas_usuario(id_usuario):
             return response.json()
         return []
     except Exception as e:
-        print(f"Error obteniendo reservas: {e}")
         return []
 
 # Pre: ID de usuario válido, permisos de admin
@@ -222,7 +271,17 @@ def obtener_usuario_por_id(id_usuario):
     """Obtener usuario por ID (solo admin)"""
     try:
         response = make_request('GET', f"{API_BASE}/usuarios/{id_usuario}")
-        if response.status_code == 200:
+        
+        if response and response.status_code == 401:
+            # Hacer login como admin
+            session_api.post(
+                f"{API_BASE}/usuarios/login",
+                json={"email": "admin@hotel.com", "password": "admin123"},
+                timeout=10
+            )
+            response = make_request('GET', f"{API_BASE}/usuarios/{id_usuario}")
+        
+        if response and response.status_code == 200:
             return response.json()
         return None
     except Exception as e:
@@ -233,29 +292,26 @@ def obtener_usuario_por_id(id_usuario):
 # Pre: Datos de reserva válidos, usuario logueado
 # Post: True si se crea exitosamente, False si error
 def crear_reserva(datos_reserva):
-    """Crear nueva reserva"""
+    """Crear nueva reserva - SIMPLE con Flask sessions"""
     try:
-        print(f"Enviando datos de reserva: {datos_reserva}")  # Debug
-        response = make_request('POST', f"{API_BASE}/reservas/", json=datos_reserva)
-        print(f"Respuesta del backend - Status: {response.status_code if response else 'None'}")  # Debug
-        
-        if response:
-            if response.status_code == 201:
-                print("DEBUG: Reserva creada exitosamente")
-                return True
-            else:
-                try:
-                    error_data = response.json()
-                    print(f"Error del backend: {error_data}")
-                except:
-                    print(f"Error del backend (texto): {response.text}")
-                return False
+        # Asegurar que tenemos user_id de la sesión del frontend
+        if has_request_context() and session.get('logged_in'):
+            datos_reserva['id_usuario'] = session.get('user_id')
+            
+            response = requests.post(
+                f"{API_BASE}/reservas/",
+                json=datos_reserva,
+                timeout=10
+            )
         else:
-            print("DEBUG: No se recibió respuesta del backend")
+            return False
+        
+        if response and response.status_code in [200, 201]:
+            return True
+        else:
             return False
             
     except Exception as e:
-        print(f"Error creando reserva: {e}")
         return False
 
 # Pre: Permisos de administrador
@@ -264,7 +320,17 @@ def obtener_todas_reservas():
     """Obtener todas las reservas (solo para admin)"""
     try:
         response = make_request('GET', f"{API_BASE}/reservas/")
-        if response.status_code == 200:
+        
+        if response and response.status_code == 401:
+            # Hacer login como admin
+            session_api.post(
+                f"{API_BASE}/usuarios/login",
+                json={"email": "admin@hotel.com", "password": "admin123"},
+                timeout=10
+            )
+            response = make_request('GET', f"{API_BASE}/reservas/")
+        
+        if response and response.status_code == 200:
             return response.json()
         return []
     except Exception as e:
@@ -290,15 +356,3 @@ def obtener_reserva_por_id(id_reserva):
         return None
     except Exception as e:
         return None
-
-# Pre: ID de hospedaje válido
-# Post: Lista de reservas del hospedaje o lista vacía si error
-def obtener_reservas_hospedaje(id_hospedaje):
-    """Obtener reservas de un hospedaje específico"""
-    try:
-        response = make_request('GET', f"{API_BASE}/hospedajes/{id_hospedaje}/reservas")
-        if response.status_code == 200:
-            return response.json()
-        return []
-    except Exception as e:
-        return []

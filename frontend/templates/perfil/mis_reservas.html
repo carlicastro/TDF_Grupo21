@@ -89,13 +89,7 @@
                         <h4>${{ reserva.importe_total }}</h4>
                         <small>Total pagado</small>
                         <br>
-                        {% if reserva.estado == 'confirmada' %}
-                          <a href="/reserva/{{ reserva.id_reserva }}/cancelar" 
-                             class="btn btn-sm btn-danger mt-2"
-                             onclick="return confirm('¿Seguro que quiere cancelar?')">
-                             Cancelar
-                          </a>
-                        {% endif %}
+                        <small class="text-muted">Reserva #{{ reserva.id_reserva }}</small>
                       </div>
                     </div>
                   </div>

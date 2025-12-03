@@ -1,5 +1,5 @@
 """
-Frontend de Hotel
+Frontend SIMPLE - Sistema Hotel Universitario
 """
 
 import os

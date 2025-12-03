@@ -2,6 +2,7 @@
 Funciones para manejar la tabla hospedajes
 """
 from flask import Blueprint, jsonify, request
+from datetime import timedelta
 from db import get_connection
 from .auth import es_admin
 
@@ -132,3 +133,36 @@ def eliminar_hospedaje(hospedaje_id):
     conn.close()
     
     return jsonify({"success": True, "message": "Hospedaje eliminado"})
+
+# Pre: hospedaje_id debe ser un entero válido
+# Post: Retorna lista simple de fechas ocupadas
+@hospedajes_bp.route("/<int:hospedaje_id>/disponibilidad", methods=["GET"])
+def get_disponibilidad_hospedaje(hospedaje_id):
+    """Ver fechas ocupadas - SIMPLE para estudiantes"""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    # SQL simple: obtener fechas de reservas confirmadas
+    cursor.execute("""
+        SELECT fecha_checkin, fecha_checkout
+        FROM reservas 
+        WHERE id_hospedaje = %s AND estado = 'confirmada'
+    """, (hospedaje_id,))
+    
+    reservas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    
+    # Crear lista de fechas ocupadas (lógica simple)
+    fechas_ocupadas = []
+    for reserva in reservas:
+        checkin = reserva[0]
+        checkout = reserva[1]
+        
+        # Agregar día por día desde checkin hasta checkout
+        fecha = checkin
+        while fecha <= checkout:
+            fechas_ocupadas.append(fecha.strftime('%Y-%m-%d'))
+            fecha += timedelta(days=1)
+    
+    return jsonify({'fechas_ocupadas': fechas_ocupadas})
