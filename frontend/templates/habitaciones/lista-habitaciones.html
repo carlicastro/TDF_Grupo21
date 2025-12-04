@@ -39,7 +39,7 @@
             <div class="room-grid">
               <div class="grid-image">
                 {% if hospedaje.foto %}
-                  <img src="{{ url_for('static', filename='images/' ~ hospedaje.foto, __external=True)}}" alt="{{ hospedaje.nombre }}" />
+                  <img src="{{ url_for('static', filename='images/' ~ hospedaje.foto, _external=True)}}" alt="{{ hospedaje.nombre }}" />
                 {% else %}
                   <img src="{{ url_for('static', filename='images/room-list/grid1.jpg') }}" alt="{{ hospedaje.nombre }}" />
                 {% endif %}
