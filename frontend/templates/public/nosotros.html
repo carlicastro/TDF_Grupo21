@@ -26,13 +26,14 @@
       <div class="col-lg-8">
         <div class="about-para mar-top-50">
           <h3>Acerca de Hotux</h3>
-          <h4>Elige una habitación que se ajuste mejor a tus gustos y presupuesto.</h4>
+          <h4>Creemos que cada viaje merece convertirse en una experiencia inolvidable</h4>
           <p>
-            Porque nadie desprecia, odia ni huye del placer en sí mismo por ser placer, sino porque grandes dolores siguen a quienes no saben seguir el placer con la razón. Tampoco hay quien ame, busque o desee obtener el dolor en sí mismo por ser dolor, sino porque a menudo se presentan situaciones en las que busca algún gran placer a través del trabajo y el dolor. Porque, en cuanto a las cosas más pequeñas...
+            Nos apasiona recibir a cada huésped con calidez y dedicación, porque sabemos que viajar implica mucho más que descansar:
+            es descubrir, conectar y sentirse parte de un lugar. Por eso, nuestro equipo está siempre dispuesto a acompañarte, ya sea 
+            recomendadno actividades locales, atendiendo tus necesidades o simplemente asegurándose de que te sientas como en casa.
           </p>
           <h5 class="text-capitalize">
-            Y además, ¿acaso hay alguien que, porque el dolor es dolor, ame, persiga y desee obtener el dolor mismo, pero porque el dolor nunca llega en momentos como estos?
-          </h5>
+            Cada estadía es una oportunidad para compartir nuestra pasión por la hospitalidad y dejarte recuerdos que te inviten a volver. </h5>
           <div class="about-para-list mar-top-20">
             <div class="row">
               <div class="col-md-4 col-sm-4 col-xs-4">
@@ -50,7 +51,7 @@
       </div>
       <div class="col-lg-4">
         <div class="about-us-image mar-top-50">
-          <img src="{{ url_for('static', filename='images/gallery/gallery1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/gallery/gallery1.jpg', _external=True) }}" alt="image" />
         </div>
       </div>
     </div>
@@ -64,7 +65,7 @@
     <div class="row">
       <div class="col-lg-5">
         <div class="about-us-image">
-          <img src="{{ url_for('static', filename='images/gallery/gallery2.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/gallery/gallery2.jpg', _external=True) }}" alt="image" />
         </div>
       </div>
       <div class="col-lg-7">
@@ -72,13 +73,12 @@
           <div class="accrodion-grp" data-grp-name="faq-accrodion">
             <div class="accrodion active">
               <div class="accrodion-title">
-                <h4>¿Cómo puedo mejorar mi higiene bucal?</h4>
+                <h4>¿Cuál es el horario de check-in y check-out?</h4>
               </div>
               <div class="accrodion-content" style="display: block">
                 <div class="inner">
                   <p>
-                    Las necesidades de cada persona son diferentes, así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
-                    dientes revisados por ellos en función del estado de su boca, dientes y encías.
+                    El check-in es a partir de las 14:00 hs y el check-out hasta las 11:00 hs.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -86,13 +86,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Cómo sé si mis dientes son saludables?</h4>
+                <h4>¿Se aceptan mascotas?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    Las necesidades de cada persona son diferentes, así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
-                    dientes revisados por ellos en función del estado de su boca, dientes y encías.
+                    Sí, aceptamos mascotas pequeñas con reserva previa y condiciones específicas.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -100,14 +99,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Por qué son tan importantes las evaluaciones dentales regulares?</h4>
+                <h4>¿Hay estacionamiento disponible?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    Las necesidades de cada persona son diferentes, 
-                    así que hable con su dentista sobre la frecuencia con la que necesita que le revisen sus dientes.
-                    Según el estado de su boca, dientes y encías.
+                    Contamos con estacionamiento privado sin cargo adicional para huéspedes.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -115,14 +112,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Qué pasa si tengo que cancelar mi cita?</h4>
+                <h4>¿El hotel tiene Wi-Fi gratuito?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
-                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
-                    
+                    Sí, ofrecemos conexión Wi-Fi de alta velocidad en todas las áreas.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -130,13 +125,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Qué debo llevar a mi cita?</h4>
+                <h4>¿El desayuno está incluido?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
-                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                    En la mayoria de nuestras tarifas, si. También ofrecemos opciones sin desayuno.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -144,13 +138,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Qué debo llevar a mi cita?</h4>
+                <h4>¿Ofrecen traslados al aeropuerto?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
-                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
+                    Sí, con costo adicional. Se puede solicitar al momento de la reserva.
                   </p>
                 </div>
                 <!-- /.inner -->
@@ -158,14 +151,12 @@
             </div>
             <div class="accrodion">
               <div class="accrodion-title">
-                <h4>¿Cuáles son las instalaciones disponibles en el hospital?</h4>
+                <h4>¿Hay habitaciones adaptadas para personas con movilidad reducida?</h4>
               </div>
               <div class="accrodion-content" style="display: none">
                 <div class="inner">
                   <p>
-                    A veces suceden imprevistos y necesita cancelar su cita, asegúrese de llamarnos o
-                    enviarnos un correo electrónico con 1 día de anticipación antes de la cancelación.
-                  </p>
+                    Sí, contamos con habitaciones accesibles y rampas en zonas comunes.</p>
                 </div>
                 <!-- /.inner -->
               </div>
@@ -212,17 +203,12 @@
   <div class="container">
     <div class="section-title">
       <h2> Explorar <span>equipo</span></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
-        vulputate quam donec vitae consectetur
-        turpis
-      </p>
     </div>
     <div class="row team-slider">
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team1.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team1.jpg', _external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>John Anderson</h4>
@@ -247,7 +233,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team2.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team2.jpg', _external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Erina Gray</h4>
@@ -272,7 +258,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team3.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team3.jpg', _external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Micheal Carter</h4>
@@ -297,7 +283,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team4.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team4.jpg', _external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Nelson Roar</h4>
@@ -329,53 +315,50 @@
   <div class="container">
     <div class="section-title title-white">
       <h2> Explorar <span>Reseñas</span></h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
-        vulputate quam donec vitae consectetur
-        turpis
-      </p>
     </div>
     <div class="review-slider">
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review1.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="slider-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
-            Sed egestas sapien libero.</p>
+          <p>Me hospedé durante una conferencia y el hotel superó mis expectativas. Las salas de reuniones estaban bien
+            equipadas y el personal siempre atento. Sin duda volvería para futuros viajes de trabajo.
+          </p>
           <h4>Micheal Clordy</h4>
-          <span>Germany</span>
-        </div>
-        <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
-        </div>
-      </div>
-      <div class="slider-item">
-        <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
-        </div>
-        <div class="slider-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
-            Sed egestas sapien libero.</p>
-          <h4>Ketty Perry</h4>
           <span>Australia</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True) }}" alt="Image" />
         </div>
       </div>
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review2.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="slider-content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod tortor vitae nisi pharetra egestas.
-            Sed egestas sapien libero.</p>
-          <h4>Micheal Clordy</h4>
-          <span>Germany</span>
+          <p>El hotel es un verdadero oasis. La habitación tenia una vista espectacular al mar y estaba impecable.
+            El desayuno buffet fue variado y delicioso, con opciones locales y saludables. Perfecto para una escapada romántica.
+          </p>
+          <h4>Kelly Schmidt</h4>
+          <span>Alemania</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True) }}" alt="Image" />
+        </div>
+      </div>
+      <div class="slider-item">
+        <div class="slider-image">
+          <img src="{{ url_for('static', filename='images/review1.jpg', _external=True) }}" alt="image" />
+        </div>
+        <div class="slider-content">
+          <p>Fuimos en familia y la experiencia fue excelente. La pileta fue un éxito para los chicos, mientras que
+             nosotros disfrutamos del spa. ¡Muy recomendable! </p>
+          <h4>Gabriel Castillo</h4>
+          <span>Italia</span>
+        </div>
+        <div class="slider-quote">
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True) }}" alt="Image" />
         </div>
       </div>
     </div>
@@ -389,9 +372,7 @@
     <div class="section-title">
       <h2> Explorar <span>Servicios</span></h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ex neque, sodales accumsan sapien et, auctor
-        vulputate quam donec vitae consectetur
-        turpis
+        Descubrí todo lo que tenemos preparado para hacer tu estadía más cómoda, práctica y especial. Nuestros servicios estan pensados para acompañarte en cada momento de tu viaje.
       </p>
     </div>
     <div class="service-outer">
@@ -399,7 +380,7 @@
         <div class="col-lg-4 col-md-12 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service1.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service1.jpg', _external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#restaurante">Restaurante</a></h4>
@@ -410,7 +391,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service2.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service2.jpg', _external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#masajes">Masaje</a></h4>
@@ -421,7 +402,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service3.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service3.jpg', _external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#conferencias">Sala de conferencias</a></h4>
