@@ -55,11 +55,11 @@
                   <td><strong>Estado:</strong></td>
                   <td>
                     {% if reserva.estado == "confirmada" %}
-                      <span class="badge badge-success">Confirmada</span>
+                      <span class="mb-2">Confirmada</span>
                     {% elif reserva.estado == "pendiente" %}
-                      <span class="badge badge-warning">Pendiente</span>
+                      <span class="mb-2">Pendiente</span>
                     {% elif reserva.estado == "cancelada" %}
-                      <span class="badge badge-danger">Cancelada</span>
+                      <span class="mb-2">Cancelada</span>
                     {% else %}
                       <span class="badge badge-secondary">{{ reserva.estado|title }}</span>
                     {% endif %}
@@ -67,7 +67,7 @@
                 </tr>
                 <tr>
                   <td><strong>Precio Total:</strong></td>
-                  <td><span class="text-success font-weight-bold">${{ reserva.precio_total }}</span></td>
+                  <td><span class="text-success font-weight-bold">${{ reserva.importe_total }}</span></td>
                 </tr>
               </tbody>
             </table>

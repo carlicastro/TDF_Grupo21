@@ -9,7 +9,7 @@
         <div class="swiper-slide" style="background-image: url(static/images/slider/slider4.jpg)">
           <div class="swiper-content">
             <div class="slider-logo">
-              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
             </div>
             <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
             <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -18,7 +18,7 @@
         <div class="swiper-slide" style="background-image: url(static/images/slider/slider2.jpg)">
           <div class="swiper-content">
             <div class="slider-logo">
-              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
             </div>
             <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
             <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -27,7 +27,7 @@
         <div class="swiper-slide" style="background-image: url(static/images/slider/slider3.jpg)">
           <div class="swiper-content">
             <div class="slider-logo">
-              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/icons/bed-logo.png', _external=True)}}" alt="Image" />
             </div>
             <h3 data-animation="animated fadeInUp">The lap of Luxury</h3>
             <h1 data-animation="animated fadeInUp">Hotel <span>Hotux</span></h1>
@@ -67,18 +67,18 @@
           <div class="about-image">
             <div class="image-box">
               <div class="image-1 abt-image">
-                <img src="{{ url_for('static', filename='images/about1.jpg',__external=True)}}" alt="image" />
+                <img src="{{ url_for('static', filename='images/about1.jpg',_external=True)}}" alt="image" />
               </div>
               <div class="image-2 abt-image">
-                <img src="{{ url_for('static', filename='images/about2.jpg',__external=True)}}" alt="image" />
+                <img src="{{ url_for('static', filename='images/about2.jpg',_external=True)}}" alt="image" />
               </div>
             </div>
             <div class="image-box">
               <div class="image-3 abt-image">
-                <img src="{{ url_for('static', filename='images/about3.jpg',__external=True)}}" alt="image" />
+                <img src="{{ url_for('static', filename='images/about3.jpg',_external=True)}}" alt="image" />
               </div>
               <div class="image-4 abt-image">
-                <img src="{{ url_for('static', filename='images/about4.jpg',__external=True)}}" alt="image" />
+                <img src="{{ url_for('static', filename='images/about4.jpg',_external=True)}}" alt="image" />
               </div>
             </div>
           </div>
@@ -103,9 +103,9 @@
             <div class="room-item">
               <div class="room-image">
                 {% if hospedaje.foto %}
-                  <img src="{{ url_for('static', filename='images/' ~ hospedaje.foto, __external=True)}}" alt="{{ hospedaje.nombre }}" />
+                  <img src="{{ url_for('static', filename='images/' ~ hospedaje.foto, _external=True)}}" alt="{{ hospedaje.nombre }}" />
                 {% else %}
-                  <img src="{{ url_for('static', filename='images/room1.jpg', __external=True)}}" alt="image" />
+                  <img src="{{ url_for('static', filename='images/room1.jpg', _external=True)}}" alt="image" />
                 {% endif %}
               </div>
               <div class="room-content">
@@ -215,7 +215,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service1.jpg', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service1.jpg', _external=True)}}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="{{ url_for('public.servicios')}}">Restaurante</a></h4>
@@ -226,7 +226,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service2.jpg', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service2.jpg', _external=True)}}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="{{ url_for('public.servicios')}}">Masajes</a></h4>
@@ -237,7 +237,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service3.jpg', __external=True)}}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service3.jpg', _external=True)}}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="{{ url_for('public.servicios')}}">Sala de conferencias</a></h4>
@@ -260,7 +260,7 @@
     <div class="review-slider">
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', __external=True)}}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review1.jpg', _external=True)}}" alt="image" />
         </div>
         <div class="slider-content">
           <p>Me hospedé durante una conferencia y el hotel superó mis expectativas. Las salas de reuniones estaban bien
@@ -270,12 +270,12 @@
           <span>Australia</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True)}}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
         </div>
       </div>
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review2.jpg', __external=True)}}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review2.jpg', _external=True)}}" alt="image" />
         </div>
         <div class="slider-content">
           <p>El hotel es un verdadero oasis. La habitación tenia una vista espectacular al mar y estaba impecable.
@@ -285,12 +285,12 @@
           <span>Alemania</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True)}}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
         </div>
       </div>
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', __external=True)}}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review1.jpg', _external=True)}}" alt="image" />
         </div>
         <div class="slider-content">
           <p>Fuimos en familia y la experiencia fue excelente. La pileta fue un éxito para los chicos, mientras que
@@ -299,7 +299,7 @@
           <span>Italia</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True)}}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', _external=True)}}" alt="Image" />
         </div>
       </div>
     </div>
@@ -309,6 +309,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{{ url_for('static', filename='js/custom-swiper1.js', __external=True)}}"></script>
-<script src="{{ url_for('static', filename='js/custom-singledate.js', __external=True)}}"></script>
+<script src="{{ url_for('static', filename='js/custom-swiper1.js', _external=True)}}"></script>
+<script src="{{ url_for('static', filename='js/custom-singledate.js', _external=True)}}"></script>
 {% endblock %}  
