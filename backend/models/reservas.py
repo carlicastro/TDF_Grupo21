@@ -20,8 +20,11 @@ def get_reservas():
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("""
-        SELECT * FROM reservas 
-        ORDER BY fecha_creacion DESC
+        SELECT r.*, u.nombre as usuario_nombre, h.nombre as hospedaje_nombre
+        FROM reservas r
+        LEFT JOIN usuarios u ON r.id_usuario = u.id_usuario
+        LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
+        ORDER BY r.id_reserva DESC
     """)
     reservas = cursor.fetchall()
     cursor.close()
@@ -35,7 +38,13 @@ def get_reserva_by_id(reserva_id):
     # Ver una reserva
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM reservas WHERE id_reserva = %s", (reserva_id,))
+    cursor.execute("""
+        SELECT r.*, u.nombre as usuario_nombre, h.nombre as hospedaje_nombre
+        FROM reservas r
+        LEFT JOIN usuarios u ON r.id_usuario = u.id_usuario
+        LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
+        WHERE r.id_reserva = %s
+    """, (reserva_id,))
     reserva = cursor.fetchone()
     cursor.close()
     conn.close()
