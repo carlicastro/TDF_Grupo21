@@ -20,7 +20,7 @@
       <div class="card-body">
         <div class="table-responsive">
           <table class="table table-striped table-bordered">
-            <thead class="table-dark">
+            <thead class="table-l">
               <tr>
                 <th>ID</th>
                 <th>Cliente</th>
@@ -41,7 +41,7 @@
                   <td>{{ reserva.hospedaje_nombre or 'Hospedaje ID: ' + reserva.id_hospedaje|string }}</td>
                   <td>{{ reserva.fecha_checkin }}</td>
                   <td>{{ reserva.fecha_checkout }}</td>
-                  <td class="fw-bold text-success">${{ reserva.precio_total }}</td>
+                  <td class="fw-bold text-success">${{ reserva.importe_total or reserva.precio_total or 'N/A' }}</td>
                   <td>
                     {% if reserva.estado == 'confirmada' %}
                       <span class="badge bg-success">Confirmada</span>
@@ -55,12 +55,12 @@
                       <span class="badge bg-secondary">{{ reserva.estado|title }}</span>
                     {% endif %}
                   </td>
-                  <td class="text-center">
+                  <td class="d-flex justify-content-center align-items-center gap-2">
                     <a href="{{ url_for('admin.mostrar_reserva_admin', id_reserva=reserva.id_reserva) }}" 
-                       class="btn btn-sm btn-info me-1" title="Ver">
+                       class="btn btn-sm btn-info" title="Ver">
                       <i class="link-icon" data-feather="eye"></i>
                     </a>
-                    <form method="POST" action="{{ url_for('admin.eliminar_reserva_admin', id_reserva=reserva.id_reserva) }}" style="display: inline-block;">
+                    <form method="POST" action="{{ url_for('admin.eliminar_reserva_admin', id_reserva=reserva.id_reserva) }}" class="m-0">
                       <button type="submit" 
                               onclick="return confirm('¿Seguro que desea eliminar esta reserva?')"
                               class="btn btn-sm btn-danger" title="Eliminar">

@@ -1,115 +1,69 @@
-# Frontend - Sistema de Reservas Hotel
+# Frontend - Sistema Hotel 🌐
 
-Interfaz web desarrollada con Flask, templates Jinja2 y Bootstrap para el sistema de reservas hoteleras.
+**Interfaz web con Flask + Bootstrap para gestión hotelera**
 
-## 🏗️ Arquitectura
+## 🚀 Inicio Rápido
 
-- **Framework**: Flask con Blueprints modulares
-- **Templates**: Jinja2 con herencia de plantillas
-- **CSS**: Bootstrap + estilos personalizados
-- **JS**: jQuery + componentes interactivos
-- **Comunicación**: Cliente HTTP al backend API
+```bash
+# 1. Instalar dependencias  
+pip install -r requirements.txt
+
+# 2. Ejecutar
+python app.py
+```
+
+**✅ Servidor corriendo en:** `http://localhost:3000`
 
 ## 📁 Estructura
 
 ```
 frontend/
-├── app.py                  # Aplicación principal Flask
-├── routes/                 # Rutas organizadas por módulos
-│   ├── public_routes.py   # Páginas públicas (inicio, servicios)
-│   ├── auth_routes.py     # Autenticación (login, registro)
-│   ├── admin_routes.py    # Panel de administración
-│   ├── reservas_routes.py # Sistema de reservas
-│   ├── habitaciones_routes.py # Gestión de habitaciones
-│   └── user_routes.py     # Perfil de usuario
+├── app.py              # 🚀 Servidor Flask principal
+├── routes/             # 📍 Rutas modulares (Blueprints)
+│   ├── public_routes.py    # 🌍 Páginas públicas
+│   ├── auth_routes.py      # 🔐 Login/Registro
+│   ├── user_routes.py      # 👤 Perfil usuario
+│   ├── habitaciones_routes.py # 🏨 Habitaciones
+│   ├── reservas_routes.py  # 📅 Reservas
+│   └── admin_routes.py     # ⚙️ Panel admin
 ├── services/
-│   └── api_client.py      # Cliente HTTP al backend
-├── templates/             # Plantillas HTML
-│   ├── Components/        # Componentes reutilizables
-│   ├── public/           # Páginas públicas
-│   ├── auth/             # Autenticación
-│   ├── admin/            # Panel admin
-│   ├── perfil/           # Perfil usuario
-│   └── reservas/         # Sistema reservas
-├── static/               # Recursos estáticos
-│   ├── css/             # Estilos
-│   ├── js/              # JavaScript
-│   ├── images/          # Imágenes
-│   └── assets/          # Admin assets
-└── requirements.txt
+│   └── api_client.py   # 🔗 Conexión al backend
+├── templates/          # 🎨 HTML (Jinja2)
+└── static/            # 📦 CSS, JS, imágenes
 ```
 
-## 🚀 Instalación
+## 🔗 Rutas Principales
 
-```bash
-# Instalar dependencias
-pip install -r requirements.txt
+### 🌍 **Públicas**
+- `/` - Inicio
+- `/habitaciones` - Lista habitaciones  
+- `/nosotros` - Información
 
-# Variables de entorno (.env)
-SECRET_KEY=tu_clave_secreta_frontend
-
-# Ejecutar servidor
-python app.py
-```
-
-## 🌐 Rutas Principales
-
-### Públicas
-- `/` - Página de inicio
-- `/nosotros` - Sobre nosotros
-- `/servicios` - Servicios del hotel
-- `/galeria` - Galería de imágenes
-- `/contacto` - Información de contacto
-
-### Autenticación
+### 🔐 **Autenticación**
 - `/login` - Iniciar sesión
 - `/registro` - Crear cuenta
-- `/logout` - Cerrar sesión
 
-### Habitaciones
-- `/habitaciones` - Lista de habitaciones
-- `/habitaciones/<id>` - Detalles de habitación
+### 👤 **Usuario**
+- `/perfil` - Mi perfil
+- `/mis-reservas` - Mis reservas
+- `/reservar/<id>` - Hacer reserva
 
-### Reservas
-- `/reservar/<id>` - Realizar reserva
-- `/confirmacion` - Confirmación de reserva
+### ⚙️ **Admin** (solo administradores)
+- `/admin` - Dashboard
+- `/admin/habitaciones` - Gestionar habitaciones
+- `/admin/usuarios` - Gestionar usuarios
 
-### Usuario
-- `/perfil` - Perfil personal
-- `/mis-reservas` - Historial de reservas
+## 🛠️ Tecnologías
 
-### Administración (Admin)
-- `/admin` - Dashboard administrativo
-- `/admin/usuarios` - Gestión de usuarios
-- `/admin/reservas` - Gestión de reservas
-- `/admin/habitaciones` - Gestión de habitaciones
+- **Flask** - Framework web
+- **Requests** - API calls al backend
+- **Bootstrap** - UI responsivo
+- **Jinja2** - Templates HTML
 
-## 🔧 Tecnologías
+## 🔄 Comunicación
 
-- **Flask 3.0.3** - Framework web
-- **Requests 2.31.0** - Cliente HTTP
-- **Python-dotenv 1.0.1** - Variables de entorno
-- **Bootstrap** - Framework CSS
-- **jQuery** - JavaScript
-- **Jinja2** - Motor de plantillas
+```
+Frontend (Flask:3000) → Backend API (Flask:8080)
+```
 
-## 🔗 Comunicación Backend
-
-El frontend comunica con el backend API mediante:
-- **Base URL**: `http://localhost:8080`
-- **Método**: HTTP requests con cookies de sesión
-- **Autenticación**: Cookies automáticas
-- **Cliente**: `services/api_client.py`
-
-## 🎨 Características
-
-- ✅ **Responsive Design** - Compatible con móviles
-- ✅ **Sistema de Sesiones** - Autenticación segura
-- ✅ **Validación Frontend** - Formularios validados
-- ✅ **Navegación Intuitiva** - UX optimizada
-- ✅ **Panel Admin** - Gestión completa
-- ✅ **Templates Modulares** - Código reutilizable
-
-## 🌐 Puerto
-
-El frontend se ejecuta en **puerto 3000** por defecto.
+**API Client:** `services/api_client.py` maneja todas las llamadas HTTP

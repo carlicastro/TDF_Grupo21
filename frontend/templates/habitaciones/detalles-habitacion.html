@@ -28,7 +28,7 @@
           {% if hospedaje.foto %}
             <img src="{{ hospedaje.foto }}" alt="{{ hospedaje.nombre }}" />
           {% else %}
-            <img src="{{ url_for('static', filename='images/detail-slider/slider1.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/detail-slider/slider1.jpg', _external=True) }}" alt="image" />
           {% endif %}
         </div>
       </div>
@@ -107,61 +107,6 @@
                 <p class="mb-0"><i class="fa fa-lightbulb text-warning"></i> <strong>Sugerencia:</strong> Intenta seleccionar fechas después del {{ fecha_ocupada_hasta }} o antes del {{ fecha_ocupada_desde }}.</p>
               </div>
               {% endif %}
-              
-              {% if reservas_actuales %}
-              <div class="availability-info mt-4">
-                <h4><i class="fa fa-calendar-alt mr-2"></i>Calendario de Reservas</h4>
-                <p class="text-muted mb-3">Próximas reservas confirmadas para esta habitación:</p>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
-                    <thead class="thead-light">
-                      <tr>
-                        <th><i class="fa fa-calendar-check"></i> Check-in</th>
-                        <th><i class="fa fa-calendar-times"></i> Check-out</th>
-                        <th><i class="fa fa-info-circle"></i> Estado</th>
-                        <th><i class="fa fa-users"></i> Personas</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for reserva in reservas_actuales[:5] %}
-                      <tr>
-                        <td>
-                          <span class="badge badge-light">{{ reserva.fecha_checkin }}</span>
-                        </td>
-                        <td>
-                          <span class="badge badge-light">{{ reserva.fecha_checkout }}</span>
-                        </td>
-                        <td>
-                          {% if reserva.estado == 'confirmada' %}
-                            <span class="badge badge-success">Confirmada</span>
-                          {% elif reserva.estado == 'pendiente' %}
-                            <span class="badge badge-warning">Pendiente</span>
-                          {% else %}
-                            <span class="badge badge-secondary">{{ reserva.estado|title }}</span>
-                          {% endif %}
-                        </td>
-                        <td>
-                          <i class="fa fa-user"></i> {{ reserva.cant_personas }}
-                        </td>
-                      </tr>
-                      {% endfor %}
-                      {% if reservas_actuales|length > 5 %}
-                      <tr>
-                        <td colspan="4" class="text-center text-muted">
-                          <small>... y {{ reservas_actuales|length - 5 }} reserva(s) más</small>
-                        </td>
-                      </tr>
-                      {% endif %}
-                    </tbody>
-                  </table>
-                </div>
-                {% if not reservas_actuales %}
-                <div class="alert alert-success">
-                  <i class="fa fa-check-circle mr-2"></i>No hay reservas programadas próximamente. ¡Esta habitación está disponible!
-                </div>
-                {% endif %}
-              </div>
-              {% endif %}
             </div>
           </div>
           <div class="col-lg-4">
@@ -176,17 +121,248 @@
 </section>
 <!-- details Ends-->
 
+<!-- Calendario Visual de Disponibilidad ESTÁTICO -->
+<section class="calendar-availability">
+  <div class="container">
+    <div class="section-title">
+      <h3>Calendario de <span>Disponibilidad</span></h3>
+      <p class="text-muted">Las fechas en rojo están ocupadas</p>
+    </div>
+    
+    <div class="calendar-wrapper">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="calendar-container">
+            <!-- Mes actual generado con datos del backend -->
+            {% set month_names = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] %}
+            
+            <div class="calendar-header">
+              <div class="calendar-month-year">
+                {{ month_names[mes_actual] }} {{ año_actual }}
+              </div>
+            </div>
+            
+            <div class="calendar-grid">
+              <div class="calendar-day-header">Dom</div>
+              <div class="calendar-day-header">Lun</div>
+              <div class="calendar-day-header">Mar</div>
+              <div class="calendar-day-header">Mié</div>
+              <div class="calendar-day-header">Jue</div>
+              <div class="calendar-day-header">Vie</div>
+              <div class="calendar-day-header">Sáb</div>
+              
+              <!-- Días vacíos del mes anterior -->
+              {% for i in range(primer_dia_semana) %}
+                <div class="calendar-day other-month"></div>
+              {% endfor %}
+              
+              <!-- Días del mes actual -->
+              {% for day in range(1, dias_en_mes + 1) %}
+                {% set date_str = "%04d-%02d-%02d"|format(año_actual, mes_actual, day) %}
+                {% set is_today = (day == hoy.day and mes_actual == hoy.month and año_actual == hoy.year) %}
+                {% set is_occupied = date_str in fechas_ocupadas %}
+                
+                <div class="calendar-day 
+                  {% if is_today %}today
+                  {% elif is_occupied %}occupied
+                  {% else %}available
+                  {% endif %}"
+                  {% if is_occupied %}title="Fecha ocupada: {{ date_str }}"{% else %}title="Disponible: {{ date_str }}"{% endif %}>
+                  {{ day }}
+                  <!-- Debug: mostrar si está en fechas ocupadas -->
+                  {% if is_occupied %}
+                    <small style="display:block; font-size:8px; color: white;">●</small>
+                  {% endif %}
+                </div>
+              {% endfor %}
+              
+              <!-- Días vacíos para completar la grilla (42 total) -->
+              {% set total_cells_used = primer_dia_semana + dias_en_mes %}
+              {% for i in range(42 - total_cells_used) %}
+                <div class="calendar-day other-month"></div>
+              {% endfor %}
+            </div>
+          </div>
+          
+          <div class="calendar-legend mt-3">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <div class="legend-item">
+                  <span class="legend-color available"></span>
+                  <small>Disponible</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="legend-item">
+                  <span class="legend-color occupied"></span>
+                  <small>Ocupado</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="legend-item">
+                  <span class="legend-color today"></span>
+                  <small>Hoy</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Información simple de fechas ocupadas -->
+          {% if fechas_ocupadas %}
+          <div class="mt-4 text-center">
+            <p class="text-muted"><strong>Fechas ocupadas este mes:</strong></p>
+            <div class="badge-container">
+              {% for fecha in fechas_ocupadas[:10] %}
+                {% if fecha.startswith(año_actual|string + '-' + '%02d'|format(mes_actual)) %}
+                  <span class="badge badge-danger mr-1 mb-1">{{ fecha }}</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <!-- Debug: mostrar todas las fechas ocupadas -->
+            <details class="mt-2">
+              <summary class="text-muted" style="cursor: pointer;">Ver todas las fechas ocupadas (debug)</summary>
+              <div class="mt-2">
+                {% for fecha in fechas_ocupadas %}
+                  <span class="badge badge-secondary mr-1 mb-1" style="font-size: 10px;">{{ fecha }}</span>
+                {% endfor %}
+                <p class="text-muted mt-2"><small>Total: {{ fechas_ocupadas|length }} fechas</small></p>
+              </div>
+            </details>
+          </div>
+          {% else %}
+          <div class="mt-4 text-center">
+            <p class="text-success"><strong>¡No hay fechas ocupadas este mes!</strong></p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.calendar-availability {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.calendar-container {
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.calendar-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.calendar-month-year {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendar-day-header {
+  background: #343a40;
+  color: white;
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.calendar-day {
+  background: white;
+  padding: 12px 8px;
+  text-align: center;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-day.other-month {
+  background: #f8f9fa;
+  color: #ccc;
+}
+
+.calendar-day.today {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.calendar-day.occupied {
+  background: #dc3545;
+  color: white;
+}
+
+.calendar-day.available {
+  background: white;
+  color: #333;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.legend-color.available {
+  background: white;
+  border: 2px solid #28a745;
+}
+
+.legend-color.occupied {
+  background: #dc3545;
+}
+
+.legend-color.today {
+  background: #007bff;
+}
+
+.badge-container {
+  max-height: 100px;
+  overflow-y: auto;
+}
+</style>
+<!-- Calendario de Disponibilidad Ends -->
+
 <!-- check-in Starts -->
 <section class="check-in">
   <div class="container">
     <h4 class="text-center mb-4">Reservar Habitación</h4>
-    <form action="{{ url_for('reservas.reservar', id_hospedaje=hospedaje.id_hospedaje) }}" method="POST">
+    {% if logged_in and puede_reservar %}
+    <form action="{{ url_for('reservas.reservar', id_hospedaje=hospedaje.id_hospedaje) }}" method="POST" id="reservaForm">
       <div class="form-content">
         <div class="table-item">
           <div class="form-group">
             <div class="date-range-inner-wrapper">
-              <input id="date-range2" type="date" name="fecha_checkin" class="form-control" 
-                     value="{{ fecha_checkin if fecha_checkin else '' }}" required />
+              <input type="date" name="fecha_checkin" class="form-control" 
+                     value="{{ fecha_checkin if fecha_checkin else '' }}" 
+                     min="{{ fecha_minima }}" required />
               <span class="input-group-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>
@@ -196,8 +372,9 @@
         <div class="table-item">
           <div class="form-group">
             <div class="date-range-inner-wrapper">
-              <input id="date-range3" type="date" name="fecha_checkout" class="form-control" 
-                     value="{{ fecha_checkout if fecha_checkout else '' }}" required />
+              <input type="date" name="fecha_checkout" class="form-control" 
+                     value="{{ fecha_checkout if fecha_checkout else '' }}" 
+                     min="{{ fecha_minima }}" required />
               <span class="input-group-addon">
                 <i class="fa fa-calendar" aria-hidden="true"></i>
               </span>
@@ -226,6 +403,15 @@
         </div>
       </div>
     </form>
+    {% else %}
+    <div class="text-center">
+      <div class="alert alert-info">
+        <h5><i class="fa fa-info-circle"></i> Inicia sesión para reservar</h5>
+        <p>Necesitas estar logueado para poder hacer una reserva</p>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-orange">Iniciar Sesión</a>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </section>
 <!-- check-in Ends -->
@@ -314,10 +500,10 @@
     <div class="col-md-3 col-sm-6 col-xs-6">
       <div class="feature-item">
         <div class="feature-image">
-          <img src="{{ url_for('static', filename='images/feature1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/feature1.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/icons/ficon1.png', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/icons/ficon1.png', _external=True) }}" alt="image" />
           <h4><a href="#" class="white">Gymnasio</a></h4>
         </div>
       </div>
@@ -325,10 +511,10 @@
     <div class="col-md-3 col-sm-6 col-xs-6">
       <div class="feature-item">
         <div class="feature-image">
-          <img src="{{ url_for('static', filename='images/feature2.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/feature2.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/icons/ficon2.png', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/icons/ficon2.png', _external=True) }}" alt="image" />
           <h4><a href="#" class="white">Playa Privada</a></h4>
         </div>
       </div>
@@ -336,10 +522,10 @@
     <div class="col-md-3 col-sm-6 col-xs-6">
       <div class="feature-item">
         <div class="feature-image">
-          <img src="{{ url_for('static', filename='images/feature3.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/feature3.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="feature-content">
-          <img src="{{ url_for('static', filename='images/icons/ficon3.png', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/icons/ficon3.png', _external=True) }}" alt="image" />
           <h4><a href="#" class="white">Alquiler de bicicletas</a></h4>
         </div>
       </div>
@@ -347,7 +533,7 @@
     <div class="col-md-3 col-sm-6 col-xs-6">
       <div class="feature-item">
         <div class="feature-image">
-          <img src="{{ url_for('static', filename='images/feature4.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/feature4.jpg', _external=True) }}" alt="image" />
         </div>
         <div class="feature-content">
           <img src="{{ url_for('static', filename='images/icons/ficon4.png', external= True) }}" alt="image" />
@@ -370,7 +556,7 @@
         <li>
           <div class="review-item">
             <div class="review-image">
-              <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+              <img src="{{ url_for('static', filename='images/review1.jpg', _external=True) }}" alt="image" />
             </div>
             <div class="review-content">
               <h5>Micheal Clordy</h5>
@@ -388,7 +574,7 @@
             <li>
               <div class="review-item">
                 <div class="review-image">
-                  <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
+                  <img src="{{ url_for('static', filename='images/review2.jpg', _external=True) }}" alt="image" />
                 </div>
                 <div class="review-content">
                   <h5>Micheal Clordy</h5>
@@ -466,7 +652,7 @@
         <div class="col-md-4">
           <div class="room-item">
             <div class="room-image">
-              <img src="{{ url_for('static', filename='images/room1.jpg', external=True) }}" alt="image" />
+              <img src="{{ url_for('static', filename='images/room1.jpg', _external=True) }}" alt="image" />
             </div>
             <div class="room-content">
               <div class="room-title">
@@ -504,7 +690,7 @@
         <div class="col-md-4">
           <div class="room-item">
             <div class="room-image">
-              <img src="{{ url_for('static', filename='images/room2.jpg', external=True) }}" alt="image" />
+              <img src="{{ url_for('static', filename='images/room2.jpg', _external=True) }}" alt="image" />
             </div>
             <div class="room-content">
               <div class="room-title">
@@ -542,7 +728,7 @@
         <div class="col-md-4">
           <div class="room-item">
             <div class="room-image">
-              <img src="{{ url_for('static', filename='images/room3.jpg', external=True) }}" alt="image" />
+              <img src="{{ url_for('static', filename='images/room3.jpg', _external=True) }}" alt="image" />
             </div>
             <div class="room-content">
               <div class="room-title">
@@ -580,7 +766,7 @@
         <div class="col-md-4">
           <div class="room-item">
             <div class="room-image">
-              <img src="{{ url_for('static', filename='images/room4.jpg', external=True) }}" alt="image" />
+              <img src="{{ url_for('static', filename='images/room4.jpg', _external=True) }}" alt="image" />
             </div>
             <div class="room-content">
               <div class="room-title">
@@ -625,12 +811,7 @@
 {% endblock %}
 
 {% block extra_js %}
-
 <script src="{{ url_for('static', filename='js/map.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4JwWo5VPt9WyNp3Ne2uc2FMGEePHpqJ8&amp;callback=initMap"
   async defer></script>
-  
-<script src="{{ url_for('static', filename='js/custom-swiper1.js', _external=True)}}"></script>
-<script src="{{ url_for('static', filename='js/custom-singledate.js', _external=True)}}"></script>
-
 {% endblock %}

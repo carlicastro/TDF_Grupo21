@@ -51,7 +51,7 @@
       </div>
       <div class="col-lg-4">
         <div class="about-us-image mar-top-50">
-          <img src="{{ url_for('static', filename='images/gallery/gallery1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/gallery/gallery1.jpg', __external=True) }}" alt="image" />
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@
     <div class="row">
       <div class="col-lg-5">
         <div class="about-us-image">
-          <img src="{{ url_for('static', filename='images/gallery/gallery2.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/gallery/gallery2.jpg', __external=True) }}" alt="image" />
         </div>
       </div>
       <div class="col-lg-7">
@@ -169,6 +169,35 @@
 </section>
 <!-- about Faq Ends -->
 
+<!-- about video starts -->
+<section class="video-box" style="position: relative; height: 100vh; overflow: hidden;">
+  <!-- Video de fondo -->
+  <div class="video-background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+    <iframe 
+      width="100%" 
+      height="100%" 
+      src="https://www.youtube.com/embed/NTIWxMyKmRE?autoplay=1&mute=1&controls=0&loop=1&playlist=NTIWxMyKmRE&showinfo=0&modestbranding=1&rel=0" 
+      title="Hotel Tour Video Background" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen
+      style="object-fit: cover; transform: scale(1.2);">
+    </iframe>
+  </div>
+  
+  <!-- Overlay oscuro para mejorar legibilidad del texto -->
+  <div class="video-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2;"></div>
+  
+  <!-- Contenido sobre el video -->
+  <div class="container" style="position: relative; z-index: 3; height: 100%; display: flex; align-items: center; justify-content: center;">
+    <div class="section-title text-center">
+      <h3 class="white mar-0" style="font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Haz un recorrido</h3>
+      <h4 class="white mar-0" style="font-size: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); margin-top: 20px;">de nuestro maravilloso complejo turístico</h4>
+    </div>
+  </div>
+</section>
+<!-- about video Ends -->
+
 <!-- about team starts-->
 <section class="about-team">
   <div class="container">
@@ -179,7 +208,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team1.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team1.jpg', __external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>John Anderson</h4>
@@ -204,7 +233,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team2.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team2.jpg', __external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Erina Gray</h4>
@@ -229,7 +258,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team3.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team3.jpg', __external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Micheal Carter</h4>
@@ -254,7 +283,7 @@
       <div class="col-md-4">
         <div class="team-item">
           <div class="team-image">
-            <img src="{{ url_for('static', filename='images/team4.jpg', external=True) }}" alt="image" />
+            <img src="{{ url_for('static', filename='images/team4.jpg', __external=True) }}" alt="image" />
           </div>
           <div class="team-content">
             <h4>Nelson Roar</h4>
@@ -290,7 +319,7 @@
     <div class="review-slider">
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review1.jpg', __external=True) }}" alt="image" />
         </div>
         <div class="slider-content">
           <p>Me hospedé durante una conferencia y el hotel superó mis expectativas. Las salas de reuniones estaban bien
@@ -300,12 +329,12 @@
           <span>Australia</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True) }}" alt="Image" />
         </div>
       </div>
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review2.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review2.jpg', __external=True) }}" alt="image" />
         </div>
         <div class="slider-content">
           <p>El hotel es un verdadero oasis. La habitación tenia una vista espectacular al mar y estaba impecable.
@@ -315,12 +344,12 @@
           <span>Alemania</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True) }}" alt="Image" />
         </div>
       </div>
       <div class="slider-item">
         <div class="slider-image">
-          <img src="{{ url_for('static', filename='images/review1.jpg', external=True) }}" alt="image" />
+          <img src="{{ url_for('static', filename='images/review1.jpg', __external=True) }}" alt="image" />
         </div>
         <div class="slider-content">
           <p>Fuimos en familia y la experiencia fue excelente. La pileta fue un éxito para los chicos, mientras que
@@ -329,7 +358,7 @@
           <span>Italia</span>
         </div>
         <div class="slider-quote">
-          <img src="{{ url_for('static', filename='images/icons/quote.png', external=True) }}" alt="Image" />
+          <img src="{{ url_for('static', filename='images/icons/quote.png', __external=True) }}" alt="Image" />
         </div>
       </div>
     </div>
@@ -351,7 +380,7 @@
         <div class="col-lg-4 col-md-12 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service1.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service1.jpg', __external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#restaurante">Restaurante</a></h4>
@@ -362,7 +391,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service2.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service2.jpg', __external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#masajes">Masaje</a></h4>
@@ -373,7 +402,7 @@
         <div class="col-lg-4 col-md-6 mar-bottom-30">
           <div class="service-item">
             <div class="service-image">
-              <img src="{{ url_for('static', filename='images/service3.jpg', external=True) }}" alt="Image" />
+              <img src="{{ url_for('static', filename='images/service3.jpg', __external=True) }}" alt="Image" />
             </div>
             <div class="service-content">
               <h4><a href="#conferencias">Sala de conferencias</a></h4>

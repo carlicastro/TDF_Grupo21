@@ -1,169 +1,121 @@
 """
-Funciones para manejar la tabla usuarios + sistema de autenticación
+Usuarios - Sistema Hotel 
 """
-from flask import Blueprint, jsonify, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask import Blueprint, jsonify, session
 from db import get_connection
+from .auth import esta_logueado, es_admin, login_usuario, logout_usuario, registro_usuario
 
 usuarios_bp = Blueprint('usuarios', __name__)
 
-def verificar_admin():
-    """
-    Verifica si el usuario es admin mediante sesión o cookies
-    """
-    # Verificar por sesión Flask (cuando viene del navegador directamente)
-    if session.get('user_rol') == 'admin':
-        return True
-    
-    # Verificar por cookies (cuando viene del API client del frontend)
-    user_rol_cookie = request.cookies.get('user_rol')
-    if user_rol_cookie == 'admin':
-        return True
-    
-    return False
-
-# ===== RUTAS DE AUTENTICACIÓN =====
-
+# Pre: Request POST con JSON conteniendo email y password válidos
+# Post: Si credenciales correctas, sesión iniciada y retorna user data. Si incorrectas, retorna error
 @usuarios_bp.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    email = data.get('email')
-    password = data.get('password')
-    
-    if not email or not password:
-        return jsonify({'success': False, 'message': 'Email y contraseña son requeridos'}), 400
-    
-    conn = get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM usuarios WHERE email = %s", (email,))
-    user = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    
-    if user and check_password_hash(user['password'], password):
-        session['user_id'] = user['id_usuario']
-        session['user_name'] = user['nombre']
-        session['user_email'] = user['email']
-        session['user_rol'] = user['rol'] if user['rol'] else 'cliente'
-        session['logged_in'] = True
-        
-        return jsonify({
-            'success': True,
-            'message': 'Login exitoso',
-            'user': {
-                'id': user['id_usuario'],
-                'nombre': user['nombre'],
-                'email': user['email'],
-                'rol': user['rol'] if user['rol'] else 'cliente'
-            }
-        })
-    else:
-        return jsonify({'success': False, 'message': 'Email o contraseña incorrectos'}), 401
+    # Login de usuario
+    return login_usuario()
 
+# Pre: Sesión Flask existe (puede estar logueada o no)
+# Post: Sesión completamente limpia, usuario deslogueado
 @usuarios_bp.route('/logout', methods=['POST'])
 def logout():
-    session.clear()
-    return jsonify({'success': True, 'message': 'Sesión cerrada exitosamente'})
+    # Cerrar sesión
+    return logout_usuario()
 
+# Pre: Request POST con JSON conteniendo nombre, email, password. Email no debe existir en BD
+# Post: Si datos válidos, usuario creado en BD con rol cliente. Si email existe, retorna error
 @usuarios_bp.route('/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    nombre = data.get('nombre')
-    email = data.get('email')
-    telefono = data.get('telefono', '')
-    password = data.get('password')
-    direccion = data.get('direccion', '')
-    rol = data.get('rol', 'cliente')
-    
-    if not all([nombre, email, password]):
-        return jsonify({'success': False, 'message': 'Nombre, email y contraseña son requeridos'}), 400
-    
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT id_usuario FROM usuarios WHERE email = %s", (email,))
-    if cursor.fetchone():
-        cursor.close()
-        conn.close()
-        return jsonify({'success': False, 'message': 'El email ya está registrado'}), 409
-    
-    hashed_password = generate_password_hash(password)
-    cursor.execute("""
-        INSERT INTO usuarios (nombre, email, telefono, password, direccion, rol)
-        VALUES (%s, %s, %s, %s, %s, %s)
-    """, (nombre, email, telefono, hashed_password, direccion, rol))
-    
-    conn.commit()
-    user_id = cursor.lastrowid
-    cursor.close()
-    conn.close()
-    
-    return jsonify({'success': True, 'message': 'Usuario registrado exitosamente', 'user_id': user_id}), 201
+def registro():
+    # Registrar usuario nuevo
+    return registro_usuario()
 
-# ===== RUTAS CRUD BÁSICAS =====
-
+# Pre: Usuario debe estar logueado como admin
+# Post: Si es admin, retorna lista JSON de todos los usuarios. Si no es admin, error 403
 @usuarios_bp.route("/", methods=["GET"])
-def get_usuarios():
-    """Listar todos los usuarios (solo admin)"""
-    if not verificar_admin():
-        return jsonify({'error': 'Acceso denegado. Solo administradores.'}), 403
+def ver_todos_usuarios():
+    # Ver todos los usuarios - solo admin
+    if esta_logueado() == False:
+        return jsonify({'error': 'Debes estar logueado'}), 401
+    if es_admin() == False:
+        return jsonify({'error': 'Solo para admin'}), 403
     
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id_usuario, nombre, email, telefono, rol, direccion, fecha_registro FROM usuarios")
-    usuarios = cursor.fetchall()
+    cursor.execute("SELECT id_usuario, nombre, email, telefono, rol, direccion FROM usuarios")
+    todos = cursor.fetchall()
     cursor.close()
     conn.close()
-    return jsonify(usuarios)
+    return jsonify(todos)
 
+# Pre: user_id debe ser un entero válido
+# Post: Si usuario existe, retorna datos JSON sin password. Si no existe, error 404
 @usuarios_bp.route("/<int:user_id>", methods=["GET"])
-def get_usuario_by_id(user_id):
-    """Ver usuario específico por ID"""
+def ver_usuario(user_id):
+    # Ver un usuario
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT id_usuario, nombre, email, telefono, rol, direccion, fecha_registro FROM usuarios WHERE id_usuario = %s", (user_id,))
+    cursor.execute("SELECT id_usuario, nombre, email, telefono, rol, direccion FROM usuarios WHERE id_usuario = %s", (user_id,))
     usuario = cursor.fetchone()
     cursor.close()
     conn.close()
     
-    if not usuario:
-        return ("Usuario no encontrado", 404)
+    if usuario == None:
+        return jsonify({'error': 'No existe'}), 404
     return jsonify(usuario)
 
+# Pre: Usuario admin logueado, user_id de usuario existente
+# Post: Si usuario existe y es admin, usuario eliminado de BD. Si no existe, error 404
 @usuarios_bp.route("/<int:user_id>", methods=["DELETE"])
-def eliminar_usuario(user_id):
-    """Eliminar usuario (solo admin)"""
-    if not verificar_admin():
-        return jsonify({'error': 'Acceso denegado. Solo administradores.'}), 403
+def borrar_usuario(user_id):
+    # Borrar usuario - solo admin
+    if esta_logueado() == False:
+        return jsonify({'error': 'Debes estar logueado'}), 401
+    if es_admin() == False:
+        return jsonify({'error': 'Solo para admin'}), 403
     
     conn = get_connection()
     cursor = conn.cursor()
     
+    # Ver si existe
     cursor.execute("SELECT id_usuario FROM usuarios WHERE id_usuario = %s", (user_id,))
-    if not cursor.fetchone():
+    usuario_existe = cursor.fetchone()
+    if usuario_existe == None:
         cursor.close()
         conn.close()
-        return ("Usuario no encontrado", 404)
+        return jsonify({'error': 'No existe'}), 404
     
+    # Borrar
     cursor.execute("DELETE FROM usuarios WHERE id_usuario = %s", (user_id,))
     conn.commit()
     cursor.close()
     conn.close()
-    return ("Usuario eliminado exitosamente", 200)
+    return jsonify({'success': True, 'message': 'Usuario borrado'})
 
+# Pre: user_id debe ser un entero válido de usuario existente
+# Post: Si usuario existe, retorna lista JSON de sus reservas con datos del hotel. Si no existe, error 404
 @usuarios_bp.route("/<int:user_id>/reservas", methods=["GET"])
-def get_reservas_usuario(user_id):
-    """Ver reservas de un usuario específico"""
+def ver_reservas_usuario(user_id):
+    # Ver reservas de usuario
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
+    
+    # Verificar que el usuario existe
+    cursor.execute("SELECT id_usuario FROM usuarios WHERE id_usuario = %s", (user_id,))
+    usuario_existe = cursor.fetchone()
+    if not usuario_existe:
+        cursor.close()
+        conn.close()
+        return jsonify({'error': 'Usuario no existe'}), 404
+    
+    # Obtener reservas del usuario
     cursor.execute("""
-        SELECT r.*, h.nombre as hospedaje_nombre, h.tipo, h.descripcion
+        SELECT r.*, h.nombre as hotel_nombre
         FROM reservas r
         LEFT JOIN hospedajes h ON r.id_hospedaje = h.id_hospedaje
         WHERE r.id_usuario = %s
         ORDER BY r.fecha_creacion DESC
     """, (user_id,))
-    reservas = cursor.fetchall()
-    
+    mis_reservas = cursor.fetchall()
     cursor.close()
     conn.close()
-    return jsonify(reservas)
+    
+    return jsonify(mis_reservas)

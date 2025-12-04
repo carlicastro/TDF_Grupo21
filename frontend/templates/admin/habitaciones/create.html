@@ -11,51 +11,83 @@
           <h5 class="mb-0">Nueva Habitación</h5>
         </div>
         <div class="card-body">
-          <!-- Mensajes flash -->
+          <!-- Solo mostrar alertas de éxito -->
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, msg in messages %}
-                <div class="alert alert-{{ 'success' if category=='success' else 'danger' }} alert-dismissible">
-                  {{ msg }}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
+                {% if category == 'success' %}
+                  <div class="alert alert-success alert-dismissible fade show">
+                    <i class="fas fa-check-circle me-2"></i>{{ msg }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                  </div>
+                {% endif %}
               {% endfor %}
             {% endif %}
           {% endwith %}
           
-          <form action="{{ url_for('habitaciones.admin_crear') }}" method="POST">
+          <form action="{{ url_for('habitaciones.admin_crear') }}" method="POST" id="formCrearHabitacion">
             
-            <label for="nombre" class="form-label">Nombre:</label>
-            <input type="text" class="form-control mb-3" name="nombre" id="nombre" required>
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre de la Habitación:</label>
+              <input type="text" class="form-control" name="nombre" id="nombre" required 
+                     placeholder="Ej: Suite Presidencial, Habitación Deluxe...">
+            </div>
 
-            <label for="tipo" class="form-label">Tipo:</label>
-            <select class="form-select mb-3" name="tipo" id="tipo">
-              <option value="habitacion">Habitación</option>
-              <option value="suite">Suite</option>
-              <option value="cabaña">Cabaña</option>
-            </select>
+            <div class="mb-3">
+              <label for="tipo" class="form-label">Tipo de Hospedaje:</label>
+              <select class="form-select" name="tipo" id="tipo" required>
+                <option value="">Selecciona un tipo...</option>
+                <option value="habitacion">Habitación</option>
+                <option value="suite">Suite</option>
+                <option value="cabaña">Cabaña</option>
+              </select>
+            </div>
 
-            <label for="capacidad" class="form-label">Capacidad:</label>
-            <select class="form-select mb-3" name="capacidad" id="capacidad" required>
-              <option value="2">2 personas</option>
-              <option value="4">4 personas</option>
-              <option value="6">6 personas</option>
-            </select>
+            <div class="mb-3">
+              <label for="capacidad" class="form-label">Capacidad:</label>
+              <select class="form-select" name="capacidad" id="capacidad" required>
+                <option value="">Selecciona capacidad...</option>
+                <option value="2">2 personas</option>
+                <option value="4">4 personas</option>
+                <option value="6">6 personas</option>
+              </select>
+            </div>
 
-            <label for="precio" class="form-label">Precio por noche ($):</label>
-            <input type="number" step="0.01" class="form-control mb-3" name="precio" id="precio" required>
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio por noche ($):</label>
+              <input type="number" step="0.01" class="form-control" name="precio" id="precio" required 
+                     placeholder="Ej: 150.00" min="1">
+            </div>
 
-            <label for="descripcion" class="form-label">Descripción:</label>
-            <textarea class="form-control mb-3" name="descripcion" id="descripcion" rows="2"></textarea>
+            <div class="mb-3">
+              <label for="imagen_url" class="form-label">URL de la Imagen:</label>
+              <input type="url" class="form-control" name="imagen_url" id="imagen_url" 
+                     placeholder="https://ejemplo.com/imagen.jpg">
+              <small class="form-text text-muted">URL de la imagen principal de la habitación</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción:</label>
+              <textarea class="form-control" name="descripcion" id="descripcion" rows="3" 
+                        placeholder="Describe las características y amenidades de la habitación..."></textarea>
+            </div>
 
             <input type="hidden" name="disponibilidad" value="0">
             <div class="form-check mb-4">
               <input class="form-check-input" type="checkbox" name="disponibilidad" id="disponibilidad" value="1" checked>
-              <label class="form-check-label" for="disponibilidad">Disponible</label>
+              <label class="form-check-label" for="disponibilidad">
+                <i class="fas fa-check-circle text-success me-1"></i>Habitación disponible
+              </label>
             </div>
             
-            <button type="submit" class="btn btn-primary">Crear Habitación</button>
-            <a href="{{ url_for('habitaciones.admin_lista') }}" class="btn btn-outline-secondary ms-2">Cancelar</a>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="{{ url_for('habitaciones.admin_lista') }}" class="btn btn-outline-secondary me-md-2">
+                <i class="fas fa-arrow-left me-1"></i>Cancelar
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Crear Habitación
+              </button>
+            </div>
             
           </form>
         </div>
@@ -63,4 +95,13 @@
     </div>
   </div>
 </div>
+
+<script>
+document.getElementById('formCrearHabitacion').addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Creando...';
+    submitBtn.disabled = true;
+});
+</script>
+
 {% endblock %}
